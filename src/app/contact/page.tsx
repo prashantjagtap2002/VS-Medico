@@ -90,7 +90,7 @@ export default function ContactPage() {
         </div>
 
         {/* Form + Map side by side */}
-        <div className="contact-layout">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem', alignItems: 'start', marginBottom: '4rem' }}>
           <ContactForm />
           <GoogleMapEmbed />
         </div>

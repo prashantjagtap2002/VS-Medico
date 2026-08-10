@@ -13,8 +13,8 @@ export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps
   const brands = limit ? PHARMA_BRANDS.slice(0, limit) : PHARMA_BRANDS;
 
   return (
-    <section className="py-16 bg-slate-50 border-t border-slate-200">
-      <div className="container">
+    <section className={showHeader ? "py-16 bg-slate-50 border-t border-slate-200" : "pb-12"}>
+      <div className={showHeader ? "container" : ""}>
         {showHeader && (
           <div className="section-header">
             <span className="section-subtitle">AUTHORIZED PHARMA PARTNERS</span>
@@ -41,7 +41,7 @@ export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps
           ))}
         </div>
 
-        <div className="mt-12 p-8 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-10 p-8 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-bold text-primary text-xl mb-1">Looking for a specific Pharma Manufacturer or Division?</h3>
             <p className="text-sm text-slate-600">We continuously expand our stockist portfolio. Get in touch with our procurement desk for specific brand requirements.</p>

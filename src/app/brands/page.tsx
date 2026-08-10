@@ -17,7 +17,7 @@ export default function BrandsPage() {
           </p>
         </div>
 
-        <BrandsGrid />
+        <BrandsGrid showHeader={false} />
       </div>
     </div>
   );

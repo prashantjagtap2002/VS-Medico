@@ -14,7 +14,7 @@ export default function GoogleMapEmbed() {
   };
 
   return (
-    <div style={{ background: '#fff', borderRadius: '1.5rem', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+    <div style={{ position: 'sticky', top: '6rem', zIndex: 10, background: '#fff', borderRadius: '1.5rem', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
       {/* Map */}
       <div style={{ width: '100%', height: '340px', background: '#f1f5f9' }}>
         <iframe

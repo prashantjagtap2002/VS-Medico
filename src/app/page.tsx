@@ -75,34 +75,60 @@ export default function Home() {
       {/* Frequently Asked Questions (FAQs) */}
       <section className="py-16 bg-white border-t border-slate-200">
         <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">COMMON B2B QUESTIONS</span>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-            <p className="section-desc">
-              Everything you need to know about opening a wholesale account, cold chain logistics, and delivery terms with VS Medico.
-            </p>
-          </div>
+          <div className="grid md:grid-cols-12 gap-10 items-start">
+            {/* Left Side: Header & WhatsApp CTA */}
+            <div className="md:col-span-5 flex flex-col gap-4">
+              <div>
+                <span className="text-secondary font-bold text-xs uppercase tracking-wider block mb-1">
+                  COMMON B2B QUESTIONS
+                </span>
+                <h2 className="font-heading font-extrabold text-3xl text-primary mb-3">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Everything you need to know about opening a wholesale account, cold chain logistics, and delivery terms with VS Medico.
+                </p>
+              </div>
 
-          <div className="faq-container">
-            {FAQS.map((faq, index) => {
-              const isOpen = openFaq === index;
-              return (
-                <div key={index} className="faq-item">
-                  <button
-                    onClick={() => toggleFaq(index)}
-                    className="faq-question-btn"
-                  >
-                    <span>{faq.q}</span>
-                    {isOpen ? <ChevronUp size={22} className="text-secondary shrink-0" /> : <ChevronDown size={22} className="text-slate-400 shrink-0" />}
-                  </button>
-                  {isOpen && (
-                    <div className="faq-answer-box">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+              <div className="p-6 bg-sky-50 rounded-2xl border border-sky-100 mt-2">
+                <h4 className="font-bold text-primary text-base mb-1">Have a specific inquiry?</h4>
+                <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+                  Reach out directly to our Bhandup wholesale sales desk via WhatsApp for instant rate sheets or stock updates.
+                </p>
+                <a
+                  href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20have%20a%20question%20regarding%20wholesale%20supply.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp btn-sm inline-flex"
+                >
+                  <MessageCircle size={16} />
+                  <span>Ask Sales Desk</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Side: Accordion Questions & Answers */}
+            <div className="md:col-span-7 flex flex-col gap-3">
+              {FAQS.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div key={index} className="faq-item">
+                    <button
+                      onClick={() => toggleFaq(index)}
+                      className="faq-question-btn"
+                    >
+                      <span className="font-bold text-primary text-base text-left">{faq.q}</span>
+                      {isOpen ? <ChevronUp size={20} className="text-secondary shrink-0" /> : <ChevronDown size={20} className="text-slate-400 shrink-0" />}
+                    </button>
+                    {isOpen && (
+                      <div className="faq-answer-box">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

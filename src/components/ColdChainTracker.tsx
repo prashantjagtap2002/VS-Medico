@@ -6,7 +6,6 @@ import { Snowflake, Activity } from 'lucide-react';
 export default function ColdChainTracker() {
   const [temp, setTemp] = useState(3.4);
 
-  // Subtle fluctuation to simulate live sensor readout
   useEffect(() => {
     const interval = setInterval(() => {
       const delta = (Math.random() * 0.4 - 0.2).toFixed(1);
@@ -16,10 +15,10 @@ export default function ColdChainTracker() {
   }, []);
 
   const steps = [
-    { title: 'Order Received', desc: 'Chemist DL Verified', active: true },
-    { title: 'FDA Batch Audit', desc: 'Expiry & Quality Check', active: true },
-    { title: '2°C Cold Room Pack', desc: 'Gel Pack Insulated Box', active: true },
-    { title: 'Same-Day Dispatch', desc: 'Bhandup Fleet Transit', active: true }
+    { title: 'Order Received', desc: 'Chemist DL Verified' },
+    { title: 'FDA Batch Audit', desc: 'Expiry & Quality Check' },
+    { title: '2°C Cold Room Pack', desc: 'Gel Pack Insulated Box' },
+    { title: 'Same-Day Dispatch', desc: 'Bhandup Fleet Transit' }
   ];
 
   return (
@@ -38,24 +37,32 @@ export default function ColdChainTracker() {
           </p>
         </div>
 
-        {/* Live Telemetry Display */}
-        <div className="bg-slate-900 text-white p-4 rounded-2xl border border-slate-800 shrink-0 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
-            <Snowflake size={26} className="animate-spin" style={{ animationDuration: '10s' }} />
+        {/* Live Telemetry Display - stacked layout */}
+        <div
+          className="shrink-0"
+          style={{
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            color: '#fff',
+            padding: '1.25rem 1.5rem',
+            borderRadius: '1rem',
+            border: '1px solid #334155',
+            textAlign: 'center',
+            minWidth: '180px',
+          }}
+        >
+          <div className="text-xs text-sky-400 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5 mb-2">
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#34d399', display: 'inline-block', animation: 'pulse 2s infinite' }} />
+            LIVE COLD ROOM TEMP
           </div>
-          <div>
-            <div className="text-[11px] text-sky-400 font-bold uppercase tracking-widest flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              LIVE COLD ROOM TEMP
-            </div>
-            <div className="font-heading font-extrabold text-2xl text-white font-mono">
-              {temp}°C <span className="text-xs text-slate-400 font-sans font-normal">(Optimal 2°C to 8°C)</span>
-            </div>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <Snowflake size={22} className="text-sky-400" style={{ animation: 'spin 10s linear infinite' }} />
+            <span className="font-heading font-extrabold text-3xl text-white font-mono">{temp}°C</span>
           </div>
+          <div className="text-xs text-slate-400">Optimal: 2°C to 8°C</div>
         </div>
       </div>
 
-      {/* Process Pipeline Visualizer */}
+      {/* Process Pipeline */}
       <div>
         <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
           Cold Chain Order Fulfillment Pipeline:
@@ -65,7 +72,7 @@ export default function ColdChainTracker() {
           {steps.map((step, idx) => (
             <div key={idx} className="cold-chain-step-card">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs shrink-0">
                   {idx + 1}
                 </div>
                 <h4 className="font-bold text-primary text-sm">{step.title}</h4>

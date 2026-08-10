@@ -145,8 +145,8 @@ export default function AboutPage() {
         </section>
 
         {/* Leadership Team */}
-        <section className="mb-16">
-          <div className="max-w-3xl mb-8">
+        <section className="mb-20">
+          <div className="max-w-3xl mb-10 text-center mx-auto">
             <span className="text-secondary font-bold text-xs uppercase tracking-widest bg-sky-100 px-3 py-1 rounded-full">
               LEADERSHIP TEAM
             </span>
@@ -160,20 +160,22 @@ export default function AboutPage() {
 
           <div className="grid-4">
             {LEADERSHIP_TEAM.map((member, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
-                <div className="team-avatar">{member.initials}</div>
-                <h3 className="font-bold text-primary text-base mb-0.5">{member.name}</h3>
-                <div className="text-xs font-semibold text-secondary mb-2">{member.role}</div>
-                <p className="text-xs text-slate-500 leading-relaxed">{member.bio}</p>
+              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col justify-between h-full">
+                <div>
+                  <div className="team-avatar">{member.initials}</div>
+                  <h3 className="font-bold text-primary text-base mb-0.5">{member.name}</h3>
+                  <div className="text-xs font-semibold text-secondary mb-3">{member.role}</div>
+                  <p className="text-xs text-slate-500 leading-relaxed">{member.bio}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* CTA */}
-        <div className="text-center bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto">
+        <div className="text-center bg-white p-8 md:p-10 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto mt-12 mb-8">
           <h3 className="font-heading font-bold text-2xl text-primary mb-2">Partner with VS Medico Today</h3>
-          <p className="text-slate-600 text-sm mb-6">
+          <p className="text-slate-600 text-sm mb-6 max-w-lg mx-auto leading-relaxed">
             Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

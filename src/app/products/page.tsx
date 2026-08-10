@@ -26,7 +26,7 @@ export default function ProductsPage() {
         <ProductCatalog showTitle={false} />
       </Suspense>
 
-      <div className="container">
+      <div className="container my-12">
         <MarginCalculator />
       </div>
     </div>

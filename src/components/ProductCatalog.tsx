@@ -188,7 +188,7 @@ export default function ProductCatalog({ initialCategory = 'all', showTitle = tr
         )}
 
         {limit && (
-          <div className="text-center mt-8">
+          <div className="text-center mt-12">
             <a href="/products" className="btn btn-primary">
               <span>View Full Product Catalog</span>
             </a>
