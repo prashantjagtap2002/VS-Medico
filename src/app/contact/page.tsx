@@ -31,9 +31,9 @@ export default function ContactPage() {
         {/* Contact Details Grid */}
         <div className="grid-4 mb-16">
           {/* Office Address */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="contact-card">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-sky-100 text-secondary flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-sky-100 text-secondary flex items-center justify-center mb-4 shrink-0">
                 <MapPin size={24} />
               </div>
               <h3 className="font-bold text-primary text-lg mb-2">Registered Warehouse</h3>
@@ -45,7 +45,7 @@ export default function ContactPage() {
               href={COMPANY_INFO.address.mapDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-secondary font-bold hover:underline flex items-center gap-1"
+              className="text-xs text-secondary font-bold hover:underline flex items-center gap-1 mt-2"
             >
               <Navigation size={13} />
               <span>Open in Google Maps</span>
@@ -53,9 +53,9 @@ export default function ContactPage() {
           </div>
 
           {/* Sales Phone */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="contact-card">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4 shrink-0">
                 <Phone size={24} />
               </div>
               <h3 className="font-bold text-primary text-lg mb-2">Sales Helpline</h3>
@@ -74,9 +74,9 @@ export default function ContactPage() {
           </div>
 
           {/* Email Support */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="contact-card">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4 shrink-0">
                 <Mail size={24} />
               </div>
               <h3 className="font-bold text-primary text-lg mb-2">Email Desk</h3>
@@ -95,9 +95,9 @@ export default function ContactPage() {
           </div>
 
           {/* Working Hours & WhatsApp */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="contact-card">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4 shrink-0">
                 <Clock size={24} />
               </div>
               <h3 className="font-bold text-primary text-lg mb-2">Working Hours</h3>
@@ -112,7 +112,7 @@ export default function ContactPage() {
               href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-whatsapp text-xs py-2 mt-4 justify-center"
+              className="btn btn-whatsapp text-xs py-2.5 mt-4 justify-center"
             >
               <MessageCircle size={15} />
               <span>WhatsApp Direct</span>

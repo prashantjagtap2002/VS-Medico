@@ -1250,6 +1250,26 @@ textarea.form-control {
   gap: 0.65rem;
 }
 
+/* Contact Card Styling */
+.contact-card {
+  background: #ffffff;
+  padding: 1.75rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.contact-card:hover {
+  border-color: var(--secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
 /* Dark Form Input Helpers */
 .dark-label {
   display: block;
