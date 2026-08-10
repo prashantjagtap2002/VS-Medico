@@ -30,8 +30,6 @@ export default function BulkInquiryModal() {
     contactPerson: '',
     phone: '',
     area: '',
-    dlNumber: '',
-    gstin: '',
     notes: ''
   });
 
@@ -52,8 +50,6 @@ export default function BulkInquiryModal() {
     msg += `*Contact Person:* ${formData.contactPerson || 'Not specified'}\n`;
     msg += `*Phone:* ${formData.phone || 'Not specified'}\n`;
     msg += `*Area / Location:* ${formData.area || 'Mumbai/MMR'}\n`;
-    if (formData.dlNumber) msg += `*DL No:* ${formData.dlNumber}\n`;
-    if (formData.gstin) msg += `*GSTIN:* ${formData.gstin}\n`;
     msg += `----------------------------------------\n`;
     msg += `*REQUESTED ITEMS & QUANTITIES:*\n`;
 
@@ -103,7 +99,12 @@ export default function BulkInquiryModal() {
   };
 
   return (
-    <div className="modal-overlay">
+    <div
+      className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) setIsModalOpen(false);
+      }}
+    >
       <div className="modal-content">
         <div className="modal-header">
           <div className="flex items-center gap-3">
@@ -270,32 +271,6 @@ export default function BulkInquiryModal() {
                     name="area"
                     placeholder="e.g. Bhandup West, Thane, Powai"
                     value={formData.area}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
-              </div>
-
-              <div className="grid-2">
-                <div className="form-group mb-0">
-                  <label className="form-label">Drug License No. (Form 20B/21B)</label>
-                  <input
-                    type="text"
-                    name="dlNumber"
-                    placeholder="MH-MUM-20B-XXXXXX"
-                    value={formData.dlNumber}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
-
-                <div className="form-group mb-0">
-                  <label className="form-label">GSTIN (Optional)</label>
-                  <input
-                    type="text"
-                    name="gstin"
-                    placeholder="27XXXXX0000X1ZX"
-                    value={formData.gstin}
                     onChange={handleInputChange}
                     className="form-control"
                   />

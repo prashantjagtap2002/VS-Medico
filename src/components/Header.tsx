@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { COMPANY_INFO } from '@/data/companyData';
@@ -22,6 +22,27 @@ export default function Header() {
   const pathname = usePathname();
   const { totalItems, setIsModalOpen, setIsLicenseModalOpen } = useQuoteBasket();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const updateScrolled = () => {
+      setIsScrolled(window.scrollY > 24);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrolled);
+        ticking = true;
+      }
+    };
+
+    updateScrolled();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -35,7 +56,7 @@ export default function Header() {
   return (
     <>
       {/* Top Announcement & Verification Bar */}
-      <div className="top-bar">
+      <div className={`top-bar ${isScrolled ? 'is-collapsed' : ''}`}>
         <div className="container top-bar-content">
           <div className="top-bar-info">
             <div className="top-bar-item">
@@ -71,7 +92,7 @@ export default function Header() {
       </div>
 
       {/* Main Sticky Navbar */}
-      <header className="navbar">
+      <header className={`navbar ${isScrolled ? 'is-scrolled' : ''}`}>
         <div className="container navbar-container">
           {/* Logo */}
           <Link href="/" className="logo-group">

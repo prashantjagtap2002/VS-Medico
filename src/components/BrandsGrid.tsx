@@ -2,11 +2,25 @@
 
 import React from 'react';
 import { PHARMA_BRANDS, COMPANY_INFO } from '@/data/companyData';
-import { Building2, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 interface BrandsGridProps {
   limit?: number;
   showHeader?: boolean;
+}
+
+const BADGE_STYLES = [
+  { bg: 'bg-sky-50', text: 'text-secondary', hover: 'group-hover:bg-secondary' },
+  { bg: 'bg-emerald-50', text: 'text-emerald-600', hover: 'group-hover:bg-emerald-600' },
+  { bg: 'bg-amber-50', text: 'text-amber-600', hover: 'group-hover:bg-amber-600' },
+  { bg: 'bg-purple-50', text: 'text-purple-600', hover: 'group-hover:bg-purple-600' },
+  { bg: 'bg-rose-50', text: 'text-rose-600', hover: 'group-hover:bg-rose-600' },
+];
+
+function getInitials(name: string) {
+  const parts = name.replace(/[^a-zA-Z\s]/g, '').trim().split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
 }
 
 export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps) {
@@ -26,19 +40,21 @@ export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps
         )}
 
         <div className="brands-grid">
-          {brands.map((brand, idx) => (
-            <div key={idx} className="brand-card group">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 text-secondary group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-3 transition-colors">
-                <Building2 size={24} />
+          {brands.map((brand, idx) => {
+            const badge = BADGE_STYLES[idx % BADGE_STYLES.length];
+            return (
+              <div key={idx} className="brand-card group">
+                <div className={`w-14 h-14 rounded-2xl ${badge.bg} ${badge.text} ${badge.hover} group-hover:text-white flex items-center justify-center mb-4 font-heading font-extrabold text-lg transition-colors`}>
+                  {getInitials(brand.name)}
+                </div>
+                <div className="brand-logo-text">{brand.logoText}</div>
+                <div className="text-xs text-slate-500 mb-3">{brand.category}</div>
+                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                  {brand.highlight}
+                </span>
               </div>
-              <div className="brand-logo-text">{brand.logoText}</div>
-              <div className="brand-category mb-2 font-semibold text-slate-700">{brand.name}</div>
-              <div className="text-xs text-slate-500 mb-3">{brand.category}</div>
-              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
-                {brand.highlight}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-10 p-8 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">

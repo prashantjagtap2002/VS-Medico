@@ -17,7 +17,12 @@ export default function LicenseBadgeModal() {
   if (!isLicenseModalOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div
+      className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) setIsLicenseModalOpen(false);
+      }}
+    >
       <div className="modal-content">
         <div className="modal-header">
           <div className="flex items-center gap-3">
