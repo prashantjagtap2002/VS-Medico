@@ -25,13 +25,22 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-md" style={{ maxWidth: '900px', margin: '0 auto' }}>
-      <div className="mb-8" style={{ textAlign: 'center' }}>
-        <h3 className="font-extrabold text-primary text-2xl font-heading mb-2">
+    <div
+      style={{
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: '1.5rem',
+        padding: '2.5rem',
+        maxWidth: '880px',
+        margin: '0 auto',
+      }}
+    >
+      <div style={{ marginBottom: '1.5rem' }}>
+        <h3 className="font-extrabold text-primary text-2xl font-heading mb-1">
           Send Us a B2B Inquiry
         </h3>
-        <p className="text-slate-500 text-sm" style={{ maxWidth: '550px', margin: '0 auto' }}>
-          Whether you need a new chemist account registration, hospital rate contract, or stock availability check, our sales team is here to assist.
+        <p className="text-slate-500 text-sm">
+          Fill out the form below and our wholesale sales team will get back to you within 24 hours.
         </p>
       </div>
 
@@ -45,14 +54,7 @@ export default function ContactForm() {
           <button
             onClick={() => {
               setSubmitted(false);
-              setFormState({
-                fullName: '',
-                storeName: '',
-                email: '',
-                phone: '',
-                inquiryType: 'Wholesale Pricing',
-                message: ''
-              });
+              setFormState({ fullName: '', storeName: '', email: '', phone: '', inquiryType: 'Wholesale Pricing', message: '' });
             }}
             className="btn btn-primary btn-sm"
           >
@@ -60,64 +62,32 @@ export default function ContactForm() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <div className="grid-2">
-            <div className="form-group mb-0">
+        <form onSubmit={handleSubmit}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
               <label className="form-label">Full Name *</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Rahul Mehta"
-                value={formState.fullName}
-                onChange={(e) => setFormState({ ...formState, fullName: e.target.value })}
-                className="form-control"
-              />
+              <input type="text" required placeholder="e.g. Rahul Mehta" value={formState.fullName} onChange={(e) => setFormState({ ...formState, fullName: e.target.value })} className="form-control" style={{ background: '#fff' }} />
             </div>
-
-            <div className="form-group mb-0">
+            <div>
               <label className="form-label">Pharmacy / Hospital Name</label>
-              <input
-                type="text"
-                placeholder="e.g. Sanjeevani Medical Stores"
-                value={formState.storeName}
-                onChange={(e) => setFormState({ ...formState, storeName: e.target.value })}
-                className="form-control"
-              />
+              <input type="text" placeholder="e.g. Sanjeevani Medical Stores" value={formState.storeName} onChange={(e) => setFormState({ ...formState, storeName: e.target.value })} className="form-control" style={{ background: '#fff' }} />
             </div>
           </div>
 
-          <div className="grid-2">
-            <div className="form-group mb-0">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
               <label className="form-label">Phone Number *</label>
-              <input
-                type="tel"
-                required
-                placeholder="+91 98200 XXXXX"
-                value={formState.phone}
-                onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                className="form-control"
-              />
+              <input type="tel" required placeholder="+91 98200 XXXXX" value={formState.phone} onChange={(e) => setFormState({ ...formState, phone: e.target.value })} className="form-control" style={{ background: '#fff' }} />
             </div>
-
-            <div className="form-group mb-0">
+            <div>
               <label className="form-label">Email Address</label>
-              <input
-                type="email"
-                placeholder="chemist@domain.com"
-                value={formState.email}
-                onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                className="form-control"
-              />
+              <input type="email" placeholder="chemist@domain.com" value={formState.email} onChange={(e) => setFormState({ ...formState, email: e.target.value })} className="form-control" style={{ background: '#fff' }} />
             </div>
           </div>
 
-          <div className="form-group mb-0">
+          <div style={{ marginBottom: '1rem' }}>
             <label className="form-label">Inquiry Subject / Category</label>
-            <select
-              value={formState.inquiryType}
-              onChange={(e) => setFormState({ ...formState, inquiryType: e.target.value })}
-              className="form-control"
-            >
+            <select value={formState.inquiryType} onChange={(e) => setFormState({ ...formState, inquiryType: e.target.value })} className="form-control" style={{ background: '#fff' }}>
               <option value="Wholesale Pricing">Request Wholesale Rates / PTR List</option>
               <option value="New Chemist Registration">New Chemist Account Opening</option>
               <option value="Hospital Bulk Contract">Hospital & ICU Institutional Order</option>
@@ -126,18 +96,12 @@ export default function ContactForm() {
             </select>
           </div>
 
-          <div className="form-group mb-0">
+          <div style={{ marginBottom: '1.5rem' }}>
             <label className="form-label">Your Message or Required SKUs</label>
-            <textarea
-              rows={4}
-              placeholder="List specific brands or products required, quantities, or delivery location details..."
-              value={formState.message}
-              onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-              className="form-control"
-            />
+            <textarea rows={3} placeholder="List specific brands or products required, quantities, or delivery location details..." value={formState.message} onChange={(e) => setFormState({ ...formState, message: e.target.value })} className="form-control" style={{ background: '#fff' }} />
           </div>
 
-          <button type="submit" className="btn btn-primary py-3.5 justify-center text-base mt-1" style={{ maxWidth: '320px', margin: '0 auto', width: '100%' }}>
+          <button type="submit" className="w-full btn btn-primary py-3 justify-center text-base">
             <Send size={18} />
             <span>Submit B2B Inquiry</span>
           </button>
