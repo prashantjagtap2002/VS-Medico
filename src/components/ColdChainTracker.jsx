@@ -61,9 +61,9 @@ export default function ColdChainTracker() {
           Cold Chain Order Fulfillment Pipeline:
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
           {steps.map((step, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 relative">
+            <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 relative flex flex-col justify-center h-full">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
                   {idx + 1}

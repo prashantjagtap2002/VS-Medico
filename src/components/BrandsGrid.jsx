@@ -16,9 +16,9 @@ export default function BrandsGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-stretch">
           {PHARMA_BRANDS.map((brand, idx) => (
-            <div key={idx} className="brand-card group">
+            <div key={idx} className="brand-card group h-full">
               <div className="w-12 h-12 rounded-xl bg-sky-50 text-secondary group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-3 transition-colors">
                 <Building2 size={24} />
               </div>

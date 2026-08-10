@@ -31,11 +31,11 @@ export default function TrustBar() {
   return (
     <section className="py-8 bg-white border-y border-slate-200">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {highlights.map((item, index) => (
             <div 
               key={index}
-              className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-sky-200 transition-all"
+              className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-sky-200 transition-all h-full"
             >
               <div className="w-12 h-12 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
                 {item.icon}
