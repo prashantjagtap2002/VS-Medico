@@ -23,7 +23,7 @@ export default function ColdChainTracker() {
   ];
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+    <div className="bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-md my-16 md:my-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider mb-2">

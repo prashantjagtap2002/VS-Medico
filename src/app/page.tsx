@@ -38,7 +38,7 @@ export default function Home() {
       <TrustBar />
 
       {/* Why Choose VS Medico Section */}
-      <section className="py-16 bg-white">
+      <section className="py-24 bg-white">
         <div className="container">
           <div className="section-header">
             <span className="section-subtitle">THE VS MEDICO ADVANTAGE</span>
@@ -48,7 +48,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {COMPANY_INFO.valuePropositions.map((vp, idx) => (
               <div key={idx} className="feature-card">
                 <div className="feature-icon">
@@ -62,26 +62,14 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Express Fast Reorder Bar */}
-      <section className="py-16 bg-slate-50 border-y border-slate-200">
-        <div className="container">
+          {/* Express Fast Reorder Bar */}
           <ExpressReorderBar />
-        </div>
-      </section>
 
-      {/* Interactive Margin & PTR Profit Calculator */}
-      <section className="py-16 bg-white">
-        <div className="container">
+          {/* Interactive Margin & PTR Profit Calculator */}
           <MarginCalculator />
-        </div>
-      </section>
 
-      {/* WHO-GDP Cold Storage Telemetry Dashboard */}
-      <section className="py-16 bg-slate-50 border-y border-slate-200">
-        <div className="container">
+          {/* WHO-GDP Cold Storage Telemetry Dashboard */}
           <ColdChainTracker />
         </div>
       </section>
@@ -93,7 +81,7 @@ export default function Home() {
       <BrandsGrid />
 
       {/* Frequently Asked Questions (FAQs) */}
-      <section className="py-16 bg-white border-t border-slate-200">
+      <section className="py-24 bg-white border-t border-slate-200">
         <div className="container max-w-4xl">
           <div className="section-header">
             <span className="section-subtitle">COMMON B2B QUESTIONS</span>
@@ -103,23 +91,23 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             {FAQS.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
                 <div
                   key={index}
-                  className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 transition-all"
+                  className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50/80 transition-all shadow-2xs"
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-5 text-left font-bold text-primary text-base flex justify-between items-center hover:bg-slate-100 transition-colors"
+                    className="w-full p-6 text-left font-bold text-primary text-lg flex justify-between items-center hover:bg-slate-100/80 transition-colors"
                   >
                     <span>{faq.q}</span>
-                    {isOpen ? <ChevronUp size={20} className="text-secondary" /> : <ChevronDown size={20} className="text-slate-400" />}
+                    {isOpen ? <ChevronUp size={22} className="text-secondary shrink-0" /> : <ChevronDown size={22} className="text-slate-400 shrink-0" />}
                   </button>
                   {isOpen && (
-                    <div className="p-5 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+                    <div className="p-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
                       {faq.a}
                     </div>
                   )}
@@ -131,22 +119,22 @@ export default function Home() {
       </section>
 
       {/* Quick B2B Banner CTA */}
-      <section className="py-14 bg-gradient-to-r from-slate-900 via-primary to-slate-900 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-slate-900 via-primary to-slate-900 text-white relative overflow-hidden">
         <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 text-center lg:text-left">
             <div>
-              <span className="inline-block text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800 mb-3">
+              <span className="inline-block text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950/80 px-4 py-1.5 rounded-full border border-sky-800 mb-4">
                 B2B REGISTERED CHEMISTS & HOSPITALS ONLY
               </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold font-heading mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold font-heading mb-4">
                 Ready to Order Wholesale Medicines?
               </h2>
-              <p className="text-slate-300 text-base max-w-xl">
+              <p className="text-slate-300 text-lg max-w-2xl leading-relaxed">
                 Get instant net PTR rates, stock availability, and same-day delivery confirmation from our Bhandup sales desk.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="btn btn-secondary btn-lg"

@@ -46,7 +46,7 @@ export default function MarginCalculator() {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+    <div className="bg-gradient-to-br from-slate-900 via-primary to-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-800 my-16 md:my-20">
       <div className="max-w-3xl mb-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-secondary text-xs font-bold uppercase tracking-wider mb-3">
           <Sparkles size={14} />

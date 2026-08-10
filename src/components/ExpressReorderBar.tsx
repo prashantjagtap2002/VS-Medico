@@ -35,7 +35,7 @@ export default function ExpressReorderBar() {
   const fastMovingProducts = PRODUCTS_LIST.slice(0, 4);
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+    <div className="bg-gradient-to-r from-sky-900 via-primary to-slate-900 text-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-800 my-16 md:my-20">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-200">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold uppercase tracking-wider mb-2">
