@@ -19,6 +19,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import CompetitiveAdvantage from '@/components/CompetitiveAdvantage';
+
 export default function Home() {
   const { setIsModalOpen } = useQuoteBasket();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -50,10 +52,10 @@ export default function Home() {
             {COMPANY_INFO.valuePropositions.map((vp, idx) => (
               <div key={idx} className="feature-card">
                 <div className="feature-icon">
-                  {idx === 0 && <ShieldCheck size={28} />}
-                  {idx === 1 && <Snowflake size={28} />}
-                  {idx === 2 && <Truck size={28} />}
-                  {idx === 3 && <Building2 size={28} />}
+                  {idx === 0 && <Building2 size={28} />}
+                  {idx === 1 && <ShieldCheck size={28} />}
+                  {idx === 2 && <Snowflake size={28} />}
+                  {idx === 3 && <Truck size={28} />}
                 </div>
                 <h3>{vp.title}</h3>
                 <p>{vp.desc}</p>
@@ -65,6 +67,9 @@ export default function Home() {
           <ColdChainTracker />
         </div>
       </section>
+
+      {/* Competitive Distributor Edge vs Manufacturers & Traders */}
+      <CompetitiveAdvantage />
 
       {/* Featured Products Showcase */}
       <ProductCatalog showTitle={true} hideControls limit={6} />

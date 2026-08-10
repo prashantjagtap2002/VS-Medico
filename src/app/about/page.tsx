@@ -50,10 +50,10 @@ export default function AboutPage() {
               Founded over 25 years ago in Mumbai, <strong>VS Medico LLP</strong> has grown from a local stockist into a major pharmaceutical distribution entity supplying over 1,200+ licensed retail pharmacies, multispecialty hospitals, nursing homes, and institutional buyers across the Mumbai Metropolitan Region (MMR).
             </p>
             <p>
-              Operating from our central facility at <strong>Sharad Industrial Estate, Bhandup West</strong>, we maintain a robust stock inventory of over 5,000+ active pharmaceutical SKUs. Our portfolio encompasses branded formulations, quality trade generics, critical care injectables, surgical disposables, and cold-chain biologics.
+              Unlike single-brand manufacturers who only supply their own narrow catalog, <strong>VS Medico LLP</strong> acts as a single-window super-stockist. Retail chemists and hospitals can order products across 50+ leading MNCs—including Sun Pharma, Cipla, Alkem, Lupin, Zydus, Torrent, Abbott, Mankind, Sanofi, and GSK—all delivered together on a single consolidated invoice.
             </p>
             <p>
-              We partner directly with leading global and Indian pharmaceutical companies—including Sun Pharma, Cipla, Alkem, Lupin, Zydus, Torrent, Abbott, and Mankind—ensuring 100% genuine products directly traceable to the manufacturer.
+              Operating from our central facility at <strong>Sharad Industrial Estate, Bhandup West</strong>, we maintain a robust stock inventory of over 5,000+ active pharmaceutical SKUs. Our hyper-local logistics fleet ensures same-day express runs across Bhandup, Mulund, Thane, Powai, Ghatkopar, and the wider Mumbai Metropolitan Region (MMR).
             </p>
           </div>
 

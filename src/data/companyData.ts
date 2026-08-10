@@ -50,6 +50,13 @@ export interface ValueProposition {
   desc: string;
 }
 
+export interface CompetitiveEdgeItem {
+  feature: string;
+  vsMedico: string;
+  singleManufacturer: string;
+  unorganizedTrader: string;
+}
+
 export interface CompanyInfo {
   name: string;
   legalName: string;
@@ -114,7 +121,7 @@ export interface TeamMember {
 export const COMPANY_INFO: CompanyInfo = {
   name: "VS Medico",
   legalName: "VS Medico LLP",
-  tagline: "Mumbai's Trusted Wholesale Stockist & Pharmaceutical Distributor",
+  tagline: "Mumbai's Single-Window Wholesale Super-Stockist & Pharma Distributor",
   establishedYear: 1998,
   yearsOfExcellence: "25+",
   
@@ -152,9 +159,9 @@ export const COMPANY_INFO: CompanyInfo = {
   },
 
   businessProfile: {
-    role: "Authorized Stockist, Wholesale Distributor & C&F Agent",
-    primaryCustomers: "Retail Chemists, Chain Pharmacies, Multispecialty Hospitals, Nursing Homes, Government Institutions, & Sub-Stockists",
-    serviceArea: "Mumbai Metropolitan Region (MMR), Thane, Navi Mumbai, Raigad & Extended Maharashtra",
+    role: "Authorized Super Stockist & Wholesale Distributor",
+    primaryCustomers: "Retail Chemists, Chain Pharmacies, Multispecialty Hospitals, Nursing Homes, & Government Procurement",
+    serviceArea: "Mumbai Metropolitan Region (MMR), Bhandup, Mulund, Thane, Powai, & Extended Maharashtra",
     dailyCapacity: "1,500+ Orders Dispatched Daily",
     skuCount: "5,000+ Active Pharma SKUs",
     activeClients: "1,200+ Registered Retail Chemists & Hospitals",
@@ -163,23 +170,56 @@ export const COMPANY_INFO: CompanyInfo = {
 
   valuePropositions: [
     {
-      title: "100% Genuine Sourcing",
-      desc: "Direct supply agreements with top tier pharmaceutical manufacturers ensuring zero counterfeit risk and batch traceability."
+      title: "50+ Brands on Single Bill",
+      desc: "One order, one invoice, and single-source delivery for Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott, Mankind, and 40+ leading MNCs."
     },
     {
-      title: "WHO-GDP Cold Chain",
-      desc: "Dedicated temperature-controlled cold room (2°C to 8°C) and calibrated transit boxes for insulins, vaccines, and biologics."
+      title: "100% Factory Direct Supply",
+      desc: "Direct authorized stockist partnerships with manufacturers ensuring batch traceability, zero counterfeit risk, and full FDA compliance."
     },
     {
-      title: "Same-Day MMR Delivery",
-      desc: "Express dispatch network serving Bhandup, Mulund, Thane, Powai, Ghatkopar, Kurla, Dadar, South Mumbai, and Navi Mumbai."
+      title: "WHO-GDP Cold Chain Standard",
+      desc: "24/7 digital temperature-monitored cold rooms (2°C to 8°C) and calibrated insulated boxes for insulins, vaccines, & biologics."
     },
     {
-      title: "Structured B2B Credit & Rates",
-      desc: "Competitive wholesale margins, transparent PTR/MRP billing, and flexible credit terms for verified registered chemists."
+      title: "Same-Day MMR Express Run",
+      desc: "Hyper-local Bhandup West logistics hub delivering same-day across Bhandup, Mulund, Thane, Powai, Ghatkopar, Dadar, and MMR."
     }
   ]
 };
+
+export const COMPETITIVE_EDGE: CompetitiveEdgeItem[] = [
+  {
+    feature: "Brand Sourcing Scope",
+    vsMedico: "50+ Top Pharma Brands on 1 Consolidated Invoice",
+    singleManufacturer: "1 Single Brand Catalog Only",
+    unorganizedTrader: "Fragmented & Unverified Stock"
+  },
+  {
+    feature: "Delivery Speed in Mumbai MMR",
+    vsMedico: "Same-Day Dispatch from Bhandup Hub (2-4 hrs)",
+    singleManufacturer: "Slow Central Warehouse Dispatch (2-4 Days)",
+    unorganizedTrader: "Uncertain Timelines & Stock Shortages"
+  },
+  {
+    feature: "Cold Chain Integrity (2°C - 8°C)",
+    vsMedico: "WHO-GDP Certified Cold Rooms + Gel-Pack Box",
+    singleManufacturer: "Varies by Carrier Line",
+    unorganizedTrader: "High Risk of Temperature Abuse"
+  },
+  {
+    feature: "Chemist Credit & Billing",
+    vsMedico: "Transparent Net PTR Rates + Structured Credit",
+    singleManufacturer: "Strict Advance Payment Terms",
+    unorganizedTrader: "Hidden Charges & Non-Compliant Bills"
+  },
+  {
+    feature: "FDA & Batch Compliance",
+    vsMedico: "Form 20B/21B Verified + Full Invoice Audit Trail",
+    singleManufacturer: "Verified (Brand Specific)",
+    unorganizedTrader: "Unverified Secondary Sources"
+  }
+];
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   { id: "all", name: "All Categories", icon: "PackageCheck" },
@@ -434,6 +474,10 @@ export const FAQS: FAQItem[] = [
   {
     q: "Who can purchase from VS Medico?",
     a: "VS Medico is a strict B2B pharmaceutical stockist and wholesaler. We sell exclusively to licensed retail chemist pharmacies, hospital procurement departments, nursing homes, clinics, and authorized sub-stockists holding valid Drug License Form 20B/21B and GSTIN."
+  },
+  {
+    q: "How is VS Medico different from buying directly from a single manufacturer?",
+    a: "Unlike single-brand manufacturers who only supply their own products and require separate vendor accounts, VS Medico acts as a single-window super-stockist. We supply 50+ leading brands (Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott, Mankind, Sanofi, GSK, Macleods) on 1 consolidated bill with same-day Mumbai MMR delivery."
   },
   {
     q: "How do I request wholesale prices or PTR/MRP rate lists?",

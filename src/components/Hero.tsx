@@ -28,11 +28,11 @@ export default function Hero() {
             </div>
 
             <h1 className="hero-title">
-              Mumbai's Trusted <span>Pharma Wholesale</span> & Stockist Partner
+              Mumbai's Single-Window <span>Pharma Wholesale</span> & Stockist Hub
             </h1>
 
             <p className="hero-lead">
-              Authorized distributor supplying 100% genuine branded formulations, trade generics, critical care injectables, and cold-chain vaccines to retail chemists, hospitals, and nursing homes across Mumbai, Thane & Navi Mumbai.
+              Authorized super stockist based at Sharad Industrial Estate, Bhandup West. Supplying 100% factory-direct branded formulations, trade generics, critical care injectables, & WHO-GDP cold chain vaccines to 1,200+ retail chemists and hospitals across Mumbai MMR.
             </p>
 
             <div className="hero-ctas">
