@@ -1,4 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #0f3b66;
+  --color-primary-dark: #0a2540;
+  --color-primary-light: #1e5288;
+
+  --color-secondary: #0284c7;
+  --color-secondary-dark: #0369a1;
+  --color-secondary-light: #e0f2fe;
+
+  --color-accent-green: #059669;
+  --color-accent-green-dark: #047857;
+  --color-accent-green-light: #d1fae5;
+
+  --color-accent-amber: #d97706;
+  --color-accent-amber-light: #fef3c7;
+
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+}
 
 :root {
   --primary: #0f3b66;
@@ -68,6 +88,8 @@ button {
   border: none;
   background: none;
 }
+
+@layer components {
 
 /* Layout Utilities */
 .container {
@@ -981,6 +1003,16 @@ textarea.form-control {
     font-size: 2.35rem;
   }
 
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    white-space: normal;
+  }
+
   .grid-4, .grid-3, .grid-2 {
     grid-template-columns: 1fr;
   }
@@ -1002,3 +1034,5 @@ textarea.form-control {
     padding-bottom: 4.5rem;
   }
 }
+
+} /* end @layer components */
