@@ -25,18 +25,18 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
-      <div className="mb-6">
-        <h3 className="font-extrabold text-primary text-2xl font-heading mb-1">
+    <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-md" style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div className="mb-8" style={{ textAlign: 'center' }}>
+        <h3 className="font-extrabold text-primary text-2xl font-heading mb-2">
           Send Us a B2B Inquiry
         </h3>
-        <p className="text-slate-500 text-sm">
+        <p className="text-slate-500 text-sm" style={{ maxWidth: '550px', margin: '0 auto' }}>
           Whether you need a new chemist account registration, hospital rate contract, or stock availability check, our sales team is here to assist.
         </p>
       </div>
 
       {submitted ? (
-        <div className="text-center py-10 bg-emerald-50 rounded-2xl border border-emerald-200">
+        <div className="text-center py-12 bg-emerald-50 rounded-2xl border border-emerald-200">
           <CheckCircle2 size={48} className="text-emerald-600 mx-auto mb-3" />
           <h4 className="font-extrabold text-slate-800 text-xl font-heading mb-2">Message Received!</h4>
           <p className="text-sm text-slate-600 max-w-md mx-auto mb-4 leading-relaxed">
@@ -60,7 +60,7 @@ export default function ContactForm() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="grid-2">
             <div className="form-group mb-0">
               <label className="form-label">Full Name *</label>
@@ -137,7 +137,7 @@ export default function ContactForm() {
             />
           </div>
 
-          <button type="submit" className="w-full btn btn-primary py-3.5 justify-center text-base mt-2">
+          <button type="submit" className="btn btn-primary py-3.5 justify-center text-base mt-1" style={{ maxWidth: '320px', margin: '0 auto', width: '100%' }}>
             <Send size={18} />
             <span>Submit B2B Inquiry</span>
           </button>
