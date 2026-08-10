@@ -15,10 +15,10 @@ import {
 
 export default function ContactPage() {
   return (
-    <div className="py-16">
+    <div className="py-12 md:py-16">
       <div className="container">
         {/* Header */}
-        <div style={{ maxWidth: '680px', marginBottom: '3rem' }}>
+        <div style={{ maxWidth: '680px', marginBottom: '2.5rem' }}>
           <span className="text-secondary font-bold text-sm tracking-wider uppercase">GET IN TOUCH</span>
           <h1 className="font-heading font-extrabold text-4xl text-primary mt-2 mb-3">
             Contact VS Medico Sales & Support Desk
@@ -29,7 +29,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Info Cards - Horizontal row with icon left, text right */}
-        <div className="grid-2" style={{ marginBottom: '3.5rem' }}>
+        <div className="grid-2" style={{ marginBottom: '2.5rem' }}>
           {/* Office Address */}
           <div className="contact-card">
             <div className="flex items-start gap-4">
@@ -90,7 +90,7 @@ export default function ContactPage() {
         </div>
 
         {/* Form + Map side by side */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2rem', alignItems: 'start', marginBottom: '4rem' }}>
+        <div className="contact-layout">
           <ContactForm />
           <GoogleMapEmbed />
         </div>

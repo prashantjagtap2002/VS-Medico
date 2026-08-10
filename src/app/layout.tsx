@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import MobileNav from '@/components/MobileNav';
 import BulkInquiryModal from '@/components/BulkInquiryModal';
 import LicenseBadgeModal from '@/components/LicenseBadgeModal';
+import WhatsAppWidget from '@/components/WhatsAppWidget';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <MobileNav />
             <BulkInquiryModal />
             <LicenseBadgeModal />
+            <WhatsAppWidget />
           </div>
         </QuoteBasketProvider>
       </body>

@@ -30,9 +30,8 @@ export default function ContactForm() {
         background: '#f8fafc',
         border: '1px solid #e2e8f0',
         borderRadius: '1.5rem',
-        padding: '2.5rem',
-        maxWidth: '880px',
-        margin: '0 auto',
+        padding: '2rem',
+        width: '100%',
       }}
     >
       <div style={{ marginBottom: '1.5rem' }}>
@@ -63,7 +62,7 @@ export default function ContactForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+          <div className="form-row-2">
             <div>
               <label className="form-label">Full Name *</label>
               <input type="text" required placeholder="e.g. Rahul Mehta" value={formState.fullName} onChange={(e) => setFormState({ ...formState, fullName: e.target.value })} className="form-control" style={{ background: '#fff' }} />
@@ -74,7 +73,7 @@ export default function ContactForm() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+          <div className="form-row-2">
             <div>
               <label className="form-label">Phone Number *</label>
               <input type="tel" required placeholder="+91 98200 XXXXX" value={formState.phone} onChange={(e) => setFormState({ ...formState, phone: e.target.value })} className="form-control" style={{ background: '#fff' }} />
