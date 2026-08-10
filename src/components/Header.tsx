@@ -78,7 +78,7 @@ export default function Header() {
             <div className="logo-icon">
               <Building2 size={24} />
             </div>
-            <div>
+            <div className="logo-text-wrapper">
               <div className="logo-title">{COMPANY_INFO.name}</div>
               <div className="logo-subtitle">PHARMA WHOLESALE LLP</div>
             </div>
