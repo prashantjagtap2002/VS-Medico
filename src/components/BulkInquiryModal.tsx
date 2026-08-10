@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { COMPANY_INFO } from '@/data/companyData';
 import { useQuoteBasket } from './QuoteBasketContext';
 import { 
@@ -11,7 +11,6 @@ import {
   MessageCircle, 
   Send, 
   CheckCircle2, 
-  Building2, 
   ShoppingBag,
   AlertCircle
 } from 'lucide-react';
@@ -41,7 +40,7 @@ export default function BulkInquiryModal() {
 
   if (!isModalOpen) return null;
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -75,7 +74,7 @@ export default function BulkInquiryModal() {
     return encodeURIComponent(msg);
   };
 
-  const handleWhatsAppSend = (e) => {
+  const handleWhatsAppSend = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!formData.storeName || !formData.phone) {
       alert("Please enter your Store Name and Phone Number to submit the inquiry.");
@@ -86,7 +85,7 @@ export default function BulkInquiryModal() {
     window.open(url, '_blank');
   };
 
-  const handleSubmitOnline = (e) => {
+  const handleSubmitOnline = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.storeName || !formData.phone) {
       alert("Please enter your Store Name and Phone Number.");

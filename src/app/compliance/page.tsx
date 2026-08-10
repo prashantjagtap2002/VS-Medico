@@ -7,12 +7,7 @@ import {
   ShieldCheck, 
   FileCheck, 
   CheckCircle2, 
-  Snowflake, 
-  Award, 
-  Building2, 
-  Download,
-  AlertTriangle,
-  Lock
+  Snowflake
 } from 'lucide-react';
 
 export default function CompliancePage() {

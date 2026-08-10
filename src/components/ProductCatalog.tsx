@@ -1,21 +1,23 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { PRODUCTS_LIST, PRODUCT_CATEGORIES } from '@/data/companyData';
+import { PRODUCTS_LIST, PRODUCT_CATEGORIES, ProductItem } from '@/data/companyData';
 import { useQuoteBasket } from './QuoteBasketContext';
 import { 
   Search, 
-  Filter, 
   Plus, 
   Check, 
   Snowflake, 
-  Pill, 
-  ShieldAlert, 
   Info,
   PackageCheck
 } from 'lucide-react';
 
-export default function ProductCatalog({ initialCategory = 'all', showTitle = true }) {
+interface ProductCatalogProps {
+  initialCategory?: string;
+  showTitle?: boolean;
+}
+
+export default function ProductCatalog({ initialCategory = 'all', showTitle = true }: ProductCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const { addToBasket, basket } = useQuoteBasket();
@@ -33,7 +35,7 @@ export default function ProductCatalog({ initialCategory = 'all', showTitle = tr
     });
   }, [selectedCategory, searchQuery]);
 
-  const isInBasket = (id) => basket.some((item) => item.id === id);
+  const isInBasket = (id: string) => basket.some((item) => item.id === id);
 
   return (
     <section className="py-12">

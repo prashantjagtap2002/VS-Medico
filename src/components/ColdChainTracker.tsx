@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Snowflake, ShieldCheck, Activity, Truck, CheckCircle2, Clock } from 'lucide-react';
+import { Snowflake, Activity } from 'lucide-react';
 
 export default function ColdChainTracker() {
   const [temp, setTemp] = useState(3.4);
@@ -10,7 +10,7 @@ export default function ColdChainTracker() {
   useEffect(() => {
     const interval = setInterval(() => {
       const delta = (Math.random() * 0.4 - 0.2).toFixed(1);
-      setTemp((prev) => parseFloat(Math.min(4.5, Math.max(2.2, parseFloat(prev) + parseFloat(delta))).toFixed(1)));
+      setTemp((prev) => parseFloat(Math.min(4.5, Math.max(2.2, parseFloat(prev.toString()) + parseFloat(delta))).toFixed(1)));
     }, 4000);
     return () => clearInterval(interval);
   }, []);

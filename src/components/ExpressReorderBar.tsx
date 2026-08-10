@@ -2,13 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useQuoteBasket } from './QuoteBasketContext';
-import { PRODUCTS_LIST } from '@/data/companyData';
-import { Clock, Zap, ShoppingBag, Plus, CheckCircle2 } from 'lucide-react';
+import { PRODUCTS_LIST, ProductItem } from '@/data/companyData';
+import { Clock, Zap, Plus, CheckCircle2 } from 'lucide-react';
 
 export default function ExpressReorderBar() {
   const { addToBasket } = useQuoteBasket();
-  const [quickSearch, setQuickSearch] = useState('');
-  const [addedItems, setAddedItems] = useState({});
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 
   // Countdown timer for 2:00 PM cutoff
   const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 45, seconds: 12 });
@@ -25,7 +24,7 @@ export default function ExpressReorderBar() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleQuickAdd = (product) => {
+  const handleQuickAdd = (product: ProductItem) => {
     addToBasket(product);
     setAddedItems((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {

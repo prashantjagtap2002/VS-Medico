@@ -3,7 +3,7 @@
 import React from 'react';
 import BrandsGrid from '@/components/BrandsGrid';
 import { COMPANY_INFO } from '@/data/companyData';
-import { MessageCircle, Building2, CheckCircle2 } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 export default function BrandsPage() {
   return (

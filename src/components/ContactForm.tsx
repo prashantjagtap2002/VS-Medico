@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
-import { COMPANY_INFO } from '@/data/companyData';
-import { Send, CheckCircle2, Building2, Phone, Mail, Clock, MapPin } from 'lucide-react';
+import React, { useState, FormEvent } from 'react';
+import { Send, CheckCircle2 } from 'lucide-react';
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
@@ -16,7 +15,7 @@ export default function ContactForm() {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formState.fullName || !formState.phone) {
       alert("Please fill in your name and contact phone number.");

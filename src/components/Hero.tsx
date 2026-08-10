@@ -11,7 +11,6 @@ import {
   MessageCircle, 
   FileText, 
   ShieldCheck, 
-  Package, 
   Truck,
   Sparkles
 } from 'lucide-react';

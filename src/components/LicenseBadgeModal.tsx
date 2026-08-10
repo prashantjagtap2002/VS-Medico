@@ -6,11 +6,8 @@ import { useQuoteBasket } from './QuoteBasketContext';
 import { 
   X, 
   ShieldCheck, 
-  FileCheck, 
   CheckCircle2, 
-  Building2, 
-  Award, 
-  Snowflake,
+  Snowflake, 
   Download
 } from 'lucide-react';
 

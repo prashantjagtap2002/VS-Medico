@@ -1,20 +1,15 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
 import { COMPANY_INFO, TRUST_STATS } from '@/data/companyData';
 import { useQuoteBasket } from '@/components/QuoteBasketContext';
 import { 
-  Building2, 
   ShieldCheck, 
   Snowflake, 
   Truck, 
-  Award, 
-  Users, 
   CheckCircle2,
   FileText,
-  MessageCircle,
-  MapPin
+  MessageCircle
 } from 'lucide-react';
 
 export default function AboutPage() {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PHARMA_BRANDS, COMPANY_INFO } from '@/data/companyData';
-import { Building2, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { Building2, MessageCircle } from 'lucide-react';
 
 export default function BrandsGrid() {
   return (

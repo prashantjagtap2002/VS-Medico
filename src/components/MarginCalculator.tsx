@@ -1,36 +1,44 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Calculator, Percent, TrendingUp, IndianRupee, Sparkles, HelpCircle } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
+
+interface Preset {
+  name: string;
+  mrp: number;
+  ptr: number;
+  scheme: number;
+  gst: number;
+}
 
 export default function MarginCalculator() {
-  const [mrp, setMrp] = useState(223.40);
-  const [ptr, setPtr] = useState(159.50);
-  const [schemeDiscount, setSchemeDiscount] = useState(5); // 5% scheme discount
-  const [gstRate, setGstRate] = useState(12); // 12% GST
-  const [quantity, setQuantity] = useState(10); // 10 strips
+  const [mrp, setMrp] = useState<number | string>(223.40);
+  const [ptr, setPtr] = useState<number | string>(159.50);
+  const [schemeDiscount, setSchemeDiscount] = useState<number | string>(5);
+  const [gstRate, setGstRate] = useState<number | string>(12);
+  const [quantity, setQuantity] = useState<number | string>(10);
 
-  // Calculations
-  const grossPtr = parseFloat(ptr) || 0;
-  const grossMrp = parseFloat(mrp) || 0;
-  const schemeVal = (grossPtr * (parseFloat(schemeDiscount) || 0)) / 100;
+  const grossPtr = typeof ptr === 'number' ? ptr : parseFloat(ptr) || 0;
+  const grossMrp = typeof mrp === 'number' ? mrp : parseFloat(mrp) || 0;
+  const schemeVal = (grossPtr * (typeof schemeDiscount === 'number' ? schemeDiscount : parseFloat(schemeDiscount) || 0)) / 100;
   const netPtrBeforeGst = grossPtr - schemeVal;
-  const gstAmount = (netPtrBeforeGst * (parseFloat(gstRate) || 0)) / 100;
+  const gstAmount = (netPtrBeforeGst * (typeof gstRate === 'number' ? gstRate : parseFloat(gstRate) || 0)) / 100;
   const finalLandingCost = netPtrBeforeGst + gstAmount;
 
   const profitPerPack = grossMrp - finalLandingCost;
-  const marginPercentage = grossMrp > 0 ? ((profitPerPack / grossMrp) * 100).toFixed(2) : 0;
-  const totalOrderProfit = (profitPerPack * (parseInt(quantity) || 1)).toFixed(2);
-  const totalInvestment = (finalLandingCost * (parseInt(quantity) || 1)).toFixed(2);
+  const marginPercentage = grossMrp > 0 ? ((profitPerPack / grossMrp) * 100).toFixed(2) : '0';
+  const qty = typeof quantity === 'number' ? quantity : parseInt(quantity) || 1;
+  const totalOrderProfit = (profitPerPack * qty).toFixed(2);
+  const totalInvestment = (finalLandingCost * qty).toFixed(2);
 
-  const presets = [
+  const presets: Preset[] = [
     { name: 'Augmentin 625 Duo', mrp: 223.40, ptr: 159.50, scheme: 5, gst: 12 },
     { name: 'Pan D Capsule', mrp: 199.00, ptr: 138.00, scheme: 8, gst: 12 },
     { name: 'Lantus Pen (Cold Chain)', mrp: 685.00, ptr: 510.00, scheme: 4, gst: 5 },
     { name: 'Montair LC Tablet', mrp: 340.00, ptr: 242.00, scheme: 6, gst: 12 }
   ];
 
-  const applyPreset = (preset) => {
+  const applyPreset = (preset: Preset) => {
     setMrp(preset.mrp);
     setPtr(preset.ptr);
     setSchemeDiscount(preset.scheme);

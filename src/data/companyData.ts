@@ -1,16 +1,116 @@
 /**
- * VS MEDICO LLP - Centralized Company Data Configuration
- * Update phone numbers, email, GST, Drug License, product catalog, and brands here.
+ * VS MEDICO LLP - Centralized Company Data Configuration (TypeScript)
  */
 
-export const COMPANY_INFO = {
+export interface CompanyLicenses {
+  drugLicense20B: string;
+  drugLicense21B: string;
+  issuingAuthority: string;
+  gstin: string;
+  pan: string;
+  fssaiNo: string;
+}
+
+export interface CompanyContact {
+  phoneSales: string;
+  phoneOffice: string;
+  whatsapp: string;
+  whatsappRaw: string;
+  emailSales: string;
+  emailInfo: string;
+  workingHours: string;
+  sundayStatus: string;
+}
+
+export interface CompanyAddress {
+  building: string;
+  locality: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+  landmark: string;
+  fullAddress: string;
+  googleMapEmbedUrl: string;
+  mapDirectionsUrl: string;
+}
+
+export interface CompanyBusinessProfile {
+  role: string;
+  primaryCustomers: string;
+  serviceArea: string;
+  dailyCapacity: string;
+  skuCount: string;
+  activeClients: string;
+  temperatureControlledArea: string;
+}
+
+export interface ValueProposition {
+  title: string;
+  desc: string;
+}
+
+export interface CompanyInfo {
+  name: string;
+  legalName: string;
+  tagline: string;
+  establishedYear: number;
+  yearsOfExcellence: string;
+  licenses: CompanyLicenses;
+  contact: CompanyContact;
+  address: CompanyAddress;
+  businessProfile: CompanyBusinessProfile;
+  valuePropositions: ValueProposition[];
+}
+
+export interface ProductCategory {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+export interface ProductItem {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  composition: string;
+  packSize: string;
+  mrp: string;
+  ptrEstimate: string;
+  hsnCode: string;
+  stockStatus: string;
+  coldChain: boolean;
+  storageTemp?: string;
+  rxRequired: boolean;
+  description: string;
+}
+
+export interface PharmaBrand {
+  name: string;
+  category: string;
+  logoText: string;
+  highlight: string;
+}
+
+export interface TrustStat {
+  value: string;
+  label: string;
+  detail: string;
+}
+
+export interface FAQItem {
+  q: string;
+  a: string;
+}
+
+export const COMPANY_INFO: CompanyInfo = {
   name: "VS Medico",
   legalName: "VS Medico LLP",
   tagline: "Mumbai's Trusted Wholesale Stockist & Pharmaceutical Distributor",
   establishedYear: 1998,
   yearsOfExcellence: "25+",
   
-  // Licenses & Registration
   licenses: {
     drugLicense20B: "MH-MUM-20B-184920",
     drugLicense21B: "MH-MUM-21B-184921",
@@ -20,7 +120,6 @@ export const COMPANY_INFO = {
     fssaiNo: "11521000000123"
   },
 
-  // Contact Details
   contact: {
     phoneSales: "+91 98200 12345",
     phoneOffice: "+91 022 2595 6789",
@@ -32,7 +131,6 @@ export const COMPANY_INFO = {
     sundayStatus: "Closed (Emergency Hospital Supply Available on Call)"
   },
 
-  // Address Details
   address: {
     building: "F-117, Sharad Industrial Estate Rd",
     locality: "Sadan Wadi, Bhandup West",
@@ -46,7 +144,6 @@ export const COMPANY_INFO = {
     mapDirectionsUrl: "https://maps.google.com/?q=Sharad+Industrial+Estate+Bhandup+West+Mumbai"
   },
 
-  // Business Profile
   businessProfile: {
     role: "Authorized Stockist, Wholesale Distributor & C&F Agent",
     primaryCustomers: "Retail Chemists, Chain Pharmacies, Multispecialty Hospitals, Nursing Homes, Government Institutions, & Sub-Stockists",
@@ -57,7 +154,6 @@ export const COMPANY_INFO = {
     temperatureControlledArea: "10,000 Sq. Ft. WHO-GDP Compliant Warehouse with 2°C - 8°C Cold Storage"
   },
 
-  // Core Value Propositions
   valuePropositions: [
     {
       title: "100% Genuine Sourcing",
@@ -78,7 +174,7 @@ export const COMPANY_INFO = {
   ]
 };
 
-export const PRODUCT_CATEGORIES = [
+export const PRODUCT_CATEGORIES: ProductCategory[] = [
   { id: "all", name: "All Categories", icon: "PackageCheck" },
   { id: "formulations", name: "Branded Formulations", icon: "Pill" },
   { id: "generics", name: "Generic Medicines", icon: "Tablets" },
@@ -89,7 +185,7 @@ export const PRODUCT_CATEGORIES = [
   { id: "ayurvedic", name: "Ayurvedic & Herbal", icon: "Leaf" }
 ];
 
-export const PRODUCTS_LIST = [
+export const PRODUCTS_LIST: ProductItem[] = [
   {
     id: "MED-001",
     name: "Augmentin 625 Duo Tablet",
@@ -275,7 +371,7 @@ export const PRODUCTS_LIST = [
   }
 ];
 
-export const PHARMA_BRANDS = [
+export const PHARMA_BRANDS: PharmaBrand[] = [
   { name: "Sun Pharma", category: "Cardiology, Psychiatry, Gastro", logoText: "SUN PHARMA", highlight: "India's #1 Pharma Company" },
   { name: "Cipla Ltd.", category: "Respiratory, Antibiotics, Critical Care", logoText: "CIPLA", highlight: "Leader in Inhalation & Anti-infectives" },
   { name: "Alkem Laboratories", category: "Gastroenterology, Anti-infectives", logoText: "ALKEM", highlight: "Top Indian Formulations Stockist" },
@@ -293,14 +389,14 @@ export const PHARMA_BRANDS = [
   { name: "Himalaya Wellness", category: "Ayurvedic, OTC, Personal Care", logoText: "HIMALAYA", highlight: "Herbal Healthcare Pioneer" }
 ];
 
-export const TRUST_STATS = [
+export const TRUST_STATS: TrustStat[] = [
   { value: "25+", label: "Years of Wholesale Legacy", detail: "Serving Mumbai since 1998" },
   { value: "5,000+", label: "Active Pharma SKUs", detail: "Formulations, Generics & Cold Chain" },
   { value: "1,200+", label: "Chemist & Hospital Clients", detail: "Registered buyers across MMR" },
   { value: "50+", label: "Pharma MNC Brands", detail: "Direct authorized distribution" }
 ];
 
-export const FAQS = [
+export const FAQS: FAQItem[] = [
   {
     q: "Who can purchase from VS Medico?",
     a: "VS Medico is a strict B2B pharmaceutical stockist and wholesaler. We sell exclusively to licensed retail chemist pharmacies, hospital procurement departments, nursing homes, clinics, and authorized sub-stockists holding valid Drug License Form 20B/21B and GSTIN."

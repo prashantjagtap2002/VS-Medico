@@ -5,13 +5,11 @@ import ContactForm from '@/components/ContactForm';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
 import { COMPANY_INFO } from '@/data/companyData';
 import { 
-  Building2, 
   MapPin, 
   Phone, 
   Mail, 
   Clock, 
   MessageCircle, 
-  ShieldCheck,
   Navigation
 } from 'lucide-react';
 

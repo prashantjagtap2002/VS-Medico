@@ -11,7 +11,6 @@ import {
   Mail, 
   Clock, 
   ShieldCheck, 
-  FileText, 
   MessageCircle,
   ExternalLink
 } from 'lucide-react';

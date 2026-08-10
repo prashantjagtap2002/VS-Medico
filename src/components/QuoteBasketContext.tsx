@@ -1,15 +1,33 @@
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { ProductItem } from '@/data/companyData';
 
-const QuoteBasketContext = createContext();
+export interface BasketItem extends ProductItem {
+  quantity: number;
+}
 
-export function QuoteBasketProvider({ children }) {
-  const [basket, setBasket] = useState([]);
+interface QuoteBasketContextType {
+  basket: BasketItem[];
+  addToBasket: (product: ProductItem) => void;
+  removeFromBasket: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
+  clearBasket: () => void;
+  isModalOpen: boolean;
+  setIsModalOpen: (open: boolean) => void;
+  isLicenseModalOpen: boolean;
+  setIsLicenseModalOpen: (open: boolean) => void;
+  totalItems: number;
+}
+
+const QuoteBasketContext = createContext<QuoteBasketContextType | undefined>(undefined);
+
+export function QuoteBasketProvider({ children }: { children: ReactNode }) {
+  const [basket, setBasket] = useState<BasketItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
-  const addToBasket = (product) => {
+  const addToBasket = (product: ProductItem) => {
     setBasket((prev) => {
       const exists = prev.find((item) => item.id === product.id);
       if (exists) {
@@ -22,11 +40,11 @@ export function QuoteBasketProvider({ children }) {
     setIsModalOpen(true);
   };
 
-  const removeFromBasket = (id) => {
+  const removeFromBasket = (id: string) => {
     setBasket((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const updateQuantity = (id, quantity) => {
+  const updateQuantity = (id: string, quantity: number) => {
     if (quantity <= 0) {
       removeFromBasket(id);
       return;
