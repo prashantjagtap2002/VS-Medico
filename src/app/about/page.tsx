@@ -11,214 +11,228 @@ import {
   FileText,
   MessageCircle,
   Building2,
-  Activity
+  Activity,
+  Sparkles
 } from 'lucide-react';
 
 export default function AboutPage() {
   const { setIsModalOpen, setIsLicenseModalOpen } = useQuoteBasket();
 
   return (
-    <div className="py-16">
-      <div className="container">
-        {/* Header - Simple and Spacious */}
-        <div className="max-w-3xl mb-16 text-center mx-auto">
-          <span className="text-secondary font-bold text-sm tracking-wider uppercase mb-4 block">ABOUT VS MEDICO LLP</span>
-          <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-primary mb-6 leading-tight">
-            Powering Mumbai's Healthcare Supply Chain Since 1998
-          </h1>
-          <p className="text-slate-600 text-lg leading-relaxed max-w-2xl mx-auto">
-            VS Medico LLP is a premier pharmaceutical wholesale distributor, super stockist, and authorized C&F partner based in Bhandup West, Mumbai.
-          </p>
-        </div>
-
-        {/* Stats Grid - Using native grid-4 */}
-        <div className="grid-4 mb-20">
-          {TRUST_STATS.map((stat, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col justify-center min-h-[160px]">
-              <div className="font-heading font-extrabold text-4xl text-primary mb-2">{stat.value}</div>
-              <div className="font-bold text-slate-800 text-base mb-2">{stat.label}</div>
-              <div className="text-xs text-slate-500">{stat.detail}</div>
+    <div>
+      {/* Hero */}
+      <section
+        className="relative overflow-hidden pt-20 pb-16 md:pt-24 md:pb-20"
+        style={{
+          background:
+            'radial-gradient(circle at 85% 15%, rgba(2, 132, 199, 0.07) 0%, transparent 45%), radial-gradient(circle at 10% 85%, rgba(5, 150, 105, 0.05) 0%, transparent 40%), linear-gradient(180deg, #ffffff 0%, var(--bg-main) 100%)',
+        }}
+      >
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="hero-tag">
+              <Sparkles size={16} className="text-secondary" />
+              <span>Est. {COMPANY_INFO.establishedYear} · {COMPANY_INFO.yearsOfExcellence} Years of Wholesale Excellence</span>
             </div>
-          ))}
-        </div>
 
-        {/* Detailed Story & Mission */}
-        <div className="grid-2 items-stretch mb-24">
-          <div className="flex flex-col gap-6 text-slate-600 leading-relaxed text-lg bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
-            <div>
+            <h1 className="hero-title text-center">
+              Powering Mumbai&apos;s <span>Healthcare Supply Chain</span> Since 1998
+            </h1>
+
+            <p className="hero-lead mx-auto text-center">
+              VS Medico LLP is a premier pharmaceutical wholesale distributor, super stockist, and authorized C&amp;F partner based in Bhandup West, Mumbai.
+            </p>
+          </div>
+
+          <div className="mt-14 max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100 overflow-hidden">
+            {TRUST_STATS.map((stat, idx) => (
+              <div key={idx} className="p-6 md:p-8 text-center">
+                <div className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-1.5">{stat.value}</div>
+                <div className="font-bold text-slate-800 text-sm mb-1">{stat.label}</div>
+                <div className="text-xs text-slate-500">{stat.detail}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Story & Compliance */}
+      <section className="py-20 md:py-24 bg-white">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            {/* Our Legacy */}
+            <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
               <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-2 block">Our Legacy</span>
-              <h2 className="font-heading font-bold text-3xl text-primary mb-4">
+              <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-5 leading-tight">
                 From Local Stockist to a Single-Window Hub
               </h2>
-            </div>
-            
-            <p>
-              Founded over 25 years ago in Mumbai, <strong>VS Medico LLP</strong> has grown from a local stockist into a major pharmaceutical distribution entity supplying over 1,200+ licensed retail pharmacies, multispecialty hospitals, and institutional buyers across the Mumbai Metropolitan Region (MMR).
-            </p>
-            
-            <div className="flex items-start gap-4 mt-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <div className="shrink-0 text-emerald-600 mt-1"><Building2 size={24} /></div>
-              <div>
-                <h4 className="font-bold text-slate-800 text-base mb-1">The Super-Stockist Advantage</h4>
-                <p className="text-sm">Unlike single-brand manufacturers, we provide a single-window ordering system. Retailers get products across 50+ leading MNCs on one consolidated invoice.</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <div className="shrink-0 text-secondary mt-1"><Activity size={24} /></div>
-              <div>
-                <h4 className="font-bold text-slate-800 text-base mb-1">Hyper-Local Logistics</h4>
-                <p className="text-sm">Operating from Sharad Industrial Estate, Bhandup West, our fleet ensures same-day express runs across Bhandup, Mulund, Thane, Powai, and Ghatkopar.</p>
-              </div>
-            </div>
-          </div>
+              <p className="text-slate-600 text-base leading-relaxed">
+                Founded over 25 years ago in Mumbai, <strong className="text-slate-800">VS Medico LLP</strong> has grown from a local stockist into a major pharmaceutical distribution entity supplying over 1,200+ licensed retail pharmacies, multispecialty hospitals, and institutional buyers across the Mumbai Metropolitan Region (MMR).
+              </p>
 
-          <div className="flex flex-col gap-8 bg-slate-900 p-10 rounded-3xl shadow-xl text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 opacity-10 pointer-events-none">
-              <ShieldCheck size={280} className="transform translate-x-1/4 -translate-y-1/4 text-white" />
-            </div>
-            
-            <div className="relative z-10">
-              <span className="text-sky-400 font-bold text-sm tracking-widest uppercase mb-2 block">Standards</span>
-              <h3 className="font-heading font-bold text-3xl mb-8">Quality & Compliance First</h3>
-              
-              <div className="flex flex-col gap-8 text-base">
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 size={24} className="text-emerald-400 shrink-0 mt-1" />
+              <div className="flex flex-col divide-y divide-slate-100 border-t border-slate-100 mt-auto pt-1">
+                <div className="flex items-start gap-4 py-5">
+                  <div className="shrink-0 w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <Building2 size={20} />
+                  </div>
                   <div>
-                    <h4 className="font-bold text-white text-lg mb-1">Counterfeit-Zero Guarantee</h4>
-                    <p className="text-sm text-slate-300 leading-relaxed">Strict batch verification and direct factory-to-warehouse sourcing ensures 100% genuine products.</p>
+                    <h4 className="font-bold text-slate-800 text-sm mb-1">The Super-Stockist Advantage</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">Single-window ordering across 50+ leading MNCs on one consolidated invoice.</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 size={24} className="text-sky-400 shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-bold text-white text-lg mb-1">WHO-GDP Cold Chain Standard</h4>
-                    <p className="text-sm text-slate-300 leading-relaxed">24/7 digital thermal monitoring for insulin, vaccines, & critical care injectables.</p>
+                <div className="flex items-start gap-4 py-5">
+                  <div className="shrink-0 w-11 h-11 rounded-xl bg-sky-50 text-secondary flex items-center justify-center">
+                    <Activity size={20} />
                   </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 size={24} className="text-amber-400 shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-bold text-white text-lg mb-1">Transparent B2B Billing</h4>
-                    <p className="text-sm text-slate-300 leading-relaxed">Accurate PTR/MRP invoice credit structures with full GST & HSN compliance.</p>
+                    <h4 className="font-bold text-slate-800 text-sm mb-1">Hyper-Local Logistics</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">Same-day express runs from Bhandup West across Mulund, Thane, Powai &amp; Ghatkopar.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="relative z-10 pt-8 mt-auto border-t border-slate-700">
-              <button
-                onClick={() => setIsLicenseModalOpen(true)}
-                className="btn btn-secondary w-full flex justify-center"
-              >
-                <ShieldCheck size={18} />
-                <span>View Drug License Details</span>
-              </button>
+            {/* Quality & Compliance */}
+            <div className="bg-slate-900 p-8 md:p-10 rounded-3xl shadow-xl text-white relative overflow-hidden flex flex-col">
+              <ShieldCheck size={240} className="absolute -top-10 -right-10 text-white/[0.04] pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col h-full">
+                <span className="text-sky-400 font-bold text-sm tracking-widest uppercase mb-2 block">Standards</span>
+                <h3 className="font-heading font-bold text-2xl md:text-3xl mb-6">Quality &amp; Compliance First</h3>
+
+                <div className="flex flex-col divide-y divide-white/10">
+                  <div className="flex items-start gap-4 py-5">
+                    <CheckCircle2 size={20} className="text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-bold text-white text-sm mb-1">Counterfeit-Zero Guarantee</h4>
+                      <p className="text-sm text-slate-400 leading-relaxed">Strict batch verification and direct factory-to-warehouse sourcing ensures 100% genuine products.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 py-5">
+                    <CheckCircle2 size={20} className="text-sky-400 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-bold text-white text-sm mb-1">WHO-GDP Cold Chain Standard</h4>
+                      <p className="text-sm text-slate-400 leading-relaxed">24/7 digital thermal monitoring for insulin, vaccines &amp; critical care injectables.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 py-5">
+                    <CheckCircle2 size={20} className="text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-bold text-white text-sm mb-1">Transparent B2B Billing</h4>
+                      <p className="text-sm text-slate-400 leading-relaxed">Accurate PTR/MRP invoice credit structures with full GST &amp; HSN compliance.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 mt-auto border-t border-white/10">
+                  <button
+                    onClick={() => setIsLicenseModalOpen(true)}
+                    className="btn btn-secondary w-full flex justify-center"
+                  >
+                    <ShieldCheck size={18} />
+                    <span>View Drug License Details</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Cold Chain & Logistics Infrastructure */}
-        <section className="bg-slate-50 p-10 md:p-14 rounded-3xl border border-slate-200 mb-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-emerald-700 font-bold text-xs uppercase tracking-widest bg-emerald-100 px-4 py-2 rounded-full inline-block mb-4">
-              INFRASTRUCTURE & LOGISTICS
-            </span>
-            <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-4">
-              WHO-GDP Compliant Cold Chain
-            </h2>
-            <p className="text-slate-600 text-lg">
+      {/* Cold Chain & Logistics Infrastructure */}
+      <section className="py-20 md:py-24 bg-slate-50 border-y border-slate-200">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle">Infrastructure &amp; Logistics</span>
+            <h2 className="section-title">WHO-GDP Compliant Cold Chain</h2>
+            <p className="section-desc">
               We operate a state-of-the-art 10,000 sq. ft. warehousing facility in Bhandup West equipped with strict climate control systems.
             </p>
           </div>
 
           <div className="grid-3">
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm min-h-[220px]">
-              <div className="w-14 h-14 rounded-xl bg-sky-100 text-secondary flex items-center justify-center mb-6">
+            <div className="feature-card">
+              <div className="feature-icon">
                 <Snowflake size={28} />
               </div>
-              <h3 className="font-bold text-primary text-xl mb-3">2°C – 8°C Cold Storage</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Dedicated cold rooms with automatic back-up generators for insulins, vaccines, growth hormones, and biological serums.
-              </p>
+              <h3>2°C – 8°C Cold Storage</h3>
+              <p>Dedicated cold rooms with automatic back-up generators for insulins, vaccines, growth hormones, and biological serums.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm min-h-[220px]">
-              <div className="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6">
+            <div className="feature-card">
+              <div className="feature-icon" style={{ background: 'var(--accent-green-light)', color: 'var(--accent-green-dark)' }}>
                 <Truck size={28} />
               </div>
-              <h3 className="font-bold text-primary text-xl mb-3">Insulated Express Fleet</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Temperature-monitored transit boxes ensuring cold chain continuity during delivery runs across Bhandup, Powai, Thane, and South Mumbai.
-              </p>
+              <h3>Insulated Express Fleet</h3>
+              <p>Temperature-monitored transit boxes ensuring cold chain continuity during delivery runs across Bhandup, Powai, Thane, and South Mumbai.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm min-h-[220px]">
-              <div className="w-14 h-14 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-6">
+            <div className="feature-card">
+              <div className="feature-icon" style={{ background: '#f3e8ff', color: '#7e22ce' }}>
                 <ShieldCheck size={28} />
               </div>
-              <h3 className="font-bold text-primary text-xl mb-3">FDA Licensing & Audit</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Full compliance with FDA Maharashtra Form 20B/21B regulations, regular stock audits, and batch expiry tracking.
-              </p>
+              <h3>FDA Licensing &amp; Audit</h3>
+              <p>Full compliance with FDA Maharashtra Form 20B/21B regulations, regular stock audits, and batch expiry tracking.</p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Leadership Team */}
-        <section className="mb-24">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-secondary font-bold text-xs uppercase tracking-widest bg-sky-100 px-4 py-2 rounded-full inline-block mb-4">
-              LEADERSHIP TEAM
-            </span>
-            <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-4">
-              The People Behind VS Medico
-            </h2>
-            <p className="text-slate-600 text-lg">
+      {/* Leadership Team */}
+      <section className="py-20 md:py-24 bg-white">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle">Leadership Team</span>
+            <h2 className="section-title">The People Behind VS Medico</h2>
+            <p className="section-desc">
               A team of pharma distribution veterans managing sourcing, cold chain, compliance, and B2B accounts.
             </p>
           </div>
 
           <div className="grid-4">
             {LEADERSHIP_TEAM.map((member, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col justify-start h-full">
-                <div className="w-20 h-20 mx-auto rounded-full bg-slate-100 border-2 border-white shadow-md text-primary flex items-center justify-center text-2xl font-bold font-heading mb-6">
+              <div key={idx} className="feature-card items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-slate-100 text-primary flex items-center justify-center text-xl font-bold font-heading mb-5">
                   {member.initials}
                 </div>
-                <h3 className="font-bold text-primary text-lg mb-1">{member.name}</h3>
-                <div className="text-xs font-bold text-secondary tracking-widest uppercase mb-4">{member.role}</div>
-                <p className="text-sm text-slate-500 leading-relaxed">{member.bio}</p>
+                <h3 className="!mb-1">{member.name}</h3>
+                <div className="text-xs font-bold text-secondary tracking-widest uppercase mb-3">{member.role}</div>
+                <p>{member.bio}</p>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <div className="text-center bg-slate-900 p-12 rounded-3xl shadow-xl max-w-4xl mx-auto mb-12 text-white">
-          <h3 className="font-heading font-bold text-3xl md:text-4xl mb-4">Partner with VS Medico Today</h3>
-          <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-            Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={() => setIsModalOpen(true)} className="btn bg-white text-slate-900 hover:bg-slate-100 border-none font-bold">
-              <FileText size={18} />
-              <span>Submit Account Request</span>
-            </button>
-            <a
-              href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp border-none font-bold"
-            >
-              <MessageCircle size={18} />
-              <span>WhatsApp Direct Desk</span>
-            </a>
+      {/* CTA */}
+      <section className="py-4 pb-20 md:pb-24 bg-white">
+        <div className="container">
+          <div className="text-center bg-slate-900 p-10 md:p-14 rounded-3xl shadow-xl max-w-4xl mx-auto text-white">
+            <h3 className="font-heading font-bold text-3xl md:text-4xl mb-4">Partner with VS Medico Today</h3>
+            <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+              Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button onClick={() => setIsModalOpen(true)} className="btn btn-white font-bold">
+                <FileText size={18} />
+                <span>Submit Account Request</span>
+              </button>
+              <a
+                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-whatsapp border-none font-bold"
+              >
+                <MessageCircle size={18} />
+                <span>WhatsApp Direct Desk</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
