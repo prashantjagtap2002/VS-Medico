@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
+import ExpressReorderBar from '@/components/ExpressReorderBar';
+import MarginCalculator from '@/components/MarginCalculator';
+import ColdChainTracker from '@/components/ColdChainTracker';
 import ProductCatalog from '@/components/ProductCatalog';
 import BrandsGrid from '@/components/BrandsGrid';
 import { COMPANY_INFO, FAQS } from '@/data/companyData';
@@ -16,14 +18,11 @@ import {
   ChevronDown, 
   ChevronUp, 
   MessageCircle,
-  FileText,
-  CheckCircle2,
-  PhoneCall,
-  MapPin
+  FileText
 } from 'lucide-react';
 
 export default function Home() {
-  const { setIsModalOpen, setIsLicenseModalOpen } = useQuoteBasket();
+  const { setIsModalOpen } = useQuoteBasket();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
@@ -37,6 +36,11 @@ export default function Home() {
 
       {/* Trust & Compliance Bar */}
       <TrustBar />
+
+      <div className="container">
+        {/* Express Fast Reorder Bar */}
+        <ExpressReorderBar />
+      </div>
 
       {/* Why Choose VS Medico Section */}
       <section className="py-16 bg-white">
@@ -63,6 +67,12 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          {/* Interactive Margin & PTR Profit Calculator */}
+          <MarginCalculator />
+
+          {/* WHO-GDP Cold Storage Telemetry Dashboard */}
+          <ColdChainTracker />
         </div>
       </section>
 
