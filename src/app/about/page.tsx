@@ -57,35 +57,35 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="bg-slate-900 text-white p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col gap-6">
-            <h3 className="font-heading font-bold text-xl text-sky-400">Company Mission & Quality Commitment</h3>
-            <div className="flex flex-col gap-4 text-sm text-slate-300">
+          <div className="dark-card flex flex-col gap-6">
+            <h3 className="dark-card-title">Company Mission & Quality Commitment</h3>
+            <div className="flex flex-col gap-4 text-sm">
               <div className="flex items-start gap-3">
                 <CheckCircle2 size={20} className="text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white">Counterfeit-Zero Genuine Guarantee</h4>
-                  <p className="text-xs text-slate-400">Strict batch verification and direct factory-to-warehouse sourcing.</p>
+                  <h4 className="font-bold text-white text-base">Counterfeit-Zero Genuine Guarantee</h4>
+                  <p className="text-xs text-slate-300 mt-0.5">Strict batch verification and direct factory-to-warehouse sourcing.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 size={20} className="text-sky-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white">WHO-GDP Cold Chain Standard</h4>
-                  <p className="text-xs text-slate-400">24/7 digital thermal monitoring for insulin, vaccines, & critical care injectables.</p>
+                  <h4 className="font-bold text-white text-base">WHO-GDP Cold Chain Standard</h4>
+                  <p className="text-xs text-slate-300 mt-0.5">24/7 digital thermal monitoring for insulin, vaccines, & critical care injectables.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 size={20} className="text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white">Transparent B2B Billing</h4>
-                  <p className="text-xs text-slate-400">Accurate PTR/MRP invoice credit structures with full GST & HSN compliance.</p>
+                  <h4 className="font-bold text-white text-base">Transparent B2B Billing</h4>
+                  <p className="text-xs text-slate-300 mt-0.5">Accurate PTR/MRP invoice credit structures with full GST & HSN compliance.</p>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div className="pt-4 border-t border-slate-700 flex items-center justify-between">
               <button
                 onClick={() => setIsLicenseModalOpen(true)}
                 className="btn btn-secondary btn-sm"

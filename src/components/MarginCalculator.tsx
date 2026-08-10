@@ -62,12 +62,12 @@ export default function MarginCalculator() {
 
       {/* Presets */}
       <div className="mb-6 flex flex-wrap gap-2 items-center">
-        <span className="text-xs text-slate-400 font-semibold">Popular Product Presets:</span>
+        <span className="text-xs text-slate-300 font-semibold">Popular Product Presets:</span>
         {presets.map((p, idx) => (
           <button
             key={idx}
             onClick={() => applyPreset(p)}
-            className="text-xs bg-slate-800/80 hover:bg-sky-900/80 text-sky-300 border border-slate-700 hover:border-sky-500 px-3 py-1.5 rounded-lg font-medium transition-all"
+            className="text-xs bg-slate-800 hover:bg-sky-900 text-sky-300 border border-slate-700 hover:border-sky-500 px-3 py-1.5 rounded-lg font-medium transition-all"
           >
             {p.name}
           </button>
@@ -75,51 +75,47 @@ export default function MarginCalculator() {
       </div>
 
       <div className="calculator-grid">
-        {/* Input Controls */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="form-group mb-0">
-            <label className="form-label text-slate-200 text-xs font-semibold">MRP Per Pack (₹)</label>
-            <div className="relative">
-              <input
-                type="number"
-                step="0.1"
-                value={mrp}
-                onChange={(e) => setMrp(e.target.value)}
-                className="form-control bg-slate-800 border-slate-700 text-white font-bold text-base focus:border-sky-400"
-              />
-            </div>
+        {/* Input Controls - 2 Columns */}
+        <div className="calc-input-grid">
+          <div>
+            <label className="dark-label">MRP Per Pack (₹)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={mrp}
+              onChange={(e) => setMrp(e.target.value)}
+              className="dark-input"
+            />
           </div>
 
-          <div className="form-group mb-0">
-            <label className="form-label text-slate-200 text-xs font-semibold">PTR Wholesale Price (₹)</label>
-            <div className="relative">
-              <input
-                type="number"
-                step="0.1"
-                value={ptr}
-                onChange={(e) => setPtr(e.target.value)}
-                className="form-control bg-slate-800 border-slate-700 text-white font-bold text-base focus:border-sky-400"
-              />
-            </div>
+          <div>
+            <label className="dark-label">PTR Wholesale Price (₹)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={ptr}
+              onChange={(e) => setPtr(e.target.value)}
+              className="dark-input"
+            />
           </div>
 
-          <div className="form-group mb-0">
-            <label className="form-label text-slate-200 text-xs font-semibold">Scheme / Cash Discount (%)</label>
+          <div>
+            <label className="dark-label">Scheme / Cash Discount (%)</label>
             <input
               type="number"
               step="0.5"
               value={schemeDiscount}
               onChange={(e) => setSchemeDiscount(e.target.value)}
-              className="form-control bg-slate-800 border-slate-700 text-white font-bold text-base focus:border-sky-400"
+              className="dark-input"
             />
           </div>
 
-          <div className="form-group mb-0">
-            <label className="form-label text-slate-200 text-xs font-semibold">GST Slab (%)</label>
+          <div>
+            <label className="dark-label">GST Slab (%)</label>
             <select
               value={gstRate}
               onChange={(e) => setGstRate(e.target.value)}
-              className="form-control bg-slate-800 border-slate-700 text-white font-bold text-base focus:border-sky-400"
+              className="dark-input"
             >
               <option value="5">5% (Life Saving & Cold Chain)</option>
               <option value="12">12% (Standard Formulations)</option>
@@ -127,31 +123,31 @@ export default function MarginCalculator() {
             </select>
           </div>
 
-          <div className="form-group mb-0 sm:col-span-2">
-            <label className="form-label text-slate-200 text-xs font-semibold">Order Quantity (Boxes / Strips)</label>
+          <div className="calc-span-full">
+            <label className="dark-label">Order Quantity (Boxes / Strips)</label>
             <input
               type="number"
               min="1"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              className="form-control bg-slate-800 border-slate-700 text-white font-bold text-base focus:border-sky-400"
+              className="dark-input"
             />
           </div>
         </div>
 
         {/* Output Results Box */}
-        <div className="calculator-results-box space-y-4">
+        <div className="calculator-results-box flex flex-col gap-4">
           <div className="flex justify-between items-center pb-3 border-b border-slate-700">
-            <span className="text-xs text-slate-400 font-semibold">Estimated Net Landing Cost:</span>
+            <span className="text-xs text-slate-300 font-semibold">Estimated Net Landing Cost:</span>
             <span className="font-mono font-extrabold text-lg text-white">₹{finalLandingCost.toFixed(2)} / pack</span>
           </div>
 
           <div className="flex justify-between items-center pb-3 border-b border-slate-700">
-            <span className="text-xs text-slate-400 font-semibold">GST Input Tax Credit:</span>
+            <span className="text-xs text-slate-300 font-semibold">GST Input Tax Credit:</span>
             <span className="font-mono font-bold text-sm text-emerald-400">₹{gstAmount.toFixed(2)}</span>
           </div>
 
-          <div className="bg-emerald-950/80 border border-emerald-800 p-4 rounded-xl text-center">
+          <div className="bg-emerald-950/90 border border-emerald-700 p-5 rounded-2xl text-center shadow-inner">
             <div className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-1">YOUR PROFIT MARGIN</div>
             <div className="font-heading font-extrabold text-3xl text-emerald-400">
               {marginPercentage}%
@@ -161,14 +157,14 @@ export default function MarginCalculator() {
             </div>
           </div>
 
-          <div className="pt-2 text-xs text-slate-300 space-y-1">
+          <div className="pt-2 text-xs text-slate-300 flex flex-col gap-2">
             <div className="flex justify-between">
               <span>Total Estimated Investment:</span>
-              <strong className="text-white font-mono">₹{totalInvestment}</strong>
+              <strong className="text-white font-mono text-sm">₹{totalInvestment}</strong>
             </div>
             <div className="flex justify-between">
               <span>Total Net Chemist Profit ({quantity} packs):</span>
-              <strong className="text-emerald-400 font-mono text-sm">₹{totalOrderProfit}</strong>
+              <strong className="text-emerald-400 font-mono text-base font-extrabold">₹{totalOrderProfit}</strong>
             </div>
           </div>
         </div>

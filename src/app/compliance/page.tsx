@@ -32,46 +32,54 @@ export default function CompliancePage() {
         {/* License Badges Card Grid */}
         <div className="grid-2 mb-12">
           {/* License 20B */}
-          <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-sky-50 rounded-bl-full flex items-start justify-end p-4 text-sky-400">
-              <FileCheck size={36} />
-            </div>
-            <span className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">WHOLESALE DRUG LICENSE</span>
-            <h2 className="font-heading font-bold text-2xl text-primary mb-1">Form 20B Registration</h2>
-            <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
+          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between h-full">
+            <div>
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <span className="badge badge-blue">WHOLESALE DRUG LICENSE</span>
+                <div className="w-12 h-12 rounded-2xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
+                  <FileCheck size={24} />
+                </div>
+              </div>
+              <h2 className="font-heading font-extrabold text-2xl text-primary mb-1">Form 20B Registration</h2>
+              <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
 
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-4">
-              <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-              <div className="font-mono font-extrabold text-2xl text-primary">{COMPANY_INFO.licenses.drugLicense20B}</div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-4">
+                <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
+                <div className="font-mono font-extrabold text-2xl text-primary">{COMPANY_INFO.licenses.drugLicense20B}</div>
+              </div>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
               Authorizes VS Medico LLP to stock, store, sell, and distribute wholesale drugs other than those specified in Schedules C, C(1), and X.
             </p>
           </div>
 
           {/* License 21B */}
-          <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full flex items-start justify-end p-4 text-emerald-400">
-              <ShieldCheck size={36} />
-            </div>
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-2">BIOLOGICALS & SCHEDULE C LICENSE</span>
-            <h2 className="font-heading font-bold text-2xl text-primary mb-1">Form 21B Registration</h2>
-            <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
+          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between h-full">
+            <div>
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <span className="badge badge-green">BIOLOGICALS & SCHEDULE C LICENSE</span>
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <ShieldCheck size={24} />
+                </div>
+              </div>
+              <h2 className="font-heading font-extrabold text-2xl text-primary mb-1">Form 21B Registration</h2>
+              <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
 
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-4">
-              <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-              <div className="font-mono font-extrabold text-2xl text-emerald-800">{COMPANY_INFO.licenses.drugLicense21B}</div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-4">
+                <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
+                <div className="font-mono font-extrabold text-2xl text-emerald-800">{COMPANY_INFO.licenses.drugLicense21B}</div>
+              </div>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
               Authorizes VS Medico LLP to stock, store, sell, and distribute wholesale biological products, insulins, vaccines, and Schedule C/C(1) formulations.
             </p>
           </div>
         </div>
 
         {/* GST & Tax Compliance */}
-        <div className="bg-slate-900 text-white p-8 md:p-10 rounded-3xl mb-12 shadow-xl">
+        <div className="dark-card mb-12">
           <div className="grid-2 items-center">
             <div>
               <span className="text-xs font-bold text-sky-400 uppercase tracking-widest">TAX COMPLIANCE STATUS</span>
@@ -89,10 +97,10 @@ export default function CompliancePage() {
                 <CheckCircle2 size={18} className="text-emerald-400" />
                 <span>Quality & Compliance Pillars</span>
               </div>
-              <p>✔ <strong>100% Genuine Direct Supply:</strong> Sourced strictly from original brand manufacturers or authorized super-stockists.</p>
-              <p>✔ <strong>Expiry Traceability:</strong> Zero near-expiry items dispatched to retail chemist stores without prior written consent.</p>
-              <p>✔ <strong>Batch Audit Trail:</strong> Every batch number is recorded on tax invoices for quick recall compliance.</p>
-              <p>✔ <strong>Restricted Sales Policy:</strong> Sales permitted strictly to buyers providing valid Drug License (20B/21B) & GST credentials.</p>
+              <p>✔ <strong className="text-white">100% Genuine Direct Supply:</strong> Sourced strictly from original brand manufacturers or authorized super-stockists.</p>
+              <p>✔ <strong className="text-white">Expiry Traceability:</strong> Zero near-expiry items dispatched to retail chemist stores without prior written consent.</p>
+              <p>✔ <strong className="text-white">Batch Audit Trail:</strong> Every batch number is recorded on tax invoices for quick recall compliance.</p>
+              <p>✔ <strong className="text-white">Restricted Sales Policy:</strong> Sales permitted strictly to buyers providing valid Drug License (20B/21B) & GST credentials.</p>
             </div>
           </div>
         </div>

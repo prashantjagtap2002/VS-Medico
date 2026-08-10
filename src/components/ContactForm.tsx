@@ -25,7 +25,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-md">
+    <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
       <div className="mb-6">
         <h3 className="font-extrabold text-primary text-2xl font-heading mb-1">
           Send Us a B2B Inquiry
@@ -36,10 +36,10 @@ export default function ContactForm() {
       </div>
 
       {submitted ? (
-        <div className="text-center py-10 bg-emerald-50 rounded-xl border border-emerald-200">
+        <div className="text-center py-10 bg-emerald-50 rounded-2xl border border-emerald-200">
           <CheckCircle2 size={48} className="text-emerald-600 mx-auto mb-3" />
           <h4 className="font-extrabold text-slate-800 text-xl font-heading mb-2">Message Received!</h4>
-          <p className="text-sm text-slate-600 max-w-md mx-auto mb-4">
+          <p className="text-sm text-slate-600 max-w-md mx-auto mb-4 leading-relaxed">
             Thank you, <strong>{formState.fullName}</strong>. Our wholesale sales executive will reach out to <strong>{formState.storeName || 'your pharmacy'}</strong> shortly.
           </p>
           <button
@@ -60,8 +60,8 @@ export default function ContactForm() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="grid-2">
             <div className="form-group mb-0">
               <label className="form-label">Full Name *</label>
               <input
@@ -86,7 +86,7 @@ export default function ContactForm() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid-2">
             <div className="form-group mb-0">
               <label className="form-label">Phone Number *</label>
               <input
@@ -137,7 +137,7 @@ export default function ContactForm() {
             />
           </div>
 
-          <button type="submit" className="w-full btn btn-primary py-3 justify-center text-base">
+          <button type="submit" className="w-full btn btn-primary py-3.5 justify-center text-base mt-2">
             <Send size={18} />
             <span>Submit B2B Inquiry</span>
           </button>

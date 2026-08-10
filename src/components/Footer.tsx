@@ -22,9 +22,9 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           {/* Col 1: About & Location */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-sky-500 text-white flex items-center justify-center font-extrabold text-xl shrink-0">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center font-extrabold text-xl shrink-0 shadow-md">
                 VS
               </div>
               <div>
@@ -33,24 +33,24 @@ export default function Footer() {
               </div>
             </div>
 
-            <p className="text-slate-300 text-sm mb-5 leading-relaxed">
+            <p className="text-slate-300 text-sm leading-relaxed">
               Authorized pharmaceutical stockist and distributor supplying genuine branded formulations, generic medicines, critical care injectables, and cold-chain products across Mumbai & Maharashtra.
             </p>
 
-            <div className="flex flex-col gap-3 text-sm text-slate-300">
-              <div className="flex items-start gap-2.5">
+            <div className="flex flex-col gap-3 text-sm text-slate-300 mt-1">
+              <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-sky-400 shrink-0 mt-1" />
                 <span>{COMPANY_INFO.address.fullAddress}</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <Phone size={18} className="text-emerald-400 shrink-0" />
                 <span>Sales: {COMPANY_INFO.contact.phoneSales}</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <Mail size={18} className="text-sky-400 shrink-0" />
                 <span>{COMPANY_INFO.contact.emailSales}</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <Clock size={18} className="text-amber-400 shrink-0" />
                 <span>{COMPANY_INFO.contact.workingHours}</span>
               </div>
@@ -86,15 +86,15 @@ export default function Footer() {
           {/* Col 4: Regulatory & Compliance */}
           <div className="footer-col">
             <h4>Licensing & Compliance</h4>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex flex-col gap-3">
+            <div className="footer-compliance-card">
               <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
                 <ShieldCheck size={18} />
                 <span>FDA Maharashtra Verified</span>
               </div>
-              <div className="text-xs text-slate-300 flex flex-col gap-1">
-                <p><strong className="text-slate-200">Drug License 20B:</strong> {COMPANY_INFO.licenses.drugLicense20B}</p>
-                <p><strong className="text-slate-200">Drug License 21B:</strong> {COMPANY_INFO.licenses.drugLicense21B}</p>
-                <p><strong className="text-slate-200">GSTIN:</strong> {COMPANY_INFO.licenses.gstin}</p>
+              <div className="text-xs text-slate-300 flex flex-col gap-1.5">
+                <p><strong className="text-slate-100">Drug License 20B:</strong> <span className="font-mono text-sky-300 font-semibold">{COMPANY_INFO.licenses.drugLicense20B}</span></p>
+                <p><strong className="text-slate-100">Drug License 21B:</strong> <span className="font-mono text-emerald-300 font-semibold">{COMPANY_INFO.licenses.drugLicense21B}</span></p>
+                <p><strong className="text-slate-100">GSTIN:</strong> <span className="font-mono text-sky-300 font-semibold">{COMPANY_INFO.licenses.gstin}</span></p>
               </div>
               <button
                 onClick={() => setIsLicenseModalOpen(true)}
@@ -110,9 +110,9 @@ export default function Footer() {
                 href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full btn btn-whatsapp text-xs py-2 justify-center"
+                className="w-full btn btn-whatsapp text-xs py-2.5 justify-center"
               >
-                <MessageCircle size={15} /> WhatsApp Wholesale Support
+                <MessageCircle size={16} /> Wholesale WhatsApp Desk
               </a>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Footer() {
           <div>
             © {new Date().getFullYear()} {COMPANY_INFO.legalName}. All Rights Reserved.
           </div>
-          <div className="text-xs text-slate-400 max-w-xl text-right">
+          <div className="text-xs text-slate-400 max-w-xl text-right leading-relaxed">
             Disclaimer: VS Medico LLP is a licensed B2B pharmaceutical stockist supplying strictly to registered retail pharmacies, hospitals, and healthcare institutions with valid Drug Licenses (Form 20B/21B).
           </div>
         </div>
