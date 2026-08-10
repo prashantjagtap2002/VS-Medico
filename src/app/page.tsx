@@ -37,11 +37,6 @@ export default function Home() {
       {/* Trust & Compliance Bar */}
       <TrustBar />
 
-      <div className="container">
-        {/* Express Fast Reorder Bar */}
-        <ExpressReorderBar />
-      </div>
-
       {/* Why Choose VS Medico Section */}
       <section className="py-16 bg-white">
         <div className="container">
@@ -67,11 +62,26 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Interactive Margin & PTR Profit Calculator */}
+      {/* Express Fast Reorder Bar */}
+      <section className="py-16 bg-slate-50 border-y border-slate-200">
+        <div className="container">
+          <ExpressReorderBar />
+        </div>
+      </section>
+
+      {/* Interactive Margin & PTR Profit Calculator */}
+      <section className="py-16 bg-white">
+        <div className="container">
           <MarginCalculator />
+        </div>
+      </section>
 
-          {/* WHO-GDP Cold Storage Telemetry Dashboard */}
+      {/* WHO-GDP Cold Storage Telemetry Dashboard */}
+      <section className="py-16 bg-slate-50 border-y border-slate-200">
+        <div className="container">
           <ColdChainTracker />
         </div>
       </section>

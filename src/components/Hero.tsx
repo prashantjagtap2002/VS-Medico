@@ -4,13 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { COMPANY_INFO, TRUST_STATS } from '@/data/companyData';
 import { useQuoteBasket } from './QuoteBasketContext';
-import { 
-  Building2, 
-  CheckCircle2, 
-  ArrowRight, 
-  MessageCircle, 
-  FileText, 
-  ShieldCheck, 
+import {
+  ArrowRight,
+  MessageCircle,
+  FileText,
+  ShieldCheck,
   Truck,
   Sparkles
 } from 'lucide-react';
@@ -60,28 +58,6 @@ export default function Hero() {
                 <MessageCircle size={18} />
                 <span>WhatsApp Instant Rate</span>
               </a>
-            </div>
-
-            <div className="hero-highlights">
-              <div className="hero-highlight-item">
-                <div className="hero-highlight-icon">
-                  <CheckCircle2 size={16} />
-                </div>
-                <div className="hero-highlight-text">
-                  <h4>100% Genuine Guarantee</h4>
-                  <p>Sourced directly from manufacturers & super stockists</p>
-                </div>
-              </div>
-
-              <div className="hero-highlight-item">
-                <div className="hero-highlight-icon">
-                  <CheckCircle2 size={16} />
-                </div>
-                <div className="hero-highlight-text">
-                  <h4>Same-Day Dispatch MMR</h4>
-                  <p>Express morning & evening delivery runs</p>
-                </div>
-              </div>
             </div>
           </div>
 

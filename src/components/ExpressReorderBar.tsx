@@ -35,31 +35,31 @@ export default function ExpressReorderBar() {
   const fastMovingProducts = PRODUCTS_LIST.slice(0, 4);
 
   return (
-    <div className="bg-gradient-to-r from-sky-900 via-primary to-slate-900 text-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-800 my-8">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-700">
+    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-200">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold uppercase tracking-wider mb-2">
             <Zap size={14} className="fill-current" />
-            <span>EXPRESS SAME-DAY DISPATCH RUN</span>
+            <span>Express Same-Day Dispatch Run</span>
           </div>
-          <h3 className="font-heading font-extrabold text-2xl text-white">
+          <h3 className="font-heading font-extrabold text-2xl text-primary">
             Fast Chemist Bulk Ordering Desk
           </h3>
-          <p className="text-slate-300 text-sm">
+          <p className="text-slate-500 text-sm max-w-xl">
             Quickly add fast-moving formulations to your wholesale inquiry list for express morning and evening logistics runs across Mumbai MMR.
           </p>
         </div>
 
         {/* Dispatch Cut-off Timer */}
-        <div className="bg-slate-800/90 p-4 rounded-2xl border border-slate-700 text-center shrink-0 min-w-[220px]">
-          <div className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1 flex items-center justify-center gap-1">
-            <Clock size={13} className="text-amber-400" />
-            <span>NEXT DISPATCH CUT-OFF</span>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center shrink-0 min-w-[220px]">
+          <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider mb-1 flex items-center justify-center gap-1">
+            <Clock size={13} className="text-amber-500" />
+            <span>Next Dispatch Cut-off</span>
           </div>
-          <div className="font-heading font-extrabold text-2xl font-mono text-amber-400">
+          <div className="font-heading font-extrabold text-2xl font-mono text-primary">
             {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s
           </div>
-          <div className="text-[11px] text-slate-300 mt-1 font-medium">
+          <div className="text-[11px] text-slate-500 mt-1 font-medium">
             Order before 2:00 PM for Same-Day Delivery
           </div>
         </div>
@@ -67,20 +67,20 @@ export default function ExpressReorderBar() {
 
       {/* Fast SKUs Grid */}
       <div className="mt-6">
-        <div className="text-xs font-bold text-sky-300 uppercase tracking-wider mb-3">
-          Top Fast-Moving Chemist Reorder SKUs:
+        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+          Top Fast-Moving Chemist Reorder SKUs
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {fastMovingProducts.map((product) => {
             const isAdded = addedItems[product.id];
             return (
-              <div key={product.id} className="bg-slate-800/90 p-4 rounded-xl border border-slate-700 flex flex-col justify-between">
+              <div key={product.id} className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
                 <div>
-                  <div className="text-[11px] font-bold text-sky-400 uppercase">{product.brand}</div>
-                  <h4 className="font-bold text-white text-sm line-clamp-1 mt-0.5">{product.name}</h4>
-                  <div className="text-xs text-slate-400 mt-1">Pack: {product.packSize}</div>
-                  <div className="text-xs font-semibold text-emerald-400 mt-1">MRP: {product.mrp}</div>
+                  <div className="text-[11px] font-bold text-secondary uppercase">{product.brand}</div>
+                  <h4 className="font-bold text-primary text-sm line-clamp-1 mt-0.5">{product.name}</h4>
+                  <div className="text-xs text-slate-500 mt-1">Pack: {product.packSize}</div>
+                  <div className="text-xs font-semibold text-emerald-600 mt-1">MRP: {product.mrp}</div>
                 </div>
 
                 <button
