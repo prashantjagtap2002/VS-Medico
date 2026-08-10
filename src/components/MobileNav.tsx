@@ -34,7 +34,7 @@ export default function MobileNav() {
           className="btn btn-secondary text-xs py-2 px-1 flex-col gap-0.5 justify-center relative"
         >
           <ShoppingBag size={16} />
-          <span>Quote Basket ({totalItems})</span>
+          <span>Basket ({totalItems})</span>
         </button>
       </div>
     </div>

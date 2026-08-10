@@ -137,7 +137,7 @@ export default function BulkInquiryModal() {
               Our wholesale sales desk will contact <strong>{formData.storeName}</strong> at <strong>{formData.phone}</strong> shortly with net PTR rates and stock confirmation.
             </p>
 
-            <div className="flex justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3">
               <a
                 href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=${generateWhatsAppMessage()}`}
                 target="_blank"

@@ -15,15 +15,17 @@ import {
 interface ProductCatalogProps {
   initialCategory?: string;
   showTitle?: boolean;
+  hideControls?: boolean;
+  limit?: number;
 }
 
-export default function ProductCatalog({ initialCategory = 'all', showTitle = true }: ProductCatalogProps) {
+export default function ProductCatalog({ initialCategory = 'all', showTitle = true, hideControls = false, limit }: ProductCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const { addToBasket, basket } = useQuoteBasket();
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS_LIST.filter((product) => {
+    const results = PRODUCTS_LIST.filter((product) => {
       const matchesCategory =
         selectedCategory === 'all' || product.category === selectedCategory;
       const matchesSearch =
@@ -33,7 +35,8 @@ export default function ProductCatalog({ initialCategory = 'all', showTitle = tr
         product.id.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+    return limit ? results.slice(0, limit) : results;
+  }, [selectedCategory, searchQuery, limit]);
 
   const isInBasket = (id: string) => basket.some((item) => item.id === id);
 
@@ -50,44 +53,48 @@ export default function ProductCatalog({ initialCategory = 'all', showTitle = tr
           </div>
         )}
 
-        {/* Search & Category Filter Controls */}
-        <div className="filter-bar">
-          <div className="search-box">
-            <Search className="search-icon" size={20} />
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search by brand, medicine name, active ingredient or HSN code..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        {!hideControls && (
+          <>
+            {/* Search & Category Filter Controls */}
+            <div className="filter-bar">
+              <div className="search-box">
+                <Search className="search-icon" size={20} />
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search by brand, medicine name, active ingredient or HSN code..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
 
-          <div className="category-tabs">
-            {PRODUCT_CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`category-tab ${selectedCategory === cat.id ? 'active' : ''}`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-        </div>
+              <div className="category-tabs">
+                {PRODUCT_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`category-tab ${selectedCategory === cat.id ? 'active' : ''}`}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-        {/* Results Counter */}
-        <div className="flex justify-between items-center mb-6 text-sm text-slate-500 font-medium">
-          <span>Showing {filteredProducts.length} pharmaceutical items</span>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="text-secondary hover:underline font-semibold"
-            >
-              Clear Search
-            </button>
-          )}
-        </div>
+            {/* Results Counter */}
+            <div className="flex justify-between items-center mb-6 text-sm text-slate-500 font-medium">
+              <span>Showing {filteredProducts.length} pharmaceutical items</span>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="text-secondary hover:underline font-semibold"
+                >
+                  Clear Search
+                </button>
+              )}
+            </div>
+          </>
+        )}
 
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
@@ -177,6 +184,14 @@ export default function ProductCatalog({ initialCategory = 'all', showTitle = tr
             >
               Reset Filters
             </button>
+          </div>
+        )}
+
+        {limit && (
+          <div className="text-center mt-8">
+            <a href="/products" className="btn btn-primary">
+              <span>View Full Product Catalog</span>
+            </a>
           </div>
         )}
       </div>

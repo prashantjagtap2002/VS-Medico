@@ -1,12 +1,12 @@
 "use client";
 
 import React from 'react';
-import { COMPANY_INFO, TRUST_STATS } from '@/data/companyData';
+import { COMPANY_INFO, TRUST_STATS, LEADERSHIP_TEAM } from '@/data/companyData';
 import { useQuoteBasket } from '@/components/QuoteBasketContext';
-import { 
-  ShieldCheck, 
-  Snowflake, 
-  Truck, 
+import {
+  ShieldCheck,
+  Snowflake,
+  Truck,
   CheckCircle2,
   FileText,
   MessageCircle
@@ -41,7 +41,7 @@ export default function AboutPage() {
         </div>
 
         {/* Detailed Story & Mission */}
-        <div className="grid-2 items-center mb-16">
+        <div className="grid-2 items-start mb-20">
           <div className="flex flex-col gap-4 text-slate-600 leading-relaxed">
             <h2 className="font-heading font-bold text-2xl text-primary">
               Our Legacy & Wholesale Footprint
@@ -144,13 +144,39 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Leadership Team */}
+        <section className="mb-16">
+          <div className="max-w-3xl mb-8">
+            <span className="text-secondary font-bold text-xs uppercase tracking-widest bg-sky-100 px-3 py-1 rounded-full">
+              LEADERSHIP TEAM
+            </span>
+            <h2 className="font-heading font-extrabold text-3xl text-primary mt-3">
+              The People Behind VS Medico
+            </h2>
+            <p className="text-slate-600 mt-2 text-sm">
+              A team of pharma distribution veterans managing sourcing, cold chain, compliance, and B2B accounts.
+            </p>
+          </div>
+
+          <div className="grid-4">
+            {LEADERSHIP_TEAM.map((member, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <div className="team-avatar">{member.initials}</div>
+                <h3 className="font-bold text-primary text-base mb-0.5">{member.name}</h3>
+                <div className="text-xs font-semibold text-secondary mb-2">{member.role}</div>
+                <p className="text-xs text-slate-500 leading-relaxed">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* CTA */}
         <div className="text-center bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto">
           <h3 className="font-heading font-bold text-2xl text-primary mb-2">Partner with VS Medico Today</h3>
           <p className="text-slate-600 text-sm mb-6">
             Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <button onClick={() => setIsModalOpen(true)} className="btn btn-primary">
               <FileText size={18} />
               <span>Submit Account Request</span>

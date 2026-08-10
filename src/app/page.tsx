@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
-import ExpressReorderBar from '@/components/ExpressReorderBar';
-import MarginCalculator from '@/components/MarginCalculator';
 import ColdChainTracker from '@/components/ColdChainTracker';
 import ProductCatalog from '@/components/ProductCatalog';
 import BrandsGrid from '@/components/BrandsGrid';
@@ -38,7 +36,7 @@ export default function Home() {
       <TrustBar />
 
       {/* Why Choose VS Medico Section */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white">
         <div className="container">
           <div className="section-header">
             <span className="section-subtitle">THE VS MEDICO ADVANTAGE</span>
@@ -63,25 +61,19 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Express Fast Reorder Bar */}
-          <ExpressReorderBar />
-
-          {/* Interactive Margin & PTR Profit Calculator */}
-          <MarginCalculator />
-
           {/* WHO-GDP Cold Storage Telemetry Dashboard */}
           <ColdChainTracker />
         </div>
       </section>
 
       {/* Featured Products Showcase */}
-      <ProductCatalog showTitle={true} />
+      <ProductCatalog showTitle={true} hideControls limit={6} />
 
       {/* Brands We Deal In */}
-      <BrandsGrid />
+      <BrandsGrid limit={10} />
 
       {/* Frequently Asked Questions (FAQs) */}
-      <section className="py-24 bg-white border-t border-slate-200">
+      <section className="py-16 bg-white border-t border-slate-200">
         <div className="container">
           <div className="section-header">
             <span className="section-subtitle">COMMON B2B QUESTIONS</span>

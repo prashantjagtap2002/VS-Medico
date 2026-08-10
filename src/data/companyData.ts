@@ -104,6 +104,13 @@ export interface FAQItem {
   a: string;
 }
 
+export interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  initials: string;
+}
+
 export const COMPANY_INFO: CompanyInfo = {
   name: "VS Medico",
   legalName: "VS Medico LLP",
@@ -394,6 +401,33 @@ export const TRUST_STATS: TrustStat[] = [
   { value: "5,000+", label: "Active Pharma SKUs", detail: "Formulations, Generics & Cold Chain" },
   { value: "1,200+", label: "Chemist & Hospital Clients", detail: "Registered buyers across MMR" },
   { value: "50+", label: "Pharma MNC Brands", detail: "Direct authorized distribution" }
+];
+
+export const LEADERSHIP_TEAM: TeamMember[] = [
+  {
+    name: "V. S. Sharma",
+    role: "Founder & Managing Partner",
+    bio: "Founded VS Medico in 1998 and has led its growth into a 5,000+ SKU wholesale distribution house serving the MMR.",
+    initials: "VS"
+  },
+  {
+    name: "Rohan Sharma",
+    role: "Director – Operations & Logistics",
+    bio: "Oversees the Bhandup warehouse, cold-chain fleet, and same-day dispatch operations across Mumbai & Thane.",
+    initials: "RS"
+  },
+  {
+    name: "Anita Deshmukh",
+    role: "Head – Quality & Regulatory Compliance",
+    bio: "Manages FDA licensing, batch audit trails, and WHO-GDP cold chain protocol adherence.",
+    initials: "AD"
+  },
+  {
+    name: "Imran Shaikh",
+    role: "Head – B2B Sales & Key Accounts",
+    bio: "Leads wholesale pricing, chemist onboarding, and hospital institutional accounts.",
+    initials: "IS"
+  }
 ];
 
 export const FAQS: FAQItem[] = [

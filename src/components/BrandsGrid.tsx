@@ -4,20 +4,29 @@ import React from 'react';
 import { PHARMA_BRANDS, COMPANY_INFO } from '@/data/companyData';
 import { Building2, MessageCircle } from 'lucide-react';
 
-export default function BrandsGrid() {
+interface BrandsGridProps {
+  limit?: number;
+  showHeader?: boolean;
+}
+
+export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps) {
+  const brands = limit ? PHARMA_BRANDS.slice(0, limit) : PHARMA_BRANDS;
+
   return (
     <section className="py-16 bg-slate-50 border-t border-slate-200">
       <div className="container">
-        <div className="section-header">
-          <span className="section-subtitle">AUTHORIZED PHARMA PARTNERS</span>
-          <h2 className="section-title">Major Brands We Stock & Distribute</h2>
-          <p className="section-desc">
-            VS Medico maintains strong relationships with leading multinational & Indian pharmaceutical companies to ensure seamless supply chain availability for chemists and hospitals.
-          </p>
-        </div>
+        {showHeader && (
+          <div className="section-header">
+            <span className="section-subtitle">AUTHORIZED PHARMA PARTNERS</span>
+            <h2 className="section-title">Major Brands We Stock & Distribute</h2>
+            <p className="section-desc">
+              VS Medico maintains strong relationships with leading multinational & Indian pharmaceutical companies to ensure seamless supply chain availability for chemists and hospitals.
+            </p>
+          </div>
+        )}
 
         <div className="brands-grid">
-          {PHARMA_BRANDS.map((brand, idx) => (
+          {brands.map((brand, idx) => (
             <div key={idx} className="brand-card group">
               <div className="w-12 h-12 rounded-xl bg-sky-50 text-secondary group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-3 transition-colors">
                 <Building2 size={24} />
@@ -37,15 +46,22 @@ export default function BrandsGrid() {
             <h3 className="font-bold text-primary text-xl mb-1">Looking for a specific Pharma Manufacturer or Division?</h3>
             <p className="text-sm text-slate-600">We continuously expand our stockist portfolio. Get in touch with our procurement desk for specific brand requirements.</p>
           </div>
-          <a
-            href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20am%20looking%20for%20wholesale%20rates%20for%20specific%20pharma%20brands.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-whatsapp shrink-0"
-          >
-            <MessageCircle size={18} />
-            <span>Inquire Brand Rates</span>
-          </a>
+          <div className="flex flex-wrap gap-3 shrink-0 justify-center">
+            {limit && (
+              <a href="/brands" className="btn btn-outline">
+                <span>View All Brands</span>
+              </a>
+            )}
+            <a
+              href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20am%20looking%20for%20wholesale%20rates%20for%20specific%20pharma%20brands.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-whatsapp"
+            >
+              <MessageCircle size={18} />
+              <span>Inquire Brand Rates</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

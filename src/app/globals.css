@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
 :root {
   --primary: #0f3b66;
@@ -267,7 +268,7 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.65rem;
+  gap: 1.35rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -331,7 +332,7 @@ button {
   display: inline-flex;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1240px) {
   .nav-desktop {
     display: none;
   }
@@ -340,10 +341,6 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .nav-wa-btn {
-    display: none;
   }
 }
 
@@ -425,6 +422,12 @@ button {
   padding: 1.05rem 2rem;
   font-size: 1.05rem;
   border-radius: var(--radius-lg);
+}
+
+@media (max-width: 1550px) {
+  .nav-actions .nav-wa-btn {
+    display: none;
+  }
 }
 
 /* Badge System */
@@ -628,7 +631,7 @@ button {
 .section-header {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto 4.5rem auto;
+  margin: 0 auto 3rem auto;
 }
 
 .section-subtitle {
@@ -1264,6 +1267,24 @@ textarea.form-control {
   gap: 0.65rem;
 }
 
+/* Leadership Team Avatar */
+.team-avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto 1rem auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+}
+
 /* Contact Card Styling */
 .contact-card {
   background: #ffffff;
@@ -1501,8 +1522,8 @@ textarea.form-control {
 .b2b-cta-banner {
   background: linear-gradient(135deg, var(--primary-dark) 0%, #091e36 100%);
   color: white;
-  padding: 5rem 0;
-  margin-top: 4rem;
+  padding: 3.5rem 0;
+  margin-top: 2.5rem;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
