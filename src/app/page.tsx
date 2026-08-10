@@ -48,7 +48,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid-4">
             {COMPANY_INFO.valuePropositions.map((vp, idx) => (
               <div key={idx} className="feature-card">
                 <div className="feature-icon">
@@ -82,7 +82,7 @@ export default function Home() {
 
       {/* Frequently Asked Questions (FAQs) */}
       <section className="py-24 bg-white border-t border-slate-200">
-        <div className="container max-w-4xl">
+        <div className="container">
           <div className="section-header">
             <span className="section-subtitle">COMMON B2B QUESTIONS</span>
             <h2 className="section-title">Frequently Asked Questions</h2>
@@ -91,23 +91,20 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="space-y-5">
+          <div className="faq-container">
             {FAQS.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
-                <div
-                  key={index}
-                  className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50/80 transition-all shadow-2xs"
-                >
+                <div key={index} className="faq-item">
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-6 text-left font-bold text-primary text-lg flex justify-between items-center hover:bg-slate-100/80 transition-colors"
+                    className="faq-question-btn"
                   >
                     <span>{faq.q}</span>
                     {isOpen ? <ChevronUp size={22} className="text-secondary shrink-0" /> : <ChevronDown size={22} className="text-slate-400 shrink-0" />}
                   </button>
                   {isOpen && (
-                    <div className="p-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+                    <div className="faq-answer-box">
                       {faq.a}
                     </div>
                   )}
@@ -119,14 +116,14 @@ export default function Home() {
       </section>
 
       {/* Quick B2B Banner CTA */}
-      <section className="py-20 bg-gradient-to-r from-slate-900 via-primary to-slate-900 text-white relative overflow-hidden">
-        <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 text-center lg:text-left">
+      <section className="b2b-cta-banner">
+        <div className="container">
+          <div className="b2b-cta-content">
             <div>
               <span className="inline-block text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950/80 px-4 py-1.5 rounded-full border border-sky-800 mb-4">
                 B2B REGISTERED CHEMISTS & HOSPITALS ONLY
               </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold font-heading mb-4">
+              <h2 className="text-3xl md:text-4xl font-extrabold font-heading mb-3 text-white">
                 Ready to Order Wholesale Medicines?
               </h2>
               <p className="text-slate-300 text-lg max-w-2xl leading-relaxed">

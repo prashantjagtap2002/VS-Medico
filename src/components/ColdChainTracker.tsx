@@ -23,8 +23,8 @@ export default function ColdChainTracker() {
   ];
 
   return (
-    <div className="bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-md my-16 md:my-20">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200">
+    <div className="cold-chain-card">
+      <div className="cold-chain-header">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider mb-2">
             <Activity size={14} className="text-sky-600 animate-pulse" />
@@ -33,7 +33,7 @@ export default function ColdChainTracker() {
           <h3 className="font-heading font-extrabold text-2xl text-primary">
             WHO-GDP Cold Storage & Fulfillment Assurance
           </h3>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 text-sm mt-1">
             Continuous 24/7 digital thermal monitoring for insulins, vaccines, & critical care injectables.
           </p>
         </div>
@@ -61,9 +61,9 @@ export default function ColdChainTracker() {
           Cold Chain Order Fulfillment Pipeline:
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+        <div className="cold-chain-pipeline-grid">
           {steps.map((step, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 relative flex flex-col justify-center h-full">
+            <div key={idx} className="cold-chain-step-card">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
                   {idx + 1}

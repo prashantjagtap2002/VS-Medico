@@ -104,10 +104,12 @@ export default function BulkInquiryModal() {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content max-w-2xl">
+      <div className="modal-content">
         <div className="modal-header">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="text-secondary" size={24} />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
+              <ShoppingBag size={22} />
+            </div>
             <div>
               <h3 className="font-bold text-primary text-xl font-heading">
                 B2B Bulk Wholesale Inquiry
@@ -155,8 +157,8 @@ export default function BulkInquiryModal() {
             {/* Basket Items List */}
             <div className="mb-6">
               <div className="flex justify-between items-center mb-3">
-                <h4 className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
-                  <span>Selected Products ({basket.length})</span>
+                <h4 className="font-bold text-slate-800 text-sm">
+                  Selected Products ({basket.length})
                 </h4>
                 {basket.length > 0 && (
                   <button
@@ -170,9 +172,9 @@ export default function BulkInquiryModal() {
               </div>
 
               {basket.length > 0 ? (
-                <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 p-2 bg-slate-50">
+                <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-xl p-2 bg-slate-50 flex flex-col gap-2">
                   {basket.map((item) => (
-                    <div key={item.id} className="p-2.5 flex items-center justify-between gap-3 bg-white rounded-lg mb-1.5 shadow-2xs">
+                    <div key={item.id} className="p-3 flex items-center justify-between gap-3 bg-white rounded-lg border border-slate-200">
                       <div>
                         <div className="font-bold text-sm text-primary">{item.name}</div>
                         <div className="text-xs text-slate-500">
@@ -180,7 +182,7 @@ export default function BulkInquiryModal() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 shrink-0">
                         <div className="flex items-center border border-slate-300 rounded-md bg-white">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -218,8 +220,8 @@ export default function BulkInquiryModal() {
             </div>
 
             {/* Chemist / Hospital Details Form */}
-            <form onSubmit={handleSubmitOnline} className="space-y-3">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <form onSubmit={handleSubmitOnline} className="flex flex-col gap-4">
+              <div className="grid-2">
                 <div className="form-group mb-0">
                   <label className="form-label">Pharmacy / Hospital Name *</label>
                   <input
@@ -247,7 +249,7 @@ export default function BulkInquiryModal() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid-2">
                 <div className="form-group mb-0">
                   <label className="form-label">WhatsApp Mobile Number *</label>
                   <input
@@ -274,7 +276,7 @@ export default function BulkInquiryModal() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid-2">
                 <div className="form-group mb-0">
                   <label className="form-label">Drug License No. (Form 20B/21B)</label>
                   <input
@@ -283,7 +285,7 @@ export default function BulkInquiryModal() {
                     placeholder="MH-MUM-20B-XXXXXX"
                     value={formData.dlNumber}
                     onChange={handleInputChange}
-                    className="form-control text-xs"
+                    className="form-control"
                   />
                 </div>
 
@@ -295,7 +297,7 @@ export default function BulkInquiryModal() {
                     placeholder="27XXXXX0000X1ZX"
                     value={formData.gstin}
                     onChange={handleInputChange}
-                    className="form-control text-xs"
+                    className="form-control"
                   />
                 </div>
               </div>
@@ -312,7 +314,7 @@ export default function BulkInquiryModal() {
                 />
               </div>
 
-              <div className="pt-3 flex flex-col sm:flex-row gap-3">
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={handleWhatsAppSend}

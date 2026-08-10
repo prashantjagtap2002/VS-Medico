@@ -14,7 +14,7 @@ export default function CompliancePage() {
   const { setIsLicenseModalOpen } = useQuoteBasket();
 
   return (
-    <div className="py-12">
+    <div className="py-16">
       <div className="container">
         {/* Header */}
         <div className="max-w-3xl mb-12">
@@ -30,13 +30,13 @@ export default function CompliancePage() {
         </div>
 
         {/* License Badges Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid-2 mb-12">
           {/* License 20B */}
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-sky-50 rounded-bl-full flex items-start justify-end p-4 text-sky-400">
               <FileCheck size={36} />
             </div>
-            <span className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">WHLESALE DRUG LICENSE</span>
+            <span className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">WHOLESALE DRUG LICENSE</span>
             <h2 className="font-heading font-bold text-2xl text-primary mb-1">Form 20B Registration</h2>
             <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
 
@@ -72,7 +72,7 @@ export default function CompliancePage() {
 
         {/* GST & Tax Compliance */}
         <div className="bg-slate-900 text-white p-8 md:p-10 rounded-3xl mb-12 shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="grid-2 items-center">
             <div>
               <span className="text-xs font-bold text-sky-400 uppercase tracking-widest">TAX COMPLIANCE STATUS</span>
               <h2 className="font-heading font-bold text-3xl text-white mt-1 mb-3">GSTIN Registration & Billing</h2>
@@ -84,7 +84,7 @@ export default function CompliancePage() {
               </div>
             </div>
 
-            <div className="space-y-3 bg-slate-800/80 p-6 rounded-2xl border border-slate-700 text-xs text-slate-300">
+            <div className="flex flex-col gap-3 bg-slate-800/80 p-6 rounded-2xl border border-slate-700 text-xs text-slate-300">
               <div className="flex items-center gap-2 text-white font-bold text-sm mb-2">
                 <CheckCircle2 size={18} className="text-emerald-400" />
                 <span>Quality & Compliance Pillars</span>

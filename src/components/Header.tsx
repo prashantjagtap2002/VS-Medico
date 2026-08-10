@@ -85,7 +85,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:block">
+          <nav className="nav-desktop">
             <ul className="nav-links">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -108,7 +108,7 @@ export default function Header() {
               title="View Quote Basket"
             >
               <ShoppingBag size={18} />
-              <span className="hidden sm:inline">Inquiry Basket</span>
+              <span className="nav-btn-label">Inquiry Basket</span>
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
                   {totalItems}
@@ -120,16 +120,16 @@ export default function Header() {
               href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20would%20like%20to%20inquire%20about%20pharmaceutical%20wholesale%20rates.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-whatsapp btn-sm hidden lg:inline-flex"
+              className="btn btn-whatsapp btn-sm nav-wa-btn"
             >
               <MessageCircle size={18} />
               <span>WhatsApp Direct</span>
             </a>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button (Only shows on mobile screens) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-primary focus:outline-none"
+              className="mobile-toggle-btn p-2 text-primary focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -139,13 +139,13 @@ export default function Header() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg animate-fadeIn">
+          <div className="mobile-drawer-menu bg-white border-b border-slate-200 px-6 py-5 space-y-3 shadow-xl animate-fadeIn">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold text-base ${
+                className={`block px-4 py-3 rounded-xl font-semibold text-base ${
                   pathname === link.href
                     ? 'bg-sky-50 text-secondary'
                     : 'text-slate-700 hover:bg-slate-50'
@@ -154,22 +154,22 @@ export default function Header() {
                 {link.name}
               </Link>
             ))}
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setIsLicenseModalOpen(true);
                 }}
-                className="w-full text-left px-3 py-2 text-sm font-semibold text-emerald-700 bg-emerald-50 rounded-md flex items-center gap-2"
+                className="w-full text-left px-4 py-3 text-sm font-semibold text-emerald-700 bg-emerald-50 rounded-xl flex items-center gap-2"
               >
-                <ShieldCheck size={16} /> View Drug License & GST Details
+                <ShieldCheck size={18} /> View Drug License & GST Details
               </button>
 
               <a
                 href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp w-full justify-center"
+                className="btn btn-whatsapp w-full justify-center py-3"
               >
                 <MessageCircle size={18} /> WhatsApp Quick Quote
               </a>

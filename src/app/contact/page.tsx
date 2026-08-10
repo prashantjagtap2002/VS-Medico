@@ -15,7 +15,7 @@ import {
 
 export default function ContactPage() {
   return (
-    <div className="py-12">
+    <div className="py-16">
       <div className="container">
         {/* Header */}
         <div className="max-w-3xl mb-12">
@@ -29,7 +29,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid-4 mb-16">
           {/* Office Address */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
             <div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form & Google Map Side-by-Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid-2 mb-16">
           <ContactForm />
           <GoogleMapEmbed />
         </div>

@@ -16,9 +16,9 @@ export default function AboutPage() {
   const { setIsModalOpen, setIsLicenseModalOpen } = useQuoteBasket();
 
   return (
-    <div className="py-12">
+    <div className="py-16">
       <div className="container">
-        {/* Breadcrumb & Header */}
+        {/* Header */}
         <div className="max-w-3xl mb-12">
           <span className="text-secondary font-bold text-sm tracking-wider uppercase">ABOUT VS MEDICO LLP</span>
           <h1 className="font-heading font-extrabold text-4xl text-primary mt-2 mb-4">
@@ -30,7 +30,7 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid-4 mb-16">
           {TRUST_STATS.map((stat, idx) => (
             <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
               <div className="font-heading font-extrabold text-3xl text-primary mb-1">{stat.value}</div>
@@ -41,8 +41,8 @@ export default function AboutPage() {
         </div>
 
         {/* Detailed Story & Mission */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          <div className="space-y-4 text-slate-600 leading-relaxed">
+        <div className="grid-2 items-center mb-16">
+          <div className="flex flex-col gap-4 text-slate-600 leading-relaxed">
             <h2 className="font-heading font-bold text-2xl text-primary">
               Our Legacy & Wholesale Footprint
             </h2>
@@ -57,9 +57,9 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="bg-slate-900 text-white p-8 rounded-3xl border border-slate-800 shadow-xl space-y-6">
+          <div className="bg-slate-900 text-white p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col gap-6">
             <h3 className="font-heading font-bold text-xl text-sky-400">Company Mission & Quality Commitment</h3>
-            <div className="space-y-4 text-sm text-slate-300">
+            <div className="flex flex-col gap-4 text-sm text-slate-300">
               <div className="flex items-start gap-3">
                 <CheckCircle2 size={20} className="text-emerald-400 shrink-0 mt-0.5" />
                 <div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid-3">
             <div className="bg-white p-6 rounded-2xl border border-slate-200">
               <div className="w-12 h-12 rounded-xl bg-sky-100 text-secondary flex items-center justify-center mb-4">
                 <Snowflake size={26} />
