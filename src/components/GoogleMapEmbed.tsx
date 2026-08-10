@@ -14,7 +14,7 @@ export default function GoogleMapEmbed() {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden flex flex-col justify-between h-full">
+    <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
       <div className="p-5 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{ background: '#0f172a' }}>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
@@ -47,7 +47,7 @@ export default function GoogleMapEmbed() {
         </div>
       </div>
 
-      <div className="relative w-full h-[420px] bg-slate-100 flex-grow">
+      <div className="relative w-full h-[450px] bg-slate-100">
         <iframe
           title="VS Medico Location Map"
           src={COMPANY_INFO.address.googleMapEmbedUrl}

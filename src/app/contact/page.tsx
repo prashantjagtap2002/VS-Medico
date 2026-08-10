@@ -121,7 +121,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form & Google Map Side-by-Side */}
-        <div className="grid-2 mb-16">
+        <div className="grid-2 items-start mb-16">
           <ContactForm />
           <GoogleMapEmbed />
         </div>
