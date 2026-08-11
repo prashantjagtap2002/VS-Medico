@@ -157,7 +157,10 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
                 className={`block px-4 py-3 rounded-xl font-semibold text-base ${
                   pathname === link.href
                     ? 'bg-sky-50 text-secondary'

@@ -4,7 +4,6 @@ import { Metadata, Viewport } from 'next';
 import { QuoteBasketProvider } from '@/components/QuoteBasketContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import MobileNav from '@/components/MobileNav';
 import BulkInquiryModal from '@/components/BulkInquiryModal';
 import LicenseBadgeModal from '@/components/LicenseBadgeModal';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
@@ -106,7 +105,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
-            <MobileNav />
             <BulkInquiryModal />
             <LicenseBadgeModal />
             <WhatsAppWidget />

@@ -283,8 +283,8 @@ export default function AboutPage() {
             <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
               Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button onClick={() => setIsModalOpen(true)} className="btn btn-white font-bold">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
+              <button onClick={() => setIsModalOpen(true)} className="btn btn-white font-bold w-full sm:w-auto justify-center">
                 <FileText size={18} />
                 <span>Submit Account Request</span>
               </button>
@@ -292,7 +292,7 @@ export default function AboutPage() {
                 href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp border-none font-bold"
+                className="btn btn-whatsapp border-none font-bold w-full sm:w-auto justify-center"
               >
                 <MessageCircle size={18} />
                 <span>WhatsApp Direct Desk</span>
