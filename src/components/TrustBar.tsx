@@ -34,14 +34,14 @@ export default function TrustBar() {
           {highlights.map((item, index) => (
             <div 
               key={index}
-              className="flex flex-row items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:border-sky-300 transition-all"
+              className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 p-4 sm:p-5 text-center sm:text-left rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:border-sky-300 transition-all"
             >
-              <div className="w-11 h-11 rounded-xl bg-sky-50 text-secondary flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 sm:w-11 sm:h-11 rounded-xl bg-sky-50 text-secondary flex items-center justify-center shrink-0 mb-1 sm:mb-0">
                 {item.icon}
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h4 className="font-extrabold text-primary text-sm leading-snug">{item.title}</h4>
-                <p className="text-xs text-slate-500 mt-0.5 leading-snug">{item.subtitle}</p>
+                <p className="text-xs text-slate-500 mt-1 sm:mt-0.5 leading-snug">{item.subtitle}</p>
               </div>
             </div>
           ))}

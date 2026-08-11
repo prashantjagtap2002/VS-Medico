@@ -1621,7 +1621,88 @@ textarea.form-control {
     font-size: 2rem;
   }
 
-  .grid-4, .grid-3, .grid-2 {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-card-main {
+    padding: 1.5rem;
+  }
+
+  .hero-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .hero-stats-mini {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .hero-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .feature-card {
+    padding: 1.25rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.825rem;
+  }
+  
+  .feature-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .brand-card {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .brand-logo-text {
+    font-size: 1.15rem;
+  }
+
+  .brands-grid {
+    gap: 1rem;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+    max-height: 85vh;
+  }
+
+  .grid-3, .grid-2 {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }

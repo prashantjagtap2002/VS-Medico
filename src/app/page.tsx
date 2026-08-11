@@ -162,16 +162,6 @@ export default function Home() {
                 <FileText size={20} />
                 <span>Request B2B Rate Card</span>
               </button>
-
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp btn-lg"
-              >
-                <MessageCircle size={20} />
-                <span>WhatsApp Instant Inquiry</span>
-              </a>
             </div>
           </div>
         </div>

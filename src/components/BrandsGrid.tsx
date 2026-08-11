@@ -49,7 +49,7 @@ export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps
                 </div>
                 <div className="brand-logo-text">{brand.logoText}</div>
                 <div className="text-xs text-slate-500 mb-3">{brand.category}</div>
-                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                <span className="text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-100 inline-block leading-tight text-center">
                   {brand.highlight}
                 </span>
               </div>
@@ -62,17 +62,17 @@ export default function BrandsGrid({ limit, showHeader = true }: BrandsGridProps
             <h3 className="font-bold text-primary text-xl mb-1">Looking for a specific Pharma Manufacturer or Division?</h3>
             <p className="text-sm text-slate-600">We continuously expand our stockist portfolio. Get in touch with our procurement desk for specific brand requirements.</p>
           </div>
-          <div className="flex flex-wrap gap-3 shrink-0 justify-center">
+          <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3 shrink-0 justify-center mt-2 md:mt-0">
             {limit && (
-              <a href="/brands" className="btn btn-outline">
+              <a href="/brands" className="btn btn-outline w-full sm:w-auto justify-center">
                 <span>View All Brands</span>
               </a>
             )}
             <a
-              href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20am%20looking%20for%20wholesale%20rates%20for%20specific%20pharma%20brands.`}
+              href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I'm%20looking%20for%20rates/availability%20for%20a%20specific%20brand.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-whatsapp"
+              className="btn btn-whatsapp w-full sm:w-auto justify-center"
             >
               <MessageCircle size={18} />
               <span>Inquire Brand Rates</span>

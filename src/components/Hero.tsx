@@ -87,7 +87,7 @@ export default function Hero() {
                 ))}
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <div className="hero-card-footer mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                 <span className="flex items-center gap-1.5 font-semibold text-emerald-700">
                   <Truck size={14} className="text-emerald-600" />
                   Today's MMR Delivery Active

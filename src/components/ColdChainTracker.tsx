@@ -25,9 +25,9 @@ export default function ColdChainTracker() {
     <div className="cold-chain-card">
       <div className="cold-chain-header">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider mb-2">
-            <Activity size={14} className="text-sky-600 animate-pulse" />
-            <span>LIVE BHANDUP WAREHOUSE TELEMETRY</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 whitespace-nowrap">
+            <Activity size={14} className="text-sky-600 animate-pulse shrink-0" />
+            <span>LIVE WAREHOUSE TELEMETRY</span>
           </div>
           <h3 className="font-heading font-extrabold text-2xl text-primary">
             WHO-GDP Cold Storage & Fulfillment Assurance
