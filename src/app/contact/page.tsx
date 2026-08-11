@@ -31,7 +31,7 @@ export default function ContactPage() {
         {/* Contact Info Cards - Horizontal row with icon left, text right */}
         <div className="grid-2" style={{ marginBottom: '2.5rem' }}>
           {/* Office Address */}
-          <div className="contact-card">
+          <div className="contact-card h-full">
             <div className="flex items-start gap-4">
               <div className="w-11 h-11 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
                 <MapPin size={22} />
@@ -47,7 +47,7 @@ export default function ContactPage() {
           </div>
 
           {/* Sales Phone */}
-          <div className="contact-card">
+          <div className="contact-card h-full">
             <div className="flex items-start gap-4">
               <div className="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                 <Phone size={22} />
@@ -61,7 +61,7 @@ export default function ContactPage() {
           </div>
 
           {/* Email Support */}
-          <div className="contact-card">
+          <div className="contact-card h-full">
             <div className="flex items-start gap-4">
               <div className="w-11 h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
                 <Mail size={22} />
@@ -75,7 +75,7 @@ export default function ContactPage() {
           </div>
 
           {/* Working Hours & WhatsApp */}
-          <div className="contact-card">
+          <div className="contact-card h-full">
             <div className="flex items-start gap-4">
               <div className="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
                 <Clock size={22} />

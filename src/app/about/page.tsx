@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { COMPANY_INFO, TRUST_STATS, LEADERSHIP_TEAM } from '@/data/companyData';
 import { useQuoteBasket } from '@/components/QuoteBasketContext';
 import {
@@ -181,28 +182,95 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership Team */}
-      <section className="py-20 md:py-24 bg-white">
+      {/* Timeline & Leadership Team */}
+      <section className="py-20 md:py-24 bg-slate-50 border-t border-slate-200 relative">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Leadership Team</span>
+            <span className="section-subtitle">Our Journey & Leadership</span>
             <h2 className="section-title">The People Behind VS Medico</h2>
             <p className="section-desc">
-              A team of pharma distribution veterans managing sourcing, cold chain, compliance, and B2B accounts.
+              From our humble beginnings to becoming Mumbai's premier pharmaceutical super-stockist.
             </p>
           </div>
 
-          <div className="grid-4">
-            {LEADERSHIP_TEAM.map((member, idx) => (
-              <div key={idx} className="feature-card items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-slate-100 text-primary flex items-center justify-center text-xl font-bold font-heading mb-5">
-                  {member.initials}
-                </div>
-                <h3 className="!mb-1">{member.name}</h3>
-                <div className="text-xs font-bold text-secondary tracking-widest uppercase mb-3">{member.role}</div>
-                <p>{member.bio}</p>
+          <div className="relative max-w-5xl mx-auto mt-16">
+            {/* Vertical Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-slate-200 transform md:-translate-x-1/2 rounded-full hidden md:block"></div>
+
+            {/* Node 1: Founder */}
+            <div className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
+              <div className="w-full md:w-1/2 md:pr-12 text-left md:text-right">
+                <div className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">1998 - Foundation</div>
+                <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">V. S. Sharma</h3>
+                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Founder & Managing Partner</h4>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Founded VS Medico in 1998 with a vision to streamline pharmaceutical distribution. Under his leadership, the company has grown into a 5,000+ SKU wholesale distribution house serving the entire MMR.
+                </p>
               </div>
-            ))}
+              <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-secondary rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
+              <div className="w-full md:w-1/2 md:pl-12">
+                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+                  <Image src="/images/founder.jpg" alt="V. S. Sharma - Founder" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+
+            {/* Node 2: Operations */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8 mb-20 relative">
+              <div className="w-full md:w-1/2 md:pl-12 text-left">
+                <div className="inline-block px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">Growth & Infrastructure</div>
+                <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Rohan Sharma</h3>
+                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Director – Operations & Logistics</h4>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Oversees the state-of-the-art Bhandup warehouse and cold-chain fleet. He spearheaded our modern logistics expansion, ensuring same-day dispatch operations across Mumbai & Thane.
+                </p>
+              </div>
+              <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-emerald-500 rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
+              <div className="w-full md:w-1/2 md:pr-12">
+                <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+                  <Image src="/images/warehouse.jpg" alt="VS Medico Logistics Warehouse" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+
+            {/* Node 3: Quality */}
+            <div className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
+              <div className="w-full md:w-1/2 md:pr-12 text-left md:text-right">
+                <div className="inline-block px-3 py-1 bg-sky-500 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">Quality & Compliance</div>
+                <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Anita Deshmukh</h3>
+                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – Quality & Regulatory Compliance</h4>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Manages FDA licensing, strict batch audit trails, and strict adherence to WHO-GDP cold chain protocols. She ensures that every product delivered is 100% genuine and safe.
+                </p>
+              </div>
+              <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-sky-500 rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
+              <div className="w-full md:w-1/2 md:pl-12">
+                <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md h-full flex flex-col justify-center">
+                  <div className="w-16 h-16 rounded-full bg-slate-100 text-primary flex items-center justify-center text-2xl font-bold font-heading mb-4">AD</div>
+                  <p className="text-slate-500 italic text-lg">"Our counterfeit-zero guarantee is the bedrock of trust we share with thousands of healthcare providers."</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Node 4: Sales */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8 relative">
+              <div className="w-full md:w-1/2 md:pl-12 text-left">
+                <div className="inline-block px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">B2B Network Expansion</div>
+                <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Imran Shaikh</h3>
+                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – B2B Sales & Key Accounts</h4>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Leads wholesale pricing strategies, chemist onboarding, and hospital institutional accounts. His efforts have expanded our active client base to over 1,200 partners.
+                </p>
+              </div>
+              <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-amber-500 rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
+              <div className="w-full md:w-1/2 md:pr-12">
+                <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-md h-full flex flex-col justify-center md:text-right">
+                  <div className="w-16 h-16 rounded-full bg-slate-100 text-primary flex items-center justify-center text-2xl font-bold font-heading mb-4 md:ml-auto">IS</div>
+                  <p className="text-slate-500 italic text-lg">"We focus on transparent PTR/MRP billing and structured credit to empower local pharmacies."</p>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </section>

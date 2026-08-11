@@ -137,15 +137,7 @@ export default function Header() {
               )}
             </button>
 
-            <a
-              href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20would%20like%20to%20inquire%20about%20pharmaceutical%20wholesale%20rates.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp btn-sm nav-wa-btn"
-            >
-              <MessageCircle size={18} />
-              <span>WhatsApp Direct</span>
-            </a>
+
 
             {/* Mobile Menu Button (Only shows on mobile screens) */}
             <button
