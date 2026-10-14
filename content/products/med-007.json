@@ -1,0 +1,19 @@
+{
+  "sku": "MED-007",
+  "name": "Telma 40 Tablet",
+  "brand": "Glenmark Pharmaceuticals",
+  "category": "formulations",
+  "composition": "Telmisartan (40mg)",
+  "packSize": "15 Tablets / Strip",
+  "mrp": "₹142.00",
+  "ptrEstimate": "High Demand Stock",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": true,
+  "featured": false,
+  "sortOrder": 70,
+  "image": "",
+  "description": "Angiotensin II receptor blocker (ARB) indicated for essential hypertension and cardiovascular protection."
+}

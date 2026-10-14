@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="same-origin" />
+    <title>VS Medico Admin</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <!-- Absolute config path so the panel works at both /admin and /admin/ -->
+    <link href="/admin/config.yml" type="application/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <!--
+      Sveltia CMS: Git-based admin panel. It only loads on this page, so it adds
+      nothing to the public website.
+      The integrity hash pins the exact file: if the CDN copy were ever tampered
+      with, the browser refuses to run it. To upgrade, change the version AND
+      regenerate the hash:
+        curl -sL https://unpkg.com/@sveltia/cms@VERSION/dist/sveltia-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+    -->
+    <script
+      src="https://unpkg.com/@sveltia/cms@0.237.0/dist/sveltia-cms.js"
+      integrity="sha384-Bxt854HbLs2oIarLZ5ugq0+YaKn0gMREbBo9F6+z58nArGKhH7V3UBVsMiMBRH9B"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

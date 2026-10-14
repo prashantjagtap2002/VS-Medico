@@ -1,8 +1,7 @@
-"use client";
-
-import React from 'react';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { COMPANY_INFO } from '@/data/companyData';
-import { useQuoteBasket } from '@/components/QuoteBasketContext';
+import { OpenLicenseButton } from '@/components/ModalTriggers';
 import { 
   ShieldCheck, 
   FileCheck, 
@@ -13,14 +12,19 @@ import {
   FileText
 } from 'lucide-react';
 
-export default function CompliancePage() {
-  const { setIsLicenseModalOpen } = useQuoteBasket();
+export const metadata: Metadata = pageMetadata({
+  title: 'Drug Licences, GST & WHO-GDP Compliance',
+  description:
+    'VS Medico LLP operates under FDA Maharashtra Form 20B/21B wholesale drug licences, full GST compliance, batch traceability and WHO-GDP 2°C–8°C cold chain storage.',
+  path: '/compliance',
+});
 
+export default function CompliancePage() {
   return (
     <div className="py-16 bg-slate-50/50">
       <div className="container">
         {/* Header */}
-        <div style={{ maxWidth: '750px', marginBottom: '3.5rem' }}>
+        <div className="max-w-3xl mb-14">
           <span className="inline-flex items-center gap-1.5 text-emerald-700 font-bold text-xs uppercase tracking-widest bg-emerald-100/80 border border-emerald-200 px-3.5 py-1.5 rounded-full mb-3">
             <Award size={14} />
             <span>REGULATORY STANDARDS & QUALITY ASSURANCE</span>
@@ -40,9 +44,9 @@ export default function CompliancePage() {
             <span>State FDA Drug Registration Certificates</span>
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.75rem' }}>
+          <div className="grid-2">
             {/* License 20B */}
-            <div className="bg-white p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between min-w-0">
               <div>
                 <div className="flex items-center justify-between gap-4 mb-4">
                   <span className="badge badge-blue font-bold">WHOLESALE DRUG LICENSE</span>
@@ -55,7 +59,7 @@ export default function CompliancePage() {
 
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-4">
                   <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-                  <div className="font-mono font-extrabold text-2xl text-primary">{COMPANY_INFO.licenses.drugLicense20B}</div>
+                  <div className="font-mono font-extrabold text-xl text-primary break-all">{COMPANY_INFO.licenses.drugLicense20B}</div>
                 </div>
               </div>
 
@@ -65,7 +69,7 @@ export default function CompliancePage() {
             </div>
 
             {/* License 21B */}
-            <div className="bg-white p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between min-w-0">
               <div>
                 <div className="flex items-center justify-between gap-4 mb-4">
                   <span className="badge badge-green font-bold">BIOLOGICALS & SCHEDULE C LICENSE</span>
@@ -78,7 +82,7 @@ export default function CompliancePage() {
 
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-4">
                   <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-                  <div className="font-mono font-extrabold text-2xl text-emerald-800">{COMPANY_INFO.licenses.drugLicense21B}</div>
+                  <div className="font-mono font-extrabold text-xl text-emerald-800 break-all">{COMPANY_INFO.licenses.drugLicense21B}</div>
                 </div>
               </div>
 
@@ -90,8 +94,8 @@ export default function CompliancePage() {
         </div>
 
         {/* Section 2: GSTIN & Tax Compliance (Dark Card) */}
-        <div className="mb-14" style={{ background: 'linear-gradient(135deg, #091a2e 0%, #0f2b48 100%)', borderRadius: '1.5rem', padding: '2.5rem', color: '#fff', border: '1px solid #1e3a5f', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+        <div className="mb-14 gst-panel">
+          <div className="gst-panel-grid">
             <div>
               <span className="text-xs font-bold text-sky-400 uppercase tracking-widest flex items-center gap-1.5 mb-2">
                 <Lock size={13} /> TAX COMPLIANCE STATUS
@@ -100,7 +104,7 @@ export default function CompliancePage() {
               <p className="text-slate-300 text-sm leading-relaxed mb-5">
                 VS Medico LLP is a fully registered tax-compliant entity under the Goods & Services Tax network in Maharashtra (State Code 27). Every invoice includes complete HSN codes, PTR rates, and tax breakdown.
               </p>
-              <div className="inline-block bg-slate-800/90 p-4 rounded-xl border border-slate-700 font-mono text-xl text-sky-300 font-extrabold">
+              <div className="inline-block bg-slate-800/90 p-4 rounded-xl border border-slate-700 font-mono text-lg text-sky-300 font-extrabold break-all">
                 GSTIN: {COMPANY_INFO.licenses.gstin}
               </div>
             </div>
@@ -145,13 +149,10 @@ export default function CompliancePage() {
               </div>
             </div>
 
-            <button
-              onClick={() => setIsLicenseModalOpen(true)}
-              className="btn btn-primary shrink-0 justify-center"
-            >
-              <FileText size={16} />
-              <span>Verify License Modal</span>
-            </button>
+            <OpenLicenseButton className="btn btn-primary shrink-0 justify-center">
+              <FileText size={16} aria-hidden="true" />
+              <span>View Licence Summary</span>
+            </OpenLicenseButton>
           </div>
         </div>
       </div>

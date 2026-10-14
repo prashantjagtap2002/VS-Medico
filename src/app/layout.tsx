@@ -1,112 +1,197 @@
 import './globals.css';
 import React, { ReactNode } from 'react';
-import { Metadata, Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Plus_Jakarta_Sans, Outfit } from 'next/font/google';
 import { QuoteBasketProvider } from '@/components/QuoteBasketContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BulkInquiryModal from '@/components/BulkInquiryModal';
 import LicenseBadgeModal from '@/components/LicenseBadgeModal';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
-import { COMPANY_INFO } from '@/data/companyData';
+import BasketToast from '@/components/BasketToast';
+import { COMPANY_INFO, GEO, PHARMA_BRANDS, SITE_URL } from '@/data/companyData';
+import { DEFAULT_OG_IMAGE } from '@/lib/seo';
+import { CONTENT_SECURITY_POLICY, jsonLd } from '@/lib/security';
+
+// Self-hosted at build time: no render-blocking request to Google Fonts.
+const bodyFont = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
+
+const headingFont = Outfit({
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  themeColor: '#0f3b66',
 };
 
+const DEFAULT_DESCRIPTION =
+  'FDA-licensed pharma wholesaler & super stockist in Bhandup West, Mumbai. 50+ brands incl. Sun, Cipla, Alkem & Lupin, 2–8°C cold chain, same-day MMR delivery.';
+
 export const metadata: Metadata = {
-  title: 'VS Medico LLP | Top Pharma Wholesale Distributor & Stockist in Mumbai',
-  description: 'VS Medico LLP is Mumbai\'s premier pharmaceutical super stockist & wholesale distributor located at Sharad Industrial Estate, Bhandup West. Authorized FDA 20B/21B licensed supplier for Sun Pharma, Cipla, Alkem, Lupin, Abbott, Torrent, GSK with WHO-GDP Cold Chain & same-day MMR delivery.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'VS Medico LLP | Pharma Wholesale Distributor & Stockist in Mumbai',
+    template: '%s | VS Medico LLP',
+  },
+  description: DEFAULT_DESCRIPTION,
+  applicationName: COMPANY_INFO.legalName,
   keywords: [
-    'VS Medico LLP',
-    'Pharma Wholesale Distributor Mumbai',
-    'Pharmaceutical Stockist Bhandup West',
-    'Super Stockist Medicine Wholesale',
-    'Form 20B 21B FDA Licensed Wholesaler',
-    'Sun Pharma Distributor Mumbai',
-    'Cipla Stockist Bhandup',
-    'Alkem Lupin Abbott Wholesale Rates',
-    'Chemist Medicine Wholesale Mumbai',
-    'WHO-GDP Cold Chain Insulin Vaccines Mumbai',
-    'Hospital Medicine Rate Contract Supplier',
-    'Sharad Industrial Estate Bhandup Wholesaler'
+    'pharma wholesale distributor Mumbai',
+    'pharmaceutical stockist Bhandup West',
+    'medicine wholesaler Mumbai',
+    'super stockist Mumbai',
+    'Form 20B 21B licensed wholesaler',
+    'cold chain insulin vaccine distributor Mumbai',
+    'hospital medicine supplier Mumbai',
+    'chemist wholesale rates Thane Mulund',
   ],
-  robots: 'index, follow',
-  authors: [{ name: 'VS Medico LLP' }],
+  alternates: { canonical: '/' },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+  },
+  authors: [{ name: COMPANY_INFO.legalName, url: SITE_URL }],
   category: 'Pharmaceutical Wholesale',
   openGraph: {
-    title: 'VS Medico LLP | Premier Pharma Wholesale Distributor & Stockist Mumbai',
-    description: "Single-window pharmaceutical wholesale stockist supplying 50+ leading brands to 1,200+ retail chemists & hospitals across Mumbai MMR since 1998.",
-    url: 'https://vsmedico.in',
-    siteName: 'VS Medico LLP',
+    title: 'VS Medico LLP | Pharma Wholesale Distributor & Stockist in Mumbai',
+    description:
+      'Single-window pharmaceutical wholesale stockist supplying 50+ leading brands to 1,200+ retail chemists & hospitals across Mumbai MMR since 1998.',
+    url: '/',
+    siteName: COMPANY_INFO.legalName,
     locale: 'en_IN',
     type: 'website',
+    images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VS Medico LLP | Pharma Wholesale Distributor in Mumbai',
+    description: 'Authorised pharma stockist for 50+ brands with same-day delivery across Mumbai MMR.',
+    images: [DEFAULT_OG_IMAGE.url],
+  },
+  formatDetection: { telephone: true, email: true, address: true },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+          other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+            ? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+            : undefined,
+        },
+      }
+    : {}),
 };
 
 const jsonLdData = {
-  "@context": "https://schema.org",
-  "@type": ["WholesaleStore", "MedicalBusiness", "LocalBusiness"],
-  "name": COMPANY_INFO.legalName,
-  "url": "https://vsmedico.in",
-  "telephone": COMPANY_INFO.contact.phoneSales,
-  "email": COMPANY_INFO.contact.emailSales,
-  "description": "Premier pharmaceutical wholesale distributor, super stockist, and FDA Form 20B/21B licensed supplier in Bhandup West, Mumbai.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": COMPANY_INFO.address.building,
-    "addressLocality": "Bhandup West, Mumbai",
-    "addressRegion": "Maharashtra",
-    "postalCode": COMPANY_INFO.address.pincode,
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 19.1471018,
-    "longitude": 72.9348123
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "opens": "09:30",
-    "closes": "20:30"
-  },
-  "areaServed": [
-    "Bhandup",
-    "Mulund",
-    "Thane",
-    "Powai",
-    "Ghatkopar",
-    "Mumbai",
-    "Navi Mumbai",
-    "Maharashtra"
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: COMPANY_INFO.legalName,
+      alternateName: COMPANY_INFO.name,
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.svg`,
+      foundingDate: String(COMPANY_INFO.establishedYear),
+      taxID: COMPANY_INFO.licenses.gstin,
+      email: COMPANY_INFO.contact.emailSales,
+      telephone: COMPANY_INFO.contact.phoneSales,
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          telephone: COMPANY_INFO.contact.phoneSales,
+          email: COMPANY_INFO.contact.emailSales,
+          areaServed: 'IN',
+          availableLanguage: ['en', 'hi', 'mr'],
+        },
+      ],
+    },
+    {
+      '@type': ['WholesaleStore', 'LocalBusiness'],
+      '@id': `${SITE_URL}/#business`,
+      name: COMPANY_INFO.legalName,
+      parentOrganization: { '@id': `${SITE_URL}/#organization` },
+      url: SITE_URL,
+      image: `${SITE_URL}/images/warehouse.webp`,
+      telephone: COMPANY_INFO.contact.phoneSales,
+      email: COMPANY_INFO.contact.emailSales,
+      description: DEFAULT_DESCRIPTION,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: `${COMPANY_INFO.address.building}, ${COMPANY_INFO.address.locality}`,
+        addressLocality: COMPANY_INFO.address.city,
+        addressRegion: COMPANY_INFO.address.state,
+        postalCode: COMPANY_INFO.address.pincode,
+        addressCountry: 'IN',
+      },
+      geo: { '@type': 'GeoCoordinates', latitude: GEO.latitude, longitude: GEO.longitude },
+      hasMap: COMPANY_INFO.address.mapDirectionsUrl,
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '09:30',
+        closes: '20:30',
+      },
+      areaServed: ['Bhandup', 'Mulund', 'Thane', 'Powai', 'Ghatkopar', 'Kurla', 'Dadar', 'Mumbai', 'Navi Mumbai'].map(
+        (name) => ({ '@type': 'Place', name })
+      ),
+      brand: PHARMA_BRANDS.map((b) => ({ '@type': 'Brand', name: b.name })),
+      knowsAbout: [
+        'Pharmaceutical wholesale distribution',
+        'Drug licence Form 20B and 21B',
+        'WHO-GDP cold chain storage (2°C to 8°C)',
+        'Hospital rate contracts',
+        'PTR and MRP pricing',
+      ],
+      priceRange: '₹₹',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: COMPANY_INFO.legalName,
+      inLanguage: 'en-IN',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
   ],
-  "knowsAbout": [
-    "Pharmaceutical Wholesale",
-    "FDA Drug License Form 20B 21B",
-    "WHO-GDP Cold Storage",
-    "Hospital Rate Contracts",
-    "Net PTR Medicine Rates"
-  ]
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-IN" className={`${bodyFont.variable} ${headingFont.variable}`} suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-        />
+        {process.env.NODE_ENV === 'production' && (
+          <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
+        )}
+        {/* Enables scroll-reveal animations only when JS runs, so content is never hidden without it. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(jsonLdData)} />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <QuoteBasketProvider>
           <div className="min-h-screen flex flex-col justify-between">
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
             <Footer />
             <BulkInquiryModal />
             <LicenseBadgeModal />
+            <BasketToast />
             <WhatsAppWidget />
           </div>
         </QuoteBasketProvider>

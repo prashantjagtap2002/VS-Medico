@@ -1,0 +1,19 @@
+{
+  "sku": "MED-006",
+  "name": "Meropenem 1g Injection (Vial)",
+  "brand": "Cipla / Sun Pharma",
+  "category": "critical-care",
+  "composition": "Meropenem IP 1000mg",
+  "packSize": "1 Vial + WFI",
+  "mrp": "₹950.00",
+  "ptrEstimate": "Hospital & ICU Special Rate",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 60,
+  "image": "",
+  "description": "Broad-spectrum carbapenem antibiotic for severe hospital-acquired infections and ICU critical care."
+}

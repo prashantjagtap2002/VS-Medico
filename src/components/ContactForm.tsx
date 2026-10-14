@@ -1,109 +1,245 @@
 "use client";
 
 import React, { useState, FormEvent } from 'react';
-import { Send, CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
+import { Send, CheckCircle2, MessageCircle, AlertTriangle } from 'lucide-react';
+import { Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
+import {
+  submitLead,
+  whatsappLink,
+  isFormDeliveryConfigured,
+  fieldsToMessage,
+  isValidIndianPhone,
+  isValidEmail,
+} from '@/lib/forms';
+
+const INQUIRY_TYPES = [
+  { value: 'Wholesale Pricing', label: 'Request Wholesale Rates / PTR List' },
+  { value: 'New Chemist Registration', label: 'New Chemist Account Opening' },
+  { value: 'Hospital Bulk Contract', label: 'Hospital & ICU Institutional Order' },
+  { value: 'Cold Chain Vaccines', label: 'Cold Chain / Insulin Supply' },
+  { value: 'Order Tracking', label: 'Existing Order / Delivery Status' },
+  { value: 'General Query', label: 'General Inquiry' },
+];
+
+const EMPTY = {
+  fullName: '',
+  storeName: '',
+  email: '',
+  phone: '',
+  inquiryType: INQUIRY_TYPES[0].value,
+  message: '',
+};
+
+type FormState = typeof EMPTY;
+type Errors = Partial<Record<keyof FormState, string>>;
+
+function validate(f: FormState): Errors {
+  const errors: Errors = {};
+  if (f.fullName.trim().length < 2) errors.fullName = 'Please enter your full name.';
+  if (!f.phone.trim()) errors.phone = 'Phone number is required so we can call you back.';
+  else if (!isValidIndianPhone(f.phone)) errors.phone = 'Enter a valid 10-digit Indian mobile or landline number.';
+  if (f.email.trim() && !isValidEmail(f.email)) errors.email = 'Enter a valid email address.';
+  if (f.message.length > 2000) errors.message = 'Please keep your message under 2,000 characters.';
+  return errors;
+}
 
 export default function ContactForm() {
-  const [formState, setFormState] = useState({
-    fullName: '',
-    storeName: '',
-    email: '',
-    phone: '',
-    inquiryType: 'Wholesale Pricing',
-    message: ''
+  const [form, setForm] = useState<FormState>(EMPTY);
+  const [errors, setErrors] = useState<Errors>({});
+  const [botcheck, setBotcheck] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle');
+  const [failMessage, setFailMessage] = useState('');
+
+  const update = (key: keyof FormState) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  };
+
+  const leadFields = () => ({
+    'Full Name': form.fullName,
+    'Pharmacy / Hospital': form.storeName,
+    Phone: form.phone,
+    Email: form.email,
+    'Inquiry Type': form.inquiryType,
+    Message: form.message,
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formState.fullName || !formState.phone) {
-      alert("Please fill in your name and contact phone number.");
+    const found = validate(form);
+    setErrors(found);
+    const firstInvalid = Object.keys(found)[0];
+    if (firstInvalid) {
+      document.getElementById(`cf-${firstInvalid}`)?.focus();
       return;
     }
-    setSubmitted(true);
+
+    if (!isFormDeliveryConfigured()) {
+      // No email delivery configured for this build: hand the lead to WhatsApp instead.
+      window.open(whatsappLink(fieldsToMessage('WEBSITE INQUIRY - VS MEDICO', leadFields())), '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    setStatus('sending');
+    const result = await submitLead(
+      `Website Inquiry: ${form.inquiryType} — ${form.storeName || form.fullName}`,
+      leadFields(),
+      { replyTo: form.email || undefined, botcheck }
+    );
+    if (result.ok) {
+      setStatus('sent');
+    } else {
+      setFailMessage(result.message);
+      setStatus('failed');
+    }
+  };
+
+  const reset = () => {
+    setForm(EMPTY);
+    setErrors({});
+    setStatus('idle');
   };
 
   return (
-    <div
-      style={{
-        background: '#f8fafc',
-        border: '1px solid #e2e8f0',
-        borderRadius: '1.5rem',
-        padding: '2rem',
-        width: '100%',
-      }}
-    >
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h3 className="font-extrabold text-primary text-2xl font-heading mb-1">
-          Send Us a B2B Inquiry
-        </h3>
+    <div className="form-panel">
+      <div className="mb-6">
+        <h2 className="font-extrabold text-primary text-2xl font-heading mb-1">Send Us a B2B Inquiry</h2>
         <p className="text-slate-500 text-sm">
-          Fill out the form below and our wholesale sales team will get back to you within 24 hours.
+          Fill out the form and our wholesale sales team will get back to you within one working day.
         </p>
       </div>
 
-      {submitted ? (
-        <div className="text-center py-12 bg-emerald-50 rounded-2xl border border-emerald-200">
-          <CheckCircle2 size={48} className="text-emerald-600 mx-auto mb-3" />
-          <h4 className="font-extrabold text-slate-800 text-xl font-heading mb-2">Message Received!</h4>
+      {status === 'sent' ? (
+        <div className="form-success" role="status">
+          <CheckCircle2 size={48} className="text-emerald-600 mx-auto mb-3" aria-hidden="true" />
+          <h3 className="font-extrabold text-slate-800 text-xl font-heading mb-2">Message Received!</h3>
           <p className="text-sm text-slate-600 max-w-md mx-auto mb-4 leading-relaxed">
-            Thank you, <strong>{formState.fullName}</strong>. Our wholesale sales executive will reach out to <strong>{formState.storeName || 'your pharmacy'}</strong> shortly.
+            Thank you, <strong>{form.fullName}</strong>. Our wholesale sales executive will reach out to{' '}
+            <strong>{form.storeName || 'you'}</strong> on <strong>{form.phone}</strong> shortly.
           </p>
-          <button
-            onClick={() => {
-              setSubmitted(false);
-              setFormState({ fullName: '', storeName: '', email: '', phone: '', inquiryType: 'Wholesale Pricing', message: '' });
-            }}
-            className="btn btn-primary btn-sm"
-          >
+          <button type="button" onClick={reset} className="btn btn-primary btn-sm">
             Send Another Message
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
+          <Honeypot checked={botcheck} onChange={setBotcheck} />
+
           <div className="form-row-2">
-            <div>
-              <label className="form-label">Full Name *</label>
-              <input type="text" required placeholder="e.g. Rahul Mehta" value={formState.fullName} onChange={(e) => setFormState({ ...formState, fullName: e.target.value })} className="form-control" style={{ background: '#fff' }} />
-            </div>
-            <div>
-              <label className="form-label">Pharmacy / Hospital Name</label>
-              <input type="text" placeholder="e.g. Sanjeevani Medical Stores" value={formState.storeName} onChange={(e) => setFormState({ ...formState, storeName: e.target.value })} className="form-control" style={{ background: '#fff' }} />
-            </div>
+            <Field id="cf-fullName" label="Full Name" required error={errors.fullName}>
+              <input
+                type="text"
+                autoComplete="name"
+                placeholder="e.g. Rahul Mehta"
+                value={form.fullName}
+                onChange={update('fullName')}
+                className="form-control"
+                {...fieldA11y('cf-fullName', errors.fullName)}
+              />
+            </Field>
+            <Field id="cf-storeName" label="Pharmacy / Hospital Name">
+              <input
+                type="text"
+                autoComplete="organization"
+                placeholder="e.g. Sanjeevani Medical Stores"
+                value={form.storeName}
+                onChange={update('storeName')}
+                className="form-control"
+                {...fieldA11y('cf-storeName')}
+              />
+            </Field>
           </div>
 
           <div className="form-row-2">
-            <div>
-              <label className="form-label">Phone Number *</label>
-              <input type="tel" required placeholder="+91 98200 XXXXX" value={formState.phone} onChange={(e) => setFormState({ ...formState, phone: e.target.value })} className="form-control" style={{ background: '#fff' }} />
-            </div>
-            <div>
-              <label className="form-label">Email Address</label>
-              <input type="email" placeholder="chemist@domain.com" value={formState.email} onChange={(e) => setFormState({ ...formState, email: e.target.value })} className="form-control" style={{ background: '#fff' }} />
-            </div>
+            <Field id="cf-phone" label="Phone Number" required error={errors.phone}>
+              <input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="+91 98XXX XXXXX"
+                value={form.phone}
+                onChange={update('phone')}
+                className="form-control"
+                {...fieldA11y('cf-phone', errors.phone)}
+              />
+            </Field>
+            <Field id="cf-email" label="Email Address" error={errors.email}>
+              <input
+                type="email"
+                autoComplete="email"
+                placeholder="chemist@example.com"
+                value={form.email}
+                onChange={update('email')}
+                className="form-control"
+                {...fieldA11y('cf-email', errors.email)}
+              />
+            </Field>
           </div>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label className="form-label">Inquiry Subject / Category</label>
-            <select value={formState.inquiryType} onChange={(e) => setFormState({ ...formState, inquiryType: e.target.value })} className="form-control" style={{ background: '#fff' }}>
-              <option value="Wholesale Pricing">Request Wholesale Rates / PTR List</option>
-              <option value="New Chemist Registration">New Chemist Account Opening</option>
-              <option value="Hospital Bulk Contract">Hospital & ICU Institutional Order</option>
-              <option value="Cold Chain Vaccines">Cold Chain / Insulin Supply</option>
-              <option value="General Query">General Inquiry</option>
+          <Field id="cf-inquiryType" label="Inquiry Subject" className="mb-4">
+            <select
+              value={form.inquiryType}
+              onChange={update('inquiryType')}
+              className="form-control"
+              {...fieldA11y('cf-inquiryType')}
+            >
+              {INQUIRY_TYPES.map((t) => (
+                <option key={t.value} value={t.value}>{t.label}</option>
+              ))}
             </select>
-          </div>
+          </Field>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label className="form-label">Your Message or Required SKUs</label>
-            <textarea rows={3} placeholder="List specific brands or products required, quantities, or delivery location details..." value={formState.message} onChange={(e) => setFormState({ ...formState, message: e.target.value })} className="form-control" style={{ background: '#fff' }} />
-          </div>
+          <Field id="cf-message" label="Your Message or Required SKUs" error={errors.message} className="mb-6">
+            <textarea
+              rows={4}
+              maxLength={2000}
+              placeholder="List brands or products required, quantities, or delivery location..."
+              value={form.message}
+              onChange={update('message')}
+              className="form-control"
+              {...fieldA11y('cf-message', errors.message)}
+            />
+          </Field>
 
-          <button type="submit" className="w-full btn btn-primary py-3 justify-center text-base">
-            <Send size={18} />
-            <span>Submit B2B Inquiry</span>
+          {status === 'failed' && (
+            <div className="form-alert form-alert-error mb-4" role="alert">
+              <AlertTriangle size={18} className="shrink-0" aria-hidden="true" />
+              <div>
+                <p className="font-semibold">{failMessage}</p>
+                <a
+                  href={whatsappLink(fieldsToMessage('WEBSITE INQUIRY - VS MEDICO', leadFields()))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp btn-sm mt-3"
+                >
+                  <MessageCircle size={16} aria-hidden="true" />
+                  <span>Send This Inquiry on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="w-full btn btn-primary py-3 justify-center text-base"
+          >
+            {status === 'sending' ? <SubmitSpinner /> : <Send size={18} aria-hidden="true" />}
+            <span>
+              {status === 'sending'
+                ? 'Sending…'
+                : isFormDeliveryConfigured()
+                  ? 'Submit B2B Inquiry'
+                  : 'Send Inquiry via WhatsApp'}
+            </span>
           </button>
+          <p className="text-xs text-slate-500 mt-3 text-center form-consent-note">
+            We use your details only to respond to this inquiry (see our <Link href="/privacy">Privacy Policy</Link>).
+            B2B buyers with valid drug licences only.
+          </p>
         </form>
       )}
     </div>

@@ -15,7 +15,7 @@ export default function MarginCalculator() {
   const [mrp, setMrp] = useState<number | string>(223.40);
   const [ptr, setPtr] = useState<number | string>(159.50);
   const [schemeDiscount, setSchemeDiscount] = useState<number | string>(5);
-  const [gstRate, setGstRate] = useState<number | string>(12);
+  const [gstRate, setGstRate] = useState<number | string>(5);
   const [quantity, setQuantity] = useState<number | string>(10);
 
   const grossPtr = typeof ptr === 'number' ? ptr : parseFloat(ptr) || 0;
@@ -27,15 +27,15 @@ export default function MarginCalculator() {
 
   const profitPerPack = grossMrp - finalLandingCost;
   const marginPercentage = grossMrp > 0 ? ((profitPerPack / grossMrp) * 100).toFixed(2) : '0';
-  const qty = typeof quantity === 'number' ? quantity : parseInt(quantity) || 1;
+  const qty = Math.max(1, typeof quantity === 'number' ? quantity : parseInt(quantity) || 1);
   const totalOrderProfit = (profitPerPack * qty).toFixed(2);
   const totalInvestment = (finalLandingCost * qty).toFixed(2);
 
   const presets: Preset[] = [
-    { name: 'Augmentin 625 Duo', mrp: 223.40, ptr: 159.50, scheme: 5, gst: 12 },
-    { name: 'Pan D Capsule', mrp: 199.00, ptr: 138.00, scheme: 8, gst: 12 },
+    { name: 'Augmentin 625 Duo', mrp: 223.40, ptr: 159.50, scheme: 5, gst: 5 },
+    { name: 'Pan D Capsule', mrp: 199.00, ptr: 138.00, scheme: 8, gst: 5 },
     { name: 'Lantus Pen (Cold Chain)', mrp: 685.00, ptr: 510.00, scheme: 4, gst: 5 },
-    { name: 'Montair LC Tablet', mrp: 340.00, ptr: 242.00, scheme: 6, gst: 12 }
+    { name: 'Montair LC Tablet', mrp: 340.00, ptr: 242.00, scheme: 6, gst: 5 }
   ];
 
   const applyPreset = (preset: Preset) => {
@@ -52,9 +52,9 @@ export default function MarginCalculator() {
           <Sparkles size={14} />
           <span>RETAILER PROFIT & SCHEME CALCULATOR</span>
         </div>
-        <h3 className="font-heading font-extrabold text-2xl md:text-3xl text-white">
+        <h2 className="font-heading font-extrabold text-2xl md:text-3xl text-white">
           Calculate Your Net Chemist PTR Margin & Profits
-        </h3>
+        </h2>
         <p className="text-slate-300 text-sm mt-1">
           Estimate your exact landing cost, GST input credit, scheme discount savings, and net profit margins before placing wholesale bulk orders with VS Medico.
         </p>
@@ -65,7 +65,8 @@ export default function MarginCalculator() {
         <span className="text-xs text-slate-300 font-semibold">Popular Product Presets:</span>
         {presets.map((p, idx) => (
           <button
-            key={idx}
+            key={p.name}
+            type="button"
             onClick={() => applyPreset(p)}
             className="text-xs bg-slate-800 hover:bg-sky-900 text-sky-300 border border-slate-700 hover:border-sky-500 px-3 py-1.5 rounded-lg font-medium transition-all"
           >
@@ -78,9 +79,12 @@ export default function MarginCalculator() {
         {/* Input Controls - 2 Columns */}
         <div className="calc-input-grid">
           <div>
-            <label className="dark-label">MRP Per Pack (₹)</label>
+            <label htmlFor="calc-mrp" className="dark-label">MRP Per Pack (₹)</label>
             <input
+              id="calc-mrp"
               type="number"
+              inputMode="decimal"
+              min="0"
               step="0.1"
               value={mrp}
               onChange={(e) => setMrp(e.target.value)}
@@ -89,9 +93,12 @@ export default function MarginCalculator() {
           </div>
 
           <div>
-            <label className="dark-label">PTR Wholesale Price (₹)</label>
+            <label htmlFor="calc-ptr" className="dark-label">PTR Wholesale Price (₹)</label>
             <input
+              id="calc-ptr"
               type="number"
+              inputMode="decimal"
+              min="0"
               step="0.1"
               value={ptr}
               onChange={(e) => setPtr(e.target.value)}
@@ -100,9 +107,13 @@ export default function MarginCalculator() {
           </div>
 
           <div>
-            <label className="dark-label">Scheme / Cash Discount (%)</label>
+            <label htmlFor="calc-scheme" className="dark-label">Scheme / Cash Discount (%)</label>
             <input
+              id="calc-scheme"
               type="number"
+              inputMode="decimal"
+              min="0"
+              max="100"
               step="0.5"
               value={schemeDiscount}
               onChange={(e) => setSchemeDiscount(e.target.value)}
@@ -111,22 +122,25 @@ export default function MarginCalculator() {
           </div>
 
           <div>
-            <label className="dark-label">GST Slab (%)</label>
+            <label htmlFor="calc-gst" className="dark-label">GST Slab (%)</label>
             <select
+              id="calc-gst"
               value={gstRate}
               onChange={(e) => setGstRate(e.target.value)}
               className="dark-input"
             >
-              <option value="5">5% (Life Saving & Cold Chain)</option>
-              <option value="12">12% (Standard Formulations)</option>
-              <option value="18">18% (OTC & Surgicals)</option>
+              <option value="0">0% (Notified life-saving drugs)</option>
+              <option value="5">5% (Most medicines, devices & diagnostics)</option>
+              <option value="18">18% (Select cosmetics & non-medicinal items)</option>
             </select>
           </div>
 
           <div className="calc-span-full">
-            <label className="dark-label">Order Quantity (Boxes / Strips)</label>
+            <label htmlFor="calc-qty" className="dark-label">Order Quantity (Boxes / Strips)</label>
             <input
+              id="calc-qty"
               type="number"
+              inputMode="numeric"
               min="1"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -163,12 +177,17 @@ export default function MarginCalculator() {
               <strong className="text-white font-mono text-sm">₹{totalInvestment}</strong>
             </div>
             <div className="flex justify-between">
-              <span>Total Net Chemist Profit ({quantity} packs):</span>
+              <span>Total Net Chemist Profit ({qty} packs):</span>
               <strong className="text-emerald-400 font-mono text-base font-extrabold">₹{totalOrderProfit}</strong>
             </div>
           </div>
         </div>
       </div>
+      <p className="text-[11px] text-slate-400 mt-6">
+        Estimates only. GST slabs reflect the GST rate rationalisation effective 22 September 2025 (most medicines at
+        5%, notified life-saving drugs exempt). The applicable rate for each item depends on its HSN code and is shown on
+        your tax invoice.
+      </p>
     </div>
   );
 }

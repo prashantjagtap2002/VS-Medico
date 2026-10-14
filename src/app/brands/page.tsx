@@ -1,7 +1,13 @@
-"use client";
-
-import React from 'react';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import BrandsGrid from '@/components/BrandsGrid';
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Pharma Brands We Stock & Distribute',
+  description:
+    "Authorised distributor of Sun Pharma, Cipla, Alkem, Lupin, Zydus, Torrent, Abbott, Mankind, Dr. Reddy's, Sanofi, GSK & more for chemists across Mumbai MMR.",
+  path: '/brands',
+});
 
 export default function BrandsPage() {
   return (

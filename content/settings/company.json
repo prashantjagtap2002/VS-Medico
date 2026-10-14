@@ -1,0 +1,29 @@
+{
+  "contact": {
+    "phoneSales": "+91 98200 12345",
+    "phoneOffice": "+91 022 2595 6789",
+    "whatsapp": "+91 98200 12345",
+    "emailSales": "sales@vsmedico.in",
+    "emailInfo": "contact@vsmedico.in",
+    "workingHours": "Monday – Saturday: 9:30 AM to 8:30 PM",
+    "sundayStatus": "Closed (Emergency Hospital Supply Available on Call)"
+  },
+  "address": {
+    "building": "F-117, Sharad Industrial Estate Rd",
+    "locality": "Sadan Wadi, Bhandup West",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": "400078",
+    "landmark": "Near Bhandup Railway Station (West)",
+    "latitude": 19.1471018,
+    "longitude": 72.9348123
+  },
+  "licenses": {
+    "drugLicense20B": "MH-MUM-20B-184920",
+    "drugLicense21B": "MH-MUM-21B-184921",
+    "issuingAuthority": "Food & Drug Administration (FDA), Maharashtra State",
+    "gstin": "27AAAAA0000A1Z5",
+    "pan": "AAAAA0000A",
+    "fssaiNo": "11521000000123"
+  }
+}

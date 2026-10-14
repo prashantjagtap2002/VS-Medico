@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { COMPANY_INFO } from '@/data/companyData';
 import { useQuoteBasket } from './QuoteBasketContext';
+import { telHref, whatsappLink } from '@/lib/forms';
 import { 
   MapPin, 
   Phone, 
@@ -28,7 +29,7 @@ export default function Footer() {
                 VS
               </div>
               <div>
-                <h3 className="text-white text-xl font-bold font-heading">{COMPANY_INFO.legalName}</h3>
+                <p className="text-white text-xl font-bold font-heading">{COMPANY_INFO.legalName}</p>
                 <p className="text-xs text-sky-400 font-semibold tracking-wider">PHARMA WHOLESALE & DISTRIBUTION</p>
               </div>
             </div>
@@ -42,14 +43,14 @@ export default function Footer() {
                 <MapPin size={18} className="text-sky-400 shrink-0 mt-1" />
                 <span>{COMPANY_INFO.address.fullAddress}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone size={18} className="text-emerald-400 shrink-0" />
+              <a href={telHref(COMPANY_INFO.contact.phoneSales)} className="flex items-center gap-3 hover:text-white transition-colors">
+                <Phone size={18} className="text-emerald-400 shrink-0" aria-hidden="true" />
                 <span>Sales: {COMPANY_INFO.contact.phoneSales}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail size={18} className="text-sky-400 shrink-0" />
+              </a>
+              <a href={`mailto:${COMPANY_INFO.contact.emailSales}`} className="flex items-center gap-3 hover:text-white transition-colors">
+                <Mail size={18} className="text-sky-400 shrink-0" aria-hidden="true" />
                 <span>{COMPANY_INFO.contact.emailSales}</span>
-              </div>
+              </a>
               <div className="flex items-center gap-3">
                 <Clock size={18} className="text-amber-400 shrink-0" />
                 <span>{COMPANY_INFO.contact.workingHours}</span>
@@ -59,12 +60,13 @@ export default function Footer() {
 
           {/* Col 2: Quick Links */}
           <div className="footer-col">
-            <h4>Quick Navigation</h4>
+            <h2 className="footer-heading">Quick Navigation</h2>
             <ul className="footer-links">
               <li><Link href="/">Home Overview</Link></li>
               <li><Link href="/about">About Company History</Link></li>
               <li><Link href="/products">Products & Categories</Link></li>
               <li><Link href="/brands">Pharma Brands We Represent</Link></li>
+              <li><Link href="/register">Open a Wholesale Account</Link></li>
               <li><Link href="/compliance">Licensing & WHO-GDP</Link></li>
               <li><Link href="/contact">Contact & Map Location</Link></li>
             </ul>
@@ -72,7 +74,7 @@ export default function Footer() {
 
           {/* Col 3: Key Categories */}
           <div className="footer-col">
-            <h4>Product Segments</h4>
+            <h2 className="footer-heading">Product Segments</h2>
             <ul className="footer-links">
               <li><Link href="/products?cat=formulations">Branded Formulations</Link></li>
               <li><Link href="/products?cat=generics">Quality Trade Generics</Link></li>
@@ -85,7 +87,7 @@ export default function Footer() {
 
           {/* Col 4: Regulatory & Compliance */}
           <div className="footer-col">
-            <h4>Licensing & Compliance</h4>
+            <h2 className="footer-heading">Licensing & Compliance</h2>
             <div className="footer-compliance-card">
               <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
                 <ShieldCheck size={18} />
@@ -97,6 +99,7 @@ export default function Footer() {
                 <p><strong className="text-slate-100">GSTIN:</strong> <span className="font-mono text-sky-300 font-semibold">{COMPANY_INFO.licenses.gstin}</span></p>
               </div>
               <button
+                type="button"
                 onClick={() => setIsLicenseModalOpen(true)}
                 className="text-xs text-sky-300 font-semibold hover:text-white flex items-center gap-1 pt-1"
               >
@@ -107,7 +110,7 @@ export default function Footer() {
 
             <div className="mt-4">
               <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
+                href={whatsappLink('Hello VS Medico, I have a wholesale inquiry.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full btn btn-whatsapp text-xs py-2.5 justify-center"
@@ -120,8 +123,12 @@ export default function Footer() {
 
         {/* Legal & Copyright */}
         <div className="footer-bottom">
-          <div>
-            © {new Date().getFullYear()} {COMPANY_INFO.legalName}. All Rights Reserved.
+          <div className="flex flex-col gap-2">
+            <span>© {new Date().getFullYear()} {COMPANY_INFO.legalName}. All Rights Reserved.</span>
+            <nav aria-label="Legal" className="footer-legal-links">
+              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="/terms">Terms of Use</Link>
+            </nav>
           </div>
           <div className="text-xs text-slate-400 max-w-xl text-right leading-relaxed">
             Disclaimer: VS Medico LLP is a licensed B2B pharmaceutical stockist supplying strictly to registered retail pharmacies, hospitals, and healthcare institutions with valid Drug Licenses (Form 20B/21B).

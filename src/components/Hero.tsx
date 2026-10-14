@@ -4,6 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { COMPANY_INFO, TRUST_STATS } from '@/data/companyData';
 import { useQuoteBasket } from './QuoteBasketContext';
+import CountUp from './CountUp';
+import { whatsappLink } from '@/lib/forms';
 import {
   ArrowRight,
   MessageCircle,
@@ -41,7 +43,8 @@ export default function Hero() {
                 <ArrowRight size={18} />
               </Link>
 
-              <button 
+              <button
+                type="button"
                 onClick={() => setIsModalOpen(true)}
                 className="btn btn-outline btn-lg"
               >
@@ -50,7 +53,7 @@ export default function Hero() {
               </button>
 
               <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=Hello%20VS%20Medico,%20I%20want%20to%20request%20the%20latest%20wholesale%20PTR/MRP%20price%20list.`}
+                href={whatsappLink('Hello VS Medico, I want to request the latest wholesale PTR/MRP price list.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-whatsapp btn-lg"
@@ -66,10 +69,11 @@ export default function Hero() {
             <div className="hero-card-main">
               <div className="hero-card-header">
                 <div>
-                  <h3 className="font-extrabold text-primary text-xl font-heading">VS Medico Overview</h3>
+                  <h2 className="font-extrabold text-primary text-xl font-heading">VS Medico Overview</h2>
                   <p className="text-xs text-slate-500">Bhandup West, Mumbai • FDA Licensed</p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setIsLicenseModalOpen(true)}
                   className="hero-card-badge flex items-center gap-1 hover:opacity-90 transition-opacity"
                 >
@@ -79,9 +83,9 @@ export default function Hero() {
               </div>
 
               <div className="hero-stats-mini">
-                {TRUST_STATS.map((stat, idx) => (
-                  <div key={idx} className="mini-stat-box">
-                    <div className="mini-stat-number">{stat.value}</div>
+                {TRUST_STATS.map((stat) => (
+                  <div key={stat.label} className="mini-stat-box">
+                    <div className="mini-stat-number"><CountUp value={stat.value} /></div>
                     <div className="mini-stat-label">{stat.label}</div>
                   </div>
                 ))}

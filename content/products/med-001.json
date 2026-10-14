@@ -1,0 +1,19 @@
+{
+  "sku": "MED-001",
+  "name": "Augmentin 625 Duo Tablet",
+  "brand": "GlaxoSmithKline (GSK)",
+  "category": "formulations",
+  "composition": "Amoxycillin (500mg) + Clavulanic Acid (125mg)",
+  "packSize": "10 Tablets / Strip",
+  "mrp": "₹223.40",
+  "ptrEstimate": "Attractive PTR Margin",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 10,
+  "image": "",
+  "description": "Broad-spectrum antibiotic formulation for bacterial infections of respiratory tract, skin, and soft tissue."
+}

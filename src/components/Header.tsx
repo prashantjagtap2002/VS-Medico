@@ -15,8 +15,10 @@ import {
   Menu, 
   X,
   FileCheck,
-  Building2
+  Building2,
+  UserPlus
 } from 'lucide-react';
+import { telHref, whatsappLink } from '@/lib/forms';
 
 export default function Header() {
   const pathname = usePathname();
@@ -44,12 +46,26 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close the mobile drawer on navigation (including browser back/forward) and on Escape.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
-    { name: 'Products Catalog', href: '/products' },
-    { name: 'Brands We Deal In', href: '/brands' },
-    { name: 'Licensing & Compliance', href: '/compliance' },
+    { name: 'Products', href: '/products' },
+    { name: 'Brands', href: '/brands' },
+    { name: 'Compliance', href: '/compliance' },
     { name: 'Contact Us', href: '/contact' }
   ];
 
@@ -59,14 +75,14 @@ export default function Header() {
       <div className={`top-bar ${isScrolled ? 'is-collapsed' : ''}`}>
         <div className="container top-bar-content">
           <div className="top-bar-info">
-            <div className="top-bar-item">
-              <Phone size={14} className="text-secondary" />
+            <a href={telHref(COMPANY_INFO.contact.phoneSales)} className="top-bar-item hover:text-white">
+              <Phone size={14} className="text-secondary" aria-hidden="true" />
               <span>Sales: {COMPANY_INFO.contact.phoneSales}</span>
-            </div>
-            <div className="top-bar-item">
-              <Mail size={14} className="text-secondary" />
+            </a>
+            <a href={`mailto:${COMPANY_INFO.contact.emailSales}`} className="top-bar-item hover:text-white">
+              <Mail size={14} className="text-secondary" aria-hidden="true" />
               <span>{COMPANY_INFO.contact.emailSales}</span>
-            </div>
+            </a>
             <div className="top-bar-item">
               <Clock size={14} className="text-secondary" />
               <span>{COMPANY_INFO.contact.workingHours}</span>
@@ -106,13 +122,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="nav-desktop">
+          <nav className="nav-desktop" aria-label="Main navigation">
             <ul className="nav-links">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     className={`nav-link ${pathname === link.href ? 'active' : ''}`}
+                    aria-current={pathname === link.href ? 'page' : undefined}
                   >
                     {link.name}
                   </Link>
@@ -123,36 +140,42 @@ export default function Header() {
 
           {/* Header Action Buttons */}
           <div className="nav-actions">
+            <Link href="/register" className="btn btn-primary btn-sm nav-register-btn">
+              <UserPlus size={16} aria-hidden="true" />
+              <span>Open Account</span>
+            </Link>
             <button
+              type="button"
               onClick={() => setIsModalOpen(true)}
               className="btn btn-secondary btn-sm relative"
-              title="View Quote Basket"
+              aria-label={`Inquiry basket, ${totalItems} item${totalItems === 1 ? '' : 's'}`}
             >
-              <ShoppingBag size={18} />
+              <ShoppingBag size={18} aria-hidden="true" />
               <span className="nav-btn-label">Inquiry Basket</span>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                <span aria-hidden="true" className="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
                   {totalItems}
                 </span>
               )}
             </button>
 
-
-
             {/* Mobile Menu Button (Only shows on mobile screens) */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="mobile-toggle-btn p-2 text-primary focus:outline-none"
-              aria-label="Toggle Navigation Menu"
+              className="mobile-toggle-btn p-2 text-primary"
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
-              {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+              {mobileMenuOpen ? <X size={26} aria-hidden="true" /> : <Menu size={26} aria-hidden="true" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="mobile-drawer-menu bg-white border-b border-slate-200 px-6 py-5 space-y-3 shadow-xl animate-fadeIn">
+          <nav id="mobile-menu" aria-label="Mobile navigation" className="mobile-drawer-menu bg-white border-b border-slate-200 px-6 py-5 space-y-3 shadow-xl animate-fadeIn">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -171,7 +194,15 @@ export default function Header() {
               </Link>
             ))}
             <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn btn-primary w-full justify-center py-3"
+              >
+                <UserPlus size={18} aria-hidden="true" /> Open a Wholesale Account
+              </Link>
               <button
+                type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setIsLicenseModalOpen(true);
@@ -182,15 +213,15 @@ export default function Header() {
               </button>
 
               <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
+                href={whatsappLink('Hello VS Medico, I would like a wholesale quote.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-whatsapp w-full justify-center py-3"
               >
-                <MessageCircle size={18} /> WhatsApp Quick Quote
+                <MessageCircle size={18} aria-hidden="true" /> WhatsApp Quick Quote
               </a>
             </div>
-          </div>
+          </nav>
         )}
       </header>
     </>

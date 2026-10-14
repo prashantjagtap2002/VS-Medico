@@ -1,316 +1,370 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { COMPANY_INFO } from '@/data/companyData';
+import Link from 'next/link';
 import { useQuoteBasket } from './QuoteBasketContext';
-import { 
-  X, 
-  Trash2, 
-  Plus, 
-  Minus, 
-  MessageCircle, 
-  Send, 
-  CheckCircle2, 
+import Modal from './Modal';
+import { Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
+import {
+  submitLead,
+  whatsappLink,
+  isFormDeliveryConfigured,
+  isValidIndianPhone,
+  isValidEmail,
+  makeReferenceId,
+} from '@/lib/forms';
+import {
+  Trash2,
+  Plus,
+  Minus,
+  MessageCircle,
+  Send,
+  CheckCircle2,
   ShoppingBag,
-  AlertCircle
+  AlertCircle,
+  AlertTriangle,
 } from 'lucide-react';
 
+const EMPTY = { storeName: '', contactPerson: '', phone: '', email: '', area: '', notes: '' };
+type FormState = typeof EMPTY;
+type Errors = Partial<Record<keyof FormState, string>>;
+
+function validate(f: FormState): Errors {
+  const errors: Errors = {};
+  if (f.storeName.trim().length < 2) errors.storeName = 'Enter your pharmacy or hospital name.';
+  if (f.contactPerson.trim().length < 2) errors.contactPerson = 'Enter the contact person’s name.';
+  if (!f.phone.trim()) errors.phone = 'Mobile number is required.';
+  else if (!isValidIndianPhone(f.phone)) errors.phone = 'Enter a valid 10-digit mobile number.';
+  if (f.email.trim() && !isValidEmail(f.email)) errors.email = 'Enter a valid email address.';
+  return errors;
+}
+
 export default function BulkInquiryModal() {
-  const { 
-    basket, 
-    removeFromBasket, 
-    updateQuantity, 
-    clearBasket, 
-    isModalOpen, 
-    setIsModalOpen 
-  } = useQuoteBasket();
+  const { basket, removeFromBasket, updateQuantity, clearBasket, isModalOpen, setIsModalOpen } = useQuoteBasket();
 
-  const [formData, setFormData] = useState({
-    storeName: '',
-    contactPerson: '',
-    phone: '',
-    area: '',
-    notes: ''
-  });
-
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY);
+  const [errors, setErrors] = useState<Errors>({});
+  const [botcheck, setBotcheck] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle');
+  const [failMessage, setFailMessage] = useState('');
   const [inquiryId, setInquiryId] = useState('');
-
-  if (!isModalOpen) return null;
+  const onlineEnabled = isFormDeliveryConfigured();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const key = e.target.name.replace(/^bq-/, '') as keyof FormState;
+    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
-  const generateWhatsAppMessage = () => {
-    let msg = `*B2B WHOLESALE INQUIRY - VS MEDICO LLP*\n`;
-    msg += `----------------------------------------\n`;
-    msg += `*Pharmacy / Hospital:* ${formData.storeName || 'Not specified'}\n`;
-    msg += `*Contact Person:* ${formData.contactPerson || 'Not specified'}\n`;
-    msg += `*Phone:* ${formData.phone || 'Not specified'}\n`;
-    msg += `*Area / Location:* ${formData.area || 'Mumbai/MMR'}\n`;
-    msg += `----------------------------------------\n`;
-    msg += `*REQUESTED ITEMS & QUANTITIES:*\n`;
+  const itemsText = () =>
+    basket.length > 0
+      ? basket.map((item, i) => `${i + 1}. ${item.name} (${item.brand}) — Pack: ${item.packSize} — Qty: ${item.quantity}`).join('\n')
+      : 'General PTR wholesale price list request';
 
-    if (basket.length > 0) {
-      basket.forEach((item, index) => {
-        msg += `${index + 1}. *${item.name}* (${item.brand})\n`;
-        msg += `   Pack: ${item.packSize} | Qty: *${item.quantity}*\n`;
-      });
+  const whatsappMessage = (refId?: string) => {
+    let msg = `*B2B WHOLESALE INQUIRY - VS MEDICO LLP*${refId ? ` (Ref: ${refId})` : ''}\n`;
+    msg += `----------------------------------------\n`;
+    msg += `*Pharmacy / Hospital:* ${form.storeName || 'Not specified'}\n`;
+    msg += `*Contact Person:* ${form.contactPerson || 'Not specified'}\n`;
+    msg += `*Phone:* ${form.phone || 'Not specified'}\n`;
+    if (form.email) msg += `*Email:* ${form.email}\n`;
+    msg += `*Area / Location:* ${form.area || 'Mumbai/MMR'}\n`;
+    msg += `----------------------------------------\n`;
+    msg += `*REQUESTED ITEMS & QUANTITIES:*\n${itemsText()}\n`;
+    if (form.notes) msg += `----------------------------------------\n*Additional Notes:* ${form.notes}\n`;
+    return msg;
+  };
+
+  const runValidation = () => {
+    const found = validate(form);
+    setErrors(found);
+    const firstInvalid = Object.keys(found)[0];
+    if (firstInvalid) document.getElementById(`bq-${firstInvalid}`)?.focus();
+    return !firstInvalid;
+  };
+
+  const handleWhatsAppSend = () => {
+    if (!runValidation()) return;
+    window.open(whatsappLink(whatsappMessage()), '_blank', 'noopener,noreferrer');
+  };
+
+  const handleSubmitOnline = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!onlineEnabled) {
+      handleWhatsAppSend();
+      return;
+    }
+    if (!runValidation()) return;
+
+    const refId = makeReferenceId();
+    setStatus('sending');
+    const result = await submitLead(
+      `Wholesale Quote Request ${refId} — ${form.storeName}`,
+      {
+        'Reference ID': refId,
+        'Pharmacy / Hospital': form.storeName,
+        'Contact Person': form.contactPerson,
+        Phone: form.phone,
+        Email: form.email,
+        'Area / Location': form.area,
+        'Requested Items': itemsText(),
+        'Additional Notes': form.notes,
+      },
+      { replyTo: form.email || undefined, botcheck }
+    );
+    if (result.ok) {
+      setInquiryId(refId);
+      setStatus('sent');
     } else {
-      msg += `General PTR Wholesale Price List Request\n`;
+      setFailMessage(result.message);
+      setStatus('failed');
     }
-
-    if (formData.notes) {
-      msg += `----------------------------------------\n`;
-      msg += `*Additional Notes:* ${formData.notes}\n`;
-    }
-
-    return encodeURIComponent(msg);
   };
 
-  const handleWhatsAppSend = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!formData.storeName || !formData.phone) {
-      alert("Please enter your Store Name and Phone Number to submit the inquiry.");
-      return;
-    }
-    const waText = generateWhatsAppMessage();
-    const url = `https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=${waText}`;
-    window.open(url, '_blank');
-  };
-
-  const handleSubmitOnline = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!formData.storeName || !formData.phone) {
-      alert("Please enter your Store Name and Phone Number.");
-      return;
-    }
-    const randomId = 'VSM-' + Math.floor(100000 + Math.random() * 900000);
-    setInquiryId(randomId);
-    setSubmitted(true);
-  };
-
-  const handleReset = () => {
-    setSubmitted(false);
-    clearBasket();
+  const close = () => {
     setIsModalOpen(false);
+    if (status === 'sent') {
+      clearBasket();
+      setForm(EMPTY);
+      setStatus('idle');
+    }
   };
 
   return (
-    <div
-      className="modal-overlay"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) setIsModalOpen(false);
-      }}
-    >
-      <div className="modal-content">
-        <div className="modal-header">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
-              <ShoppingBag size={22} />
-            </div>
-            <div>
-              <h3 className="font-bold text-primary text-xl font-heading">
-                B2B Bulk Wholesale Inquiry
-              </h3>
-              <p className="text-xs text-slate-500">
-                VS Medico LLP • Bhandup West, Mumbai
-              </p>
-            </div>
+    <Modal
+      open={isModalOpen}
+      onClose={close}
+      titleId="bulk-inquiry-title"
+      header={
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
+            <ShoppingBag size={22} aria-hidden="true" />
           </div>
-          <button onClick={() => setIsModalOpen(false)} className="modal-close">
-            <X size={20} />
-          </button>
-        </div>
-
-        {submitted ? (
-          <div className="text-center py-8">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 size={36} />
-            </div>
-            <h4 className="text-2xl font-extrabold text-primary mb-2 font-heading">Inquiry Submitted Successfully!</h4>
-            <p className="text-sm text-slate-600 mb-2">
-              Inquiry Reference ID: <strong className="text-emerald-700 font-mono text-base">{inquiryId}</strong>
-            </p>
-            <p className="text-xs text-slate-500 max-w-md mx-auto mb-6">
-              Our wholesale sales desk will contact <strong>{formData.storeName}</strong> at <strong>{formData.phone}</strong> shortly with net PTR rates and stock confirmation.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-3">
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}?text=${generateWhatsAppMessage()}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp"
-              >
-                <MessageCircle size={18} />
-                <span>Forward via WhatsApp Now</span>
-              </a>
-              <button onClick={handleReset} className="btn btn-outline">
-                Close & Return
-              </button>
-            </div>
-          </div>
-        ) : (
           <div>
-            {/* Basket Items List */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-3">
-                <h4 className="font-bold text-slate-800 text-sm">
-                  Selected Products ({basket.length})
-                </h4>
-                {basket.length > 0 && (
-                  <button
-                    onClick={clearBasket}
-                    className="text-xs text-red-600 hover:underline flex items-center gap-1 font-semibold"
-                  >
-                    <Trash2 size={13} />
-                    <span>Clear All</span>
-                  </button>
-                )}
-              </div>
-
-              {basket.length > 0 ? (
-                <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-xl p-2 bg-slate-50 flex flex-col gap-2">
-                  {basket.map((item) => (
-                    <div key={item.id} className="p-3 flex items-center justify-between gap-3 bg-white rounded-lg border border-slate-200">
-                      <div>
-                        <div className="font-bold text-sm text-primary">{item.name}</div>
-                        <div className="text-xs text-slate-500">
-                          {item.brand} • Pack: {item.packSize}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3 shrink-0">
-                        <div className="flex items-center border border-slate-300 rounded-md bg-white">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="p-1 text-slate-600 hover:bg-slate-100"
-                          >
-                            <Minus size={13} />
-                          </button>
-                          <span className="px-2.5 text-xs font-bold text-slate-800">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="p-1 text-slate-600 hover:bg-slate-100"
-                          >
-                            <Plus size={13} />
-                          </button>
-                        </div>
-
-                        <button
-                          onClick={() => removeFromBasket(item.id)}
-                          className="text-slate-400 hover:text-red-600 p-1"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-4 bg-sky-50 rounded-xl border border-sky-100 text-xs text-sky-800 flex items-center gap-2">
-                  <AlertCircle size={16} className="shrink-0 text-sky-600" />
-                  <span>Your basket is empty. You can still submit this form to receive our full general wholesale price list.</span>
-                </div>
+            <h2 id="bulk-inquiry-title" className="font-bold text-primary text-xl font-heading">
+              B2B Bulk Wholesale Inquiry
+            </h2>
+            <p className="text-xs text-slate-500">VS Medico LLP • Bhandup West, Mumbai</p>
+          </div>
+        </div>
+      }
+    >
+      {status === 'sent' ? (
+        <div className="text-center py-8" role="status">
+          <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 size={36} aria-hidden="true" />
+          </div>
+          <h3 className="text-2xl font-extrabold text-primary mb-2 font-heading">Inquiry Submitted Successfully!</h3>
+          <p className="text-sm text-slate-600 mb-2">
+            Reference ID: <strong className="text-emerald-700 font-mono text-base">{inquiryId}</strong>
+          </p>
+          <p className="text-xs text-slate-500 max-w-md mx-auto mb-6">
+            Our wholesale sales desk will contact <strong>{form.storeName}</strong> at <strong>{form.phone}</strong> with
+            net PTR rates and stock confirmation. Keep the reference ID for follow-ups.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href={whatsappLink(whatsappMessage(inquiryId))}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-whatsapp"
+            >
+              <MessageCircle size={18} aria-hidden="true" />
+              <span>Also Share on WhatsApp</span>
+            </a>
+            <button type="button" onClick={close} className="btn btn-outline">
+              Close
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-bold text-slate-800 text-sm">Selected Products ({basket.length})</h3>
+              {basket.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearBasket}
+                  className="text-xs text-red-600 hover:underline flex items-center gap-1 font-semibold"
+                >
+                  <Trash2 size={13} aria-hidden="true" />
+                  <span>Clear All</span>
+                </button>
               )}
             </div>
 
-            {/* Chemist / Hospital Details Form */}
-            <form onSubmit={handleSubmitOnline} className="flex flex-col gap-4">
-              <div className="grid-2">
-                <div className="form-group mb-0">
-                  <label className="form-label">Pharmacy / Hospital Name *</label>
-                  <input
-                    type="text"
-                    name="storeName"
-                    required
-                    placeholder="e.g. Apex Chemist & Druggist"
-                    value={formData.storeName}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
+            {basket.length > 0 ? (
+              <ul className="max-h-48 overflow-y-auto border border-slate-200 rounded-xl p-2 bg-slate-50 flex flex-col gap-2">
+                {basket.map((item) => (
+                  <li key={item.id} className="p-3 flex items-center justify-between gap-3 bg-white rounded-lg border border-slate-200">
+                    <div className="min-w-0">
+                      <div className="font-bold text-sm text-primary">{item.name}</div>
+                      <div className="text-xs text-slate-500">
+                        {item.brand} • Pack: {item.packSize}
+                      </div>
+                    </div>
 
-                <div className="form-group mb-0">
-                  <label className="form-label">Contact Person Name *</label>
-                  <input
-                    type="text"
-                    name="contactPerson"
-                    required
-                    placeholder="e.g. Mr. Rajesh Sharma"
-                    value={formData.contactPerson}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <div className="flex items-center border border-slate-300 rounded-md bg-white">
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="qty-btn"
+                          aria-label={`Decrease quantity of ${item.name}`}
+                        >
+                          <Minus size={13} aria-hidden="true" />
+                        </button>
+                        <span className="px-2.5 text-xs font-bold text-slate-800" aria-live="polite">
+                          {item.quantity}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="qty-btn"
+                          aria-label={`Increase quantity of ${item.name}`}
+                        >
+                          <Plus size={13} aria-hidden="true" />
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => removeFromBasket(item.id)}
+                        className="text-slate-400 hover:text-red-600 p-1"
+                        aria-label={`Remove ${item.name}`}
+                      >
+                        <Trash2 size={16} aria-hidden="true" />
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="p-4 bg-sky-50 rounded-xl border border-sky-100 text-xs text-sky-800 flex items-center gap-2">
+                <AlertCircle size={16} className="shrink-0 text-sky-600" aria-hidden="true" />
+                <span>Your basket is empty. You can still submit this form to receive our full wholesale price list.</span>
               </div>
+            )}
+          </div>
 
-              <div className="grid-2">
-                <div className="form-group mb-0">
-                  <label className="form-label">WhatsApp Mobile Number *</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    required
-                    placeholder="+91 98200 XXXXX"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
+          <form onSubmit={handleSubmitOnline} className="flex flex-col gap-4" noValidate>
+            <Honeypot checked={botcheck} onChange={setBotcheck} />
 
-                <div className="form-group mb-0">
-                  <label className="form-label">Location / Area in Mumbai</label>
-                  <input
-                    type="text"
-                    name="area"
-                    placeholder="e.g. Bhandup West, Thane, Powai"
-                    value={formData.area}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group mb-0">
-                <label className="form-label">Additional Instructions / Quantity Specs</label>
-                <textarea
-                  name="notes"
-                  rows={2}
-                  placeholder="Specify required batch expiry preference, box quantities, or special delivery instructions..."
-                  value={formData.notes}
+            <div className="form-row-2 mb-0">
+              <Field id="bq-storeName" label="Pharmacy / Hospital Name" required error={errors.storeName}>
+                <input
+                  type="text"
+                  autoComplete="organization"
+                  placeholder="e.g. Apex Chemist & Druggist"
+                  value={form.storeName}
                   onChange={handleInputChange}
                   className="form-control"
+                  {...fieldA11y('bq-storeName', errors.storeName)}
                 />
+              </Field>
+              <Field id="bq-contactPerson" label="Contact Person" required error={errors.contactPerson}>
+                <input
+                  type="text"
+                  autoComplete="name"
+                  placeholder="e.g. Rajesh Sharma"
+                  value={form.contactPerson}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  {...fieldA11y('bq-contactPerson', errors.contactPerson)}
+                />
+              </Field>
+            </div>
+
+            <div className="form-row-2 mb-0">
+              <Field id="bq-phone" label="WhatsApp Mobile Number" required error={errors.phone}>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="+91 98XXX XXXXX"
+                  value={form.phone}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  {...fieldA11y('bq-phone', errors.phone)}
+                />
+              </Field>
+              <Field id="bq-email" label="Email (optional)" error={errors.email}>
+                <input
+                  type="email"
+                  autoComplete="email"
+                  placeholder="purchase@yourpharmacy.com"
+                  value={form.email}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  {...fieldA11y('bq-email', errors.email)}
+                />
+              </Field>
+            </div>
+
+            <Field id="bq-area" label="Location / Area in Mumbai">
+              <input
+                type="text"
+                autoComplete="address-level2"
+                placeholder="e.g. Bhandup West, Thane, Powai"
+                value={form.area}
+                onChange={handleInputChange}
+                className="form-control"
+                {...fieldA11y('bq-area')}
+              />
+            </Field>
+
+            <Field id="bq-notes" label="Additional Instructions / Quantity Specs">
+              <textarea
+                rows={2}
+                maxLength={1500}
+                placeholder="Batch expiry preference, box quantities, or delivery instructions..."
+                value={form.notes}
+                onChange={handleInputChange}
+                className="form-control"
+                {...fieldA11y('bq-notes')}
+              />
+            </Field>
+
+            {status === 'failed' && (
+              <div className="form-alert form-alert-error" role="alert">
+                <AlertTriangle size={18} className="shrink-0" aria-hidden="true" />
+                <p className="font-semibold">{failMessage}</p>
               </div>
+            )}
 
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                <button
-                  type="button"
-                  onClick={handleWhatsAppSend}
-                  className="btn btn-whatsapp flex-1 justify-center py-3"
-                >
-                  <MessageCircle size={18} />
-                  <span>Send via WhatsApp Instant</span>
-                </button>
+            <p className="text-xs text-slate-500 form-consent-note">
+              By submitting you agree to our{' '}
+              <Link href="/privacy" onClick={close}>
+                Privacy Policy
+              </Link>
+              . For licensed trade buyers only.
+            </p>
 
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={handleWhatsAppSend}
+                className="btn btn-whatsapp flex-1 justify-center py-3"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                <span>Send via WhatsApp</span>
+              </button>
+
+              {onlineEnabled && (
                 <button
                   type="submit"
+                  disabled={status === 'sending'}
                   className="btn btn-primary flex-1 justify-center py-3"
                 >
-                  <Send size={18} />
-                  <span>Submit Web Order Quote</span>
+                  {status === 'sending' ? <SubmitSpinner /> : <Send size={18} aria-hidden="true" />}
+                  <span>{status === 'sending' ? 'Submitting…' : 'Submit Quote Request'}</span>
                 </button>
-              </div>
-            </form>
-          </div>
-        )}
-      </div>
-    </div>
+              )}
+            </div>
+          </form>
+        </div>
+      )}
+    </Modal>
   );
 }

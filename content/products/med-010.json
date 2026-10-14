@@ -1,0 +1,19 @@
+{
+  "sku": "MED-010",
+  "name": "Disposable Syringes with Needle (2ml / 5ml)",
+  "brand": "BD / Dispovan",
+  "category": "surgical",
+  "composition": "Medical Grade Non-toxic Polypropylene",
+  "packSize": "Box of 100 Units",
+  "mrp": "₹450.00 / Box",
+  "ptrEstimate": "Institutional Rate",
+  "hsnCode": "90183100",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": false,
+  "featured": false,
+  "sortOrder": 100,
+  "image": "",
+  "description": "Sterile single-use syringes with ultra-sharp luer mount needle for clinical and hospital administration."
+}

@@ -1,0 +1,19 @@
+{
+  "sku": "MED-005",
+  "name": "Montair LC Tablet",
+  "brand": "Cipla Ltd.",
+  "category": "formulations",
+  "composition": "Montelukast (10mg) + Levocetirizine (5mg)",
+  "packSize": "15 Tablets / Strip",
+  "mrp": "₹340.00",
+  "ptrEstimate": "Standard PTR Pricing",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 50,
+  "image": "",
+  "description": "Dual action antiallergic and leukotriene receptor antagonist for allergic rhinitis and bronchial asthma."
+}

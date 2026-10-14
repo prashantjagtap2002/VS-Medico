@@ -1,0 +1,19 @@
+{
+  "sku": "MED-008",
+  "name": "Paracetamol 650mg Tablets (Trade Generic)",
+  "brand": "Generic Division",
+  "category": "generics",
+  "composition": "Paracetamol IP 650mg",
+  "packSize": "10 x 10 Tablets Box",
+  "mrp": "₹320.00 / Box",
+  "ptrEstimate": "Bulk Generic Rates",
+  "hsnCode": "30049060",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": false,
+  "featured": false,
+  "sortOrder": 80,
+  "image": "",
+  "description": "Analgesic & antipyretic formulation for high fever and pain relief. High margin generic trade item."
+}

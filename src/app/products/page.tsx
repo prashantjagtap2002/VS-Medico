@@ -1,11 +1,20 @@
-"use client";
-
-import React, { Suspense } from 'react';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import ProductCatalog from '@/components/ProductCatalog';
 import ExpressReorderBar from '@/components/ExpressReorderBar';
 import MarginCalculator from '@/components/MarginCalculator';
+import { getProducts, getFeaturedProducts } from '@/data/products';
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Wholesale Pharma Product Catalog',
+  description:
+    'Wholesale catalogue of branded formulations, generics, injectables, cold-chain insulins, surgical & OTC products. Request net PTR quotes from VS Medico, Mumbai.',
+  path: '/products',
+});
 
 export default function ProductsPage() {
+  const products = getProducts();
+
   return (
     <div className="py-8">
       <div className="container">
@@ -19,12 +28,10 @@ export default function ProductsPage() {
           </p>
         </div>
 
-        <ExpressReorderBar />
+        <ExpressReorderBar products={getFeaturedProducts(4)} />
       </div>
 
-      <Suspense fallback={<div className="text-center py-12 text-slate-500">Loading catalog...</div>}>
-        <ProductCatalog showTitle={false} />
-      </Suspense>
+      <ProductCatalog products={products} showTitle={false} />
 
       <div className="container my-12">
         <MarginCalculator />

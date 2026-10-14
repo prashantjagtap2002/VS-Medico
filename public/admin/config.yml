@@ -1,0 +1,180 @@
+# VS Medico admin panel (Sveltia CMS) — https://sveltiacms.app/en/docs
+#
+# Every save is committed to GitHub; your host then rebuilds the static site
+# (usually 1–2 minutes). Sign in with "Sign In with Token" using a GitHub
+# fine-grained token that has "Contents: Read and write" on this repository.
+
+backend:
+  name: github
+  repo: prashantjagtap2002/VS-Medico
+  branch: main
+  commit_messages:
+    create: 'Admin: add {{collection}} "{{slug}}"'
+    update: 'Admin: update {{collection}} "{{slug}}"'
+    delete: 'Admin: delete {{collection}} "{{slug}}"'
+    uploadMedia: 'Admin: upload "{{path}}"'
+    deleteMedia: 'Admin: delete "{{path}}"'
+
+site_url: https://vsmedico.in
+display_url: https://vsmedico.in
+logo_url: /icon.svg
+
+# Uploaded images are saved in the repo and served from /images/uploads/.
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+# Images are resized and converted to WebP in the browser before upload,
+# so large phone photos never slow the website down.
+media_libraries:
+  default:
+    config:
+      max_file_size: 8388608 # 8 MB before optimisation
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1200
+          height: 1200
+        svg:
+          optimize: true
+
+collections:
+  - name: products
+    label: Medicines & Products
+    label_singular: Product
+    description: >-
+      Products shown in the website catalogue. Each product gets its own page at
+      /products/product-name. Tick **Featured** to show it on the home page.
+    folder: content/products
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: '{{sku}}'
+    identifier_field: name
+    summary: '{{name}} — {{brand}} ({{sku}})'
+    sortable_fields:
+      fields: [name, brand, category, sortOrder]
+      default:
+        field: sortOrder
+        direction: ascending
+    view_filters:
+      - { label: Featured, field: featured, pattern: true }
+      - { label: Cold chain, field: coldChain, pattern: true }
+      - { label: Out of stock, field: stockStatus, pattern: Out of Stock }
+      - { label: Rx only, field: rxRequired, pattern: true }
+    view_groups:
+      - { label: Category, field: category }
+      - { label: Brand, field: brand }
+    fields:
+      - label: SKU / Product Code
+        name: sku
+        widget: string
+        hint: Unique code, e.g. MED-013. Letters, numbers and dashes only. Also used as the file name.
+        pattern: ['^[A-Za-z0-9-]+$', 'Use only letters, numbers and dashes']
+      - { label: Product Name, name: name, widget: string, hint: 'e.g. Augmentin 625 Duo Tablet' }
+      - { label: Brand / Manufacturer, name: brand, widget: string, hint: 'e.g. Cipla Ltd.' }
+      - label: Category
+        name: category
+        widget: select
+        default: formulations
+        options:
+          - { label: Branded Formulations, value: formulations }
+          - { label: Generic Medicines, value: generics }
+          - { label: Critical Care & Injectables, value: critical-care }
+          - { label: Cold Chain & Biologics, value: cold-chain }
+          - { label: OTC & Health Supplements, value: otc }
+          - { label: Surgical & Diagnostics, value: surgical }
+          - { label: Ayurvedic & Herbal, value: ayurvedic }
+      - label: Product Photo
+        name: image
+        widget: image
+        required: false
+        hint: Clear photo of the pack on a plain background. Automatically converted to WebP and resized.
+      - { label: Composition / Active Ingredients, name: composition, widget: string, hint: 'e.g. Amoxycillin (500mg) + Clavulanic Acid (125mg)' }
+      - { label: Pack Size, name: packSize, widget: string, hint: 'e.g. 10 Tablets / Strip' }
+      - { label: MRP, name: mrp, widget: string, required: false, hint: 'Include the rupee sign, e.g. ₹223.40' }
+      - label: Pricing Note
+        name: ptrEstimate
+        widget: string
+        required: false
+        default: Wholesale rate on request
+        hint: Short line shown in green on the product card, e.g. "Hospital & ICU Special Rate"
+      - label: HSN Code
+        name: hsnCode
+        widget: string
+        required: false
+        pattern: ['^[0-9]{4,8}$', 'HSN codes are 4–8 digits']
+      - label: Stock Status
+        name: stockStatus
+        widget: select
+        default: In Stock
+        options: [In Stock, Low Stock, On Order, Out of Stock]
+      - { label: Cold Chain Product (2–8°C), name: coldChain, widget: boolean, default: false }
+      - label: Storage Instructions
+        name: storageTemp
+        widget: string
+        required: false
+        hint: 'e.g. 2°C to 8°C (Cold Chain Mandatory). Leave blank for normal storage.'
+      - { label: Prescription Required (Rx), name: rxRequired, widget: boolean, default: true }
+      - { label: Featured on Home Page, name: featured, widget: boolean, default: false }
+      - label: Display Order
+        name: sortOrder
+        widget: number
+        value_type: int
+        default: 100
+        hint: Lower numbers appear first in the catalogue.
+      - label: Short Description
+        name: description
+        widget: text
+        hint: One or two sentences about what the product is used for.
+
+  - name: settings
+    label: Company Settings
+    description: Contact details, address and licence numbers shown across the website.
+    create: false
+    delete: false
+    files:
+      - name: company
+        label: Contact, Address & Licences
+        file: content/settings/company.json
+        format: json
+        fields:
+          - label: Contact
+            name: contact
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Sales Phone, name: phoneSales, widget: string, hint: 'Format: +91 98200 12345' }
+              - { label: Office Landline, name: phoneOffice, widget: string }
+              - { label: WhatsApp Number, name: whatsapp, widget: string, hint: 'With country code, e.g. +91 98200 12345' }
+              - { label: Sales Email, name: emailSales, widget: string }
+              - { label: General Email, name: emailInfo, widget: string }
+              - { label: Working Hours, name: workingHours, widget: string }
+              - { label: Sunday Note, name: sundayStatus, widget: string }
+          - label: Address
+            name: address
+            widget: object
+            fields:
+              - { label: Building / Street, name: building, widget: string }
+              - { label: Locality, name: locality, widget: string }
+              - { label: City, name: city, widget: string }
+              - { label: State, name: state, widget: string }
+              - { label: PIN Code, name: pincode, widget: string, pattern: ['^[1-9][0-9]{5}$', '6-digit PIN code'] }
+              - { label: Landmark, name: landmark, widget: string }
+              - { label: Latitude, name: latitude, widget: number, value_type: float, hint: 'From Google Maps (right-click the pin)' }
+              - { label: Longitude, name: longitude, widget: number, value_type: float }
+          - label: Licences & Registrations
+            name: licenses
+            widget: object
+            fields:
+              - { label: Drug Licence (Form 20B), name: drugLicense20B, widget: string }
+              - { label: Drug Licence (Form 21B), name: drugLicense21B, widget: string }
+              - { label: Issuing Authority, name: issuingAuthority, widget: string }
+              - label: GSTIN
+                name: gstin
+                widget: string
+                pattern: ['^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$', 'Enter a valid 15-character GSTIN']
+              - { label: PAN, name: pan, widget: string }
+              - { label: FSSAI Licence No., name: fssaiNo, widget: string, required: false }

@@ -1,6 +1,12 @@
 /**
  * VS MEDICO LLP - Centralized Company Data Configuration (TypeScript)
+ *
+ * Contact details, address and licence numbers live in content/settings/company.json
+ * and products live in content/products/*.json so they can be edited from the
+ * admin panel (/admin). Everything else on this page is edited in code.
  */
+
+import companySettings from '../../content/settings/company.json';
 
 export interface CompanyLicenses {
   drugLicense20B: string;
@@ -91,6 +97,13 @@ export interface ProductItem {
   storageTemp?: string;
   rxRequired: boolean;
   description: string;
+  /** URL slug for /products/[slug], generated from the name at build time. */
+  slug?: string;
+  /** Public path of the product photo, e.g. /images/uploads/augmentin.webp */
+  image?: string;
+  /** Shown on the home page and the express reorder desk. */
+  featured?: boolean;
+  sortOrder?: number;
 }
 
 export interface PharmaBrand {
@@ -118,6 +131,20 @@ export interface TeamMember {
   initials: string;
 }
 
+/**
+ * Canonical production URL (no trailing slash). Used for SEO metadata, sitemap and structured data.
+ * Set NEXT_PUBLIC_SITE_URL in the hosting environment to the live domain.
+ */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://vsmedico.in").replace(/\/+$/, "");
+
+/** Same-day dispatch cut-off, in IST (24h clock). */
+export const DISPATCH_CUTOFF_HOUR_IST = 14;
+
+const { latitude, longitude, ...ADDRESS } = companySettings.address;
+const FULL_ADDRESS = `${ADDRESS.building}, ${ADDRESS.locality}, ${ADDRESS.city}, ${ADDRESS.state} ${ADDRESS.pincode}`;
+const MAP_QUERY = FULL_ADDRESS;
+export const GEO = { latitude, longitude };
+
 export const COMPANY_INFO: CompanyInfo = {
   name: "VS Medico",
   legalName: "VS Medico LLP",
@@ -125,37 +152,19 @@ export const COMPANY_INFO: CompanyInfo = {
   establishedYear: 1998,
   yearsOfExcellence: "25+",
   
-  licenses: {
-    drugLicense20B: "MH-MUM-20B-184920",
-    drugLicense21B: "MH-MUM-21B-184921",
-    issuingAuthority: "Food & Drug Administration (FDA), Maharashtra State",
-    gstin: "27AAAAA0000A1Z5",
-    pan: "AAAAA0000A",
-    fssaiNo: "11521000000123"
-  },
+  licenses: companySettings.licenses,
 
   contact: {
-    phoneSales: "+91 98200 12345",
-    phoneOffice: "+91 022 2595 6789",
-    whatsapp: "+91 98200 12345",
-    whatsappRaw: "919820012345",
-    emailSales: "sales@vsmedico.in",
-    emailInfo: "contact@vsmedico.in",
-    workingHours: "Monday – Saturday: 9:30 AM to 8:30 PM",
-    sundayStatus: "Closed (Emergency Hospital Supply Available on Call)"
+    ...companySettings.contact,
+    whatsappRaw: companySettings.contact.whatsapp.replace(/\D/g, ''),
   },
 
   address: {
-    building: "F-117, Sharad Industrial Estate Rd",
-    locality: "Sadan Wadi, Bhandup West",
-    city: "Mumbai",
-    state: "Maharashtra",
-    pincode: "400078",
+    ...ADDRESS,
     country: "India",
-    landmark: "Near Bhandup Railway Station (West)",
-    fullAddress: "F-117, Sharad Industrial Estate Rd, Sadan Wadi, Bhandup West, Mumbai, Maharashtra 400078",
-    googleMapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.349942767094!2d72.9348123!3d19.1471018!2m3!1f0!0f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b848c772bb01%3A0x6a0584eb2e5d95d1!2sSharad%20Industrial%20Estate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
-    mapDirectionsUrl: "https://maps.google.com/?q=Sharad+Industrial+Estate+Bhandup+West+Mumbai"
+    fullAddress: FULL_ADDRESS,
+    googleMapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=16&output=embed`,
+    mapDirectionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAP_QUERY)}`,
   },
 
   businessProfile: {
@@ -230,192 +239,6 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   { id: "otc", name: "OTC & Health Supplements", icon: "Sparkles" },
   { id: "surgical", name: "Surgical & Diagnostics", icon: "Stethoscope" },
   { id: "ayurvedic", name: "Ayurvedic & Herbal", icon: "Leaf" }
-];
-
-export const PRODUCTS_LIST: ProductItem[] = [
-  {
-    id: "MED-001",
-    name: "Augmentin 625 Duo Tablet",
-    brand: "GlaxoSmithKline (GSK)",
-    category: "formulations",
-    composition: "Amoxycillin (500mg) + Clavulanic Acid (125mg)",
-    packSize: "10 Tablets / Strip",
-    mrp: "₹223.40",
-    ptrEstimate: "Attractive PTR Margin",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: true,
-    description: "Broad-spectrum antibiotic formulation for bacterial infections of respiratory tract, skin, and soft tissue."
-  },
-  {
-    id: "MED-002",
-    name: "Lantus SoloStar Pen (100IU/ml)",
-    brand: "Sanofi India",
-    category: "cold-chain",
-    composition: "Insulin Glargine (100 IU/ml)",
-    packSize: "3ml Pre-filled Pen",
-    mrp: "₹685.00",
-    ptrEstimate: "Wholesale Margin Available",
-    hsnCode: "30043110",
-    stockStatus: "In Stock",
-    coldChain: true,
-    storageTemp: "2°C to 8°C (Cold Chain Mandatory)",
-    rxRequired: true,
-    description: "Long-acting human insulin analog indicated for glycemic control in adult patients with Diabetes Mellitus."
-  },
-  {
-    id: "MED-003",
-    name: "Pan D Capsule",
-    brand: "Alkem Laboratories",
-    category: "formulations",
-    composition: "Pantoprazole (40mg) + Domperidone (30mg SR)",
-    packSize: "15 Capsules / Strip",
-    mrp: "₹199.00",
-    ptrEstimate: "High Wholesale Demand",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: true,
-    description: "Proton pump inhibitor combined with prokinetic agent for GERD, acidity, and peptic ulcers."
-  },
-  {
-    id: "MED-004",
-    name: "Clexane 40mg Injection",
-    brand: "Sanofi / Abbott",
-    category: "critical-care",
-    composition: "Enoxaparin Sodium (40mg/0.4ml)",
-    packSize: "Pre-filled Syringe",
-    mrp: "₹620.00",
-    ptrEstimate: "Hospital Wholesale Rate",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: true,
-    storageTemp: "Below 25°C / Cold Controlled",
-    rxRequired: true,
-    description: "Low Molecular Weight Heparin (LMWH) used to prevent and treat deep vein thrombosis (DVT) and pulmonary embolism."
-  },
-  {
-    id: "MED-005",
-    name: "Montair LC Tablet",
-    brand: "Cipla Ltd.",
-    category: "formulations",
-    composition: "Montelukast (10mg) + Levocetirizine (5mg)",
-    packSize: "15 Tablets / Strip",
-    mrp: "₹340.00",
-    ptrEstimate: "Standard PTR Pricing",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: true,
-    description: "Dual action antiallergic and leukotriene receptor antagonist for allergic rhinitis and bronchial asthma."
-  },
-  {
-    id: "MED-006",
-    name: "Meropenem 1g Injection (Vial)",
-    brand: "Cipla / Sun Pharma",
-    category: "critical-care",
-    composition: "Meropenem IP 1000mg",
-    packSize: "1 Vial + WFI",
-    mrp: "₹950.00",
-    ptrEstimate: "Hospital & ICU Special Rate",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: true,
-    description: "Broad-spectrum carbapenem antibiotic for severe hospital-acquired infections and ICU critical care."
-  },
-  {
-    id: "MED-007",
-    name: "Telma 40 Tablet",
-    brand: "Glenmark Pharmaceuticals",
-    category: "formulations",
-    composition: "Telmisartan (40mg)",
-    packSize: "15 Tablets / Strip",
-    mrp: "₹142.00",
-    ptrEstimate: "High Demand Stock",
-    hsnCode: "30049099",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: true,
-    description: "Angiotensin II receptor blocker (ARB) indicated for essential hypertension and cardiovascular protection."
-  },
-  {
-    id: "MED-008",
-    name: "Paracetamol 650mg Tablets (Trade Generic)",
-    brand: "Generic Division",
-    category: "generics",
-    composition: "Paracetamol IP 650mg",
-    packSize: "10 x 10 Tablets Box",
-    mrp: "₹320.00 / Box",
-    ptrEstimate: "Bulk Generic Rates",
-    hsnCode: "30049060",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: false,
-    description: "Analgesic & antipyretic formulation for high fever and pain relief. High margin generic trade item."
-  },
-  {
-    id: "MED-009",
-    name: "Human Mixtard 30/70 100IU/ml Cartridge",
-    brand: "Novo Nordisk",
-    category: "cold-chain",
-    composition: "Biphasic Isophane Insulin (30% soluble / 70% isophane)",
-    packSize: "5 x 3ml Penfill Cartridges",
-    mrp: "₹1,250.00",
-    ptrEstimate: "Cold Chain Wholesale Rate",
-    hsnCode: "30043110",
-    stockStatus: "In Stock",
-    coldChain: true,
-    storageTemp: "2°C to 8°C Strict Cold Chain",
-    rxRequired: true,
-    description: "Premixed human insulin for diabetes mellitus glycemic control."
-  },
-  {
-    id: "MED-010",
-    name: "Disposable Syringes with Needle (2ml / 5ml)",
-    brand: "BD / Dispovan",
-    category: "surgical",
-    composition: "Medical Grade Non-toxic Polypropylene",
-    packSize: "Box of 100 Units",
-    mrp: "₹450.00 / Box",
-    ptrEstimate: "Institutional Rate",
-    hsnCode: "90183100",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: false,
-    description: "Sterile single-use syringes with ultra-sharp luer mount needle for clinical and hospital administration."
-  },
-  {
-    id: "MED-011",
-    name: "Liv.52 Syrup / Tablets",
-    brand: "Himalaya Wellness",
-    category: "ayurvedic",
-    composition: "Caper Bush, Chicory, Mandur Bhasma & Herbal Extracts",
-    packSize: "200ml Bottle / 100 Tabs",
-    mrp: "₹170.00",
-    ptrEstimate: "Wholesale Discount Available",
-    hsnCode: "30049011",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: false,
-    description: "Hepatoprotective herbal formulation supporting liver health, appetite, and metabolic detoxification."
-  },
-  {
-    id: "MED-012",
-    name: "Shelcal 500 Tablet",
-    brand: "Torrent Pharmaceuticals",
-    category: "otc",
-    composition: "Elemental Calcium (500mg) + Vitamin D3 (250 IU)",
-    packSize: "15 Tablets / Strip",
-    mrp: "₹131.50",
-    ptrEstimate: "High Fast-Moving SKU",
-    hsnCode: "30045090",
-    stockStatus: "In Stock",
-    coldChain: false,
-    rxRequired: false,
-    description: "Calcium and Vitamin D3 supplement for bone mineral density, joint strength, and osteoporosis prevention."
-  }
 ];
 
 export const PHARMA_BRANDS: PharmaBrand[] = [

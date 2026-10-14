@@ -1,0 +1,19 @@
+{
+  "sku": "MED-012",
+  "name": "Shelcal 500 Tablet",
+  "brand": "Torrent Pharmaceuticals",
+  "category": "otc",
+  "composition": "Elemental Calcium (500mg) + Vitamin D3 (250 IU)",
+  "packSize": "15 Tablets / Strip",
+  "mrp": "₹131.50",
+  "ptrEstimate": "High Fast-Moving SKU",
+  "hsnCode": "30045090",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": false,
+  "featured": false,
+  "sortOrder": 120,
+  "image": "",
+  "description": "Calcium and Vitamin D3 supplement for bone mineral density, joint strength, and osteoporosis prevention."
+}

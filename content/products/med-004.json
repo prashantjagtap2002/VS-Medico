@@ -1,0 +1,19 @@
+{
+  "sku": "MED-004",
+  "name": "Clexane 40mg Injection",
+  "brand": "Sanofi / Abbott",
+  "category": "critical-care",
+  "composition": "Enoxaparin Sodium (40mg/0.4ml)",
+  "packSize": "Pre-filled Syringe",
+  "mrp": "₹620.00",
+  "ptrEstimate": "Hospital Wholesale Rate",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": true,
+  "storageTemp": "Below 25°C / Cold Controlled",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 40,
+  "image": "",
+  "description": "Low Molecular Weight Heparin (LMWH) used to prevent and treat deep vein thrombosis (DVT) and pulmonary embolism."
+}

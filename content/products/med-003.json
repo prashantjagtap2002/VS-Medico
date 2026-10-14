@@ -1,0 +1,19 @@
+{
+  "sku": "MED-003",
+  "name": "Pan D Capsule",
+  "brand": "Alkem Laboratories",
+  "category": "formulations",
+  "composition": "Pantoprazole (40mg) + Domperidone (30mg SR)",
+  "packSize": "15 Capsules / Strip",
+  "mrp": "₹199.00",
+  "ptrEstimate": "High Wholesale Demand",
+  "hsnCode": "30049099",
+  "stockStatus": "In Stock",
+  "coldChain": false,
+  "storageTemp": "",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 30,
+  "image": "",
+  "description": "Proton pump inhibitor combined with prokinetic agent for GERD, acidity, and peptic ulcers."
+}

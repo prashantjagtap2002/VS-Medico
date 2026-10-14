@@ -1,0 +1,19 @@
+{
+  "sku": "MED-009",
+  "name": "Human Mixtard 30/70 100IU/ml Cartridge",
+  "brand": "Novo Nordisk",
+  "category": "cold-chain",
+  "composition": "Biphasic Isophane Insulin (30% soluble / 70% isophane)",
+  "packSize": "5 x 3ml Penfill Cartridges",
+  "mrp": "₹1,250.00",
+  "ptrEstimate": "Cold Chain Wholesale Rate",
+  "hsnCode": "30043110",
+  "stockStatus": "In Stock",
+  "coldChain": true,
+  "storageTemp": "2°C to 8°C Strict Cold Chain",
+  "rxRequired": true,
+  "featured": false,
+  "sortOrder": 90,
+  "image": "",
+  "description": "Premixed human insulin for diabetes mellitus glycemic control."
+}

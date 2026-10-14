@@ -1,0 +1,19 @@
+{
+  "sku": "MED-002",
+  "name": "Lantus SoloStar Pen (100IU/ml)",
+  "brand": "Sanofi India",
+  "category": "cold-chain",
+  "composition": "Insulin Glargine (100 IU/ml)",
+  "packSize": "3ml Pre-filled Pen",
+  "mrp": "₹685.00",
+  "ptrEstimate": "Wholesale Margin Available",
+  "hsnCode": "30043110",
+  "stockStatus": "In Stock",
+  "coldChain": true,
+  "storageTemp": "2°C to 8°C (Cold Chain Mandatory)",
+  "rxRequired": true,
+  "featured": true,
+  "sortOrder": 20,
+  "image": "",
+  "description": "Long-acting human insulin analog indicated for glycemic control in adult patients with Diabetes Mellitus."
+}

@@ -1,9 +1,12 @@
-"use client";
-
-import React from 'react';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Image from 'next/image';
-import { COMPANY_INFO, TRUST_STATS, LEADERSHIP_TEAM } from '@/data/companyData';
-import { useQuoteBasket } from '@/components/QuoteBasketContext';
+import Link from 'next/link';
+import { COMPANY_INFO, TRUST_STATS } from '@/data/companyData';
+import { OpenLicenseButton } from '@/components/ModalTriggers';
+import CountUp from '@/components/CountUp';
+import Reveal from '@/components/Reveal';
+import { whatsappLink } from '@/lib/forms';
 import {
   ShieldCheck,
   Snowflake,
@@ -16,9 +19,14 @@ import {
   Sparkles
 } from 'lucide-react';
 
-export default function AboutPage() {
-  const { setIsModalOpen, setIsLicenseModalOpen } = useQuoteBasket();
+export const metadata: Metadata = pageMetadata({
+  title: 'About Us — Pharma Wholesale Since 1998',
+  description:
+    'VS Medico LLP has supplied genuine medicines to 1,200+ chemists and hospitals across Mumbai MMR since 1998 from its WHO-GDP compliant warehouse in Bhandup West.',
+  path: '/about',
+});
 
+export default function AboutPage() {
   return (
     <div>
       {/* Hero */}
@@ -45,15 +53,15 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="mt-14 max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100 overflow-hidden">
+          <Reveal className="mt-14 max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100 overflow-hidden" delay={200}>
             {TRUST_STATS.map((stat, idx) => (
               <div key={idx} className="p-6 md:p-8 text-center">
-                <div className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-1.5">{stat.value}</div>
+                <div className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-1.5"><CountUp value={stat.value} /></div>
                 <div className="font-bold text-slate-800 text-sm mb-1">{stat.label}</div>
                 <div className="text-xs text-slate-500">{stat.detail}</div>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -62,7 +70,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
             {/* Our Legacy */}
-            <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+            <Reveal className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
               <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-2 block">Our Legacy</span>
               <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-5 leading-tight">
                 From Local Stockist to a Single-Window Hub
@@ -77,7 +85,7 @@ export default function AboutPage() {
                     <Building2 size={20} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm mb-1">The Super-Stockist Advantage</h4>
+                    <h3 className="font-bold text-slate-800 text-sm mb-1">The Super-Stockist Advantage</h3>
                     <p className="text-sm text-slate-500 leading-relaxed">Single-window ordering across 50+ leading MNCs on one consolidated invoice.</p>
                   </div>
                 </div>
@@ -87,26 +95,26 @@ export default function AboutPage() {
                     <Activity size={20} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm mb-1">Hyper-Local Logistics</h4>
+                    <h3 className="font-bold text-slate-800 text-sm mb-1">Hyper-Local Logistics</h3>
                     <p className="text-sm text-slate-500 leading-relaxed">Same-day express runs from Bhandup West across Mulund, Thane, Powai &amp; Ghatkopar.</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Quality & Compliance */}
-            <div className="bg-slate-900 p-8 md:p-10 rounded-3xl shadow-xl text-white relative overflow-hidden flex flex-col">
+            <Reveal className="bg-slate-900 p-8 md:p-10 rounded-3xl shadow-xl text-white relative overflow-hidden flex flex-col" delay={120}>
               <ShieldCheck size={240} className="absolute -top-10 -right-10 text-white/[0.04] pointer-events-none" />
 
               <div className="relative z-10 flex flex-col h-full">
                 <span className="text-sky-400 font-bold text-sm tracking-widest uppercase mb-2 block">Standards</span>
-                <h3 className="font-heading font-bold text-2xl md:text-3xl mb-6">Quality &amp; Compliance First</h3>
+                <h2 className="font-heading font-bold text-2xl md:text-3xl mb-6">Quality &amp; Compliance First</h2>
 
                 <div className="flex flex-col divide-y divide-white/10">
                   <div className="flex items-start gap-4 py-5">
                     <CheckCircle2 size={20} className="text-emerald-400 shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-bold text-white text-sm mb-1">Counterfeit-Zero Guarantee</h4>
+                      <h3 className="font-bold text-white text-sm mb-1">Counterfeit-Zero Guarantee</h3>
                       <p className="text-sm text-slate-400 leading-relaxed">Strict batch verification and direct factory-to-warehouse sourcing ensures 100% genuine products.</p>
                     </div>
                   </div>
@@ -114,7 +122,7 @@ export default function AboutPage() {
                   <div className="flex items-start gap-4 py-5">
                     <CheckCircle2 size={20} className="text-sky-400 shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-bold text-white text-sm mb-1">WHO-GDP Cold Chain Standard</h4>
+                      <h3 className="font-bold text-white text-sm mb-1">WHO-GDP Cold Chain Standard</h3>
                       <p className="text-sm text-slate-400 leading-relaxed">24/7 digital thermal monitoring for insulin, vaccines &amp; critical care injectables.</p>
                     </div>
                   </div>
@@ -122,23 +130,20 @@ export default function AboutPage() {
                   <div className="flex items-start gap-4 py-5">
                     <CheckCircle2 size={20} className="text-amber-400 shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-bold text-white text-sm mb-1">Transparent B2B Billing</h4>
+                      <h3 className="font-bold text-white text-sm mb-1">Transparent B2B Billing</h3>
                       <p className="text-sm text-slate-400 leading-relaxed">Accurate PTR/MRP invoice credit structures with full GST &amp; HSN compliance.</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-6 mt-auto border-t border-white/10">
-                  <button
-                    onClick={() => setIsLicenseModalOpen(true)}
-                    className="btn btn-secondary w-full flex justify-center"
-                  >
-                    <ShieldCheck size={18} />
+                  <OpenLicenseButton className="btn btn-secondary w-full flex justify-center">
+                    <ShieldCheck size={18} aria-hidden="true" />
                     <span>View Drug License Details</span>
-                  </button>
+                  </OpenLicenseButton>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -155,29 +160,29 @@ export default function AboutPage() {
           </div>
 
           <div className="grid-3">
-            <div className="feature-card">
+            <Reveal className="feature-card">
               <div className="feature-icon">
                 <Snowflake size={28} />
               </div>
               <h3>2°C – 8°C Cold Storage</h3>
               <p>Dedicated cold rooms with automatic back-up generators for insulins, vaccines, growth hormones, and biological serums.</p>
-            </div>
+            </Reveal>
 
-            <div className="feature-card">
+            <Reveal className="feature-card" delay={100}>
               <div className="feature-icon" style={{ background: 'var(--accent-green-light)', color: 'var(--accent-green-dark)' }}>
                 <Truck size={28} />
               </div>
               <h3>Insulated Express Fleet</h3>
               <p>Temperature-monitored transit boxes ensuring cold chain continuity during delivery runs across Bhandup, Powai, Thane, and South Mumbai.</p>
-            </div>
+            </Reveal>
 
-            <div className="feature-card">
+            <Reveal className="feature-card" delay={200}>
               <div className="feature-icon" style={{ background: '#f3e8ff', color: '#7e22ce' }}>
                 <ShieldCheck size={28} />
               </div>
               <h3>FDA Licensing &amp; Audit</h3>
               <p>Full compliance with FDA Maharashtra Form 20B/21B regulations, regular stock audits, and batch expiry tracking.</p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -198,11 +203,11 @@ export default function AboutPage() {
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-slate-200 transform md:-translate-x-1/2 rounded-full hidden md:block"></div>
 
             {/* Node 1: Founder */}
-            <div className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
+            <Reveal className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
               <div className="w-full md:w-1/2 md:pr-12 text-left md:text-right">
                 <div className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">1998 - Foundation</div>
                 <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">V. S. Sharma</h3>
-                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Founder & Managing Partner</h4>
+                <p className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Founder & Managing Partner</p>
                 <p className="text-slate-600 leading-relaxed text-lg">
                   Founded VS Medico in 1998 with a vision to streamline pharmaceutical distribution. Under his leadership, the company has grown into a 5,000+ SKU wholesale distribution house serving the entire MMR.
                 </p>
@@ -210,17 +215,17 @@ export default function AboutPage() {
               <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-secondary rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
               <div className="w-full md:w-1/2 md:pl-12">
                 <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border-4 border-white">
-                  <Image src="/images/founder.jpg" alt="V. S. Sharma - Founder" fill className="object-cover" />
+                  <Image src="/images/founder.webp" alt="V. S. Sharma, Founder & Managing Partner of VS Medico" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Node 2: Operations */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8 mb-20 relative">
+            <Reveal className="flex flex-col md:flex-row-reverse items-center gap-8 mb-20 relative">
               <div className="w-full md:w-1/2 md:pl-12 text-left">
                 <div className="inline-block px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">Growth & Infrastructure</div>
                 <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Rohan Sharma</h3>
-                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Director – Operations & Logistics</h4>
+                <p className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Director – Operations & Logistics</p>
                 <p className="text-slate-600 leading-relaxed text-lg">
                   Oversees the state-of-the-art Bhandup warehouse and cold-chain fleet. He spearheaded our modern logistics expansion, ensuring same-day dispatch operations across Mumbai & Thane.
                 </p>
@@ -228,17 +233,17 @@ export default function AboutPage() {
               <div className="absolute left-4 md:left-1/2 w-5 h-5 bg-emerald-500 rounded-full transform -translate-x-1/2 border-4 border-white shadow-lg hidden md:block z-10"></div>
               <div className="w-full md:w-1/2 md:pr-12">
                 <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white">
-                  <Image src="/images/warehouse.jpg" alt="VS Medico Logistics Warehouse" fill className="object-cover" />
+                  <Image src="/images/warehouse.webp" alt="VS Medico pharmaceutical warehouse and logistics hub in Bhandup West, Mumbai" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Node 3: Quality */}
-            <div className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
+            <Reveal className="flex flex-col md:flex-row items-center gap-8 mb-20 relative">
               <div className="w-full md:w-1/2 md:pr-12 text-left md:text-right">
                 <div className="inline-block px-3 py-1 bg-sky-500 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">Quality & Compliance</div>
                 <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Anita Deshmukh</h3>
-                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – Quality & Regulatory Compliance</h4>
+                <p className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – Quality & Regulatory Compliance</p>
                 <p className="text-slate-600 leading-relaxed text-lg">
                   Manages FDA licensing, strict batch audit trails, and strict adherence to WHO-GDP cold chain protocols. She ensures that every product delivered is 100% genuine and safe.
                 </p>
@@ -250,14 +255,14 @@ export default function AboutPage() {
                   <p className="text-slate-500 italic text-lg">"Our counterfeit-zero guarantee is the bedrock of trust we share with thousands of healthcare providers."</p>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Node 4: Sales */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8 relative">
+            <Reveal className="flex flex-col md:flex-row-reverse items-center gap-8 relative">
               <div className="w-full md:w-1/2 md:pl-12 text-left">
                 <div className="inline-block px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full mb-3 uppercase tracking-widest">B2B Network Expansion</div>
                 <h3 className="font-heading font-extrabold text-3xl text-primary mb-2">Imran Shaikh</h3>
-                <h4 className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – B2B Sales & Key Accounts</h4>
+                <p className="text-sm font-bold text-secondary tracking-widest uppercase mb-4">Head – B2B Sales & Key Accounts</p>
                 <p className="text-slate-600 leading-relaxed text-lg">
                   Leads wholesale pricing strategies, chemist onboarding, and hospital institutional accounts. His efforts have expanded our active client base to over 1,200 partners.
                 </p>
@@ -269,8 +274,7 @@ export default function AboutPage() {
                   <p className="text-slate-500 italic text-lg">"We focus on transparent PTR/MRP billing and structured credit to empower local pharmacies."</p>
                 </div>
               </div>
-            </div>
-            
+            </Reveal>
           </div>
         </div>
       </section>
@@ -278,18 +282,18 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-4 pb-20 md:pb-24 bg-white">
         <div className="container">
-          <div className="text-center bg-slate-900 p-10 md:p-14 rounded-3xl shadow-xl max-w-4xl mx-auto text-white">
-            <h3 className="font-heading font-bold text-3xl md:text-4xl mb-4">Partner with VS Medico Today</h3>
+          <Reveal variant="scale" className="text-center bg-slate-900 p-10 md:p-14 rounded-3xl shadow-xl max-w-4xl mx-auto text-white">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">Partner with VS Medico Today</h2>
             <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
               Register your chemist shop or hospital procurement account with VS Medico to unlock structured wholesale pricing.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
-              <button onClick={() => setIsModalOpen(true)} className="btn btn-white font-bold w-full sm:w-auto justify-center">
-                <FileText size={18} />
-                <span>Submit Account Request</span>
-              </button>
+              <Link href="/register" className="btn btn-white font-bold w-full sm:w-auto justify-center">
+                <FileText size={18} aria-hidden="true" />
+                <span>Open a Wholesale Account</span>
+              </Link>
               <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappRaw}`}
+                href={whatsappLink('Hello VS Medico, I would like to know more about becoming a wholesale buyer.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-whatsapp border-none font-bold w-full sm:w-auto justify-center"
@@ -298,7 +302,7 @@ export default function AboutPage() {
                 <span>WhatsApp Direct Desk</span>
               </a>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>
