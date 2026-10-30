@@ -1,161 +1,128 @@
 import type { Metadata } from 'next';
+import { CheckCircle2 } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
+import { CtaBand, PageHeader, SectionHead } from '@/components/PageSections';
 import { COMPANY_INFO } from '@/data/companyData';
-import { OpenLicenseButton } from '@/components/ModalTriggers';
-import { 
-  ShieldCheck, 
-  FileCheck, 
-  CheckCircle2, 
-  Snowflake,
-  Award,
-  Lock,
-  FileText
-} from 'lucide-react';
+import { BUYER_DOCUMENTS, COMPLIANCE_FRAMEWORK, COMPLIANCE_GROUPS, SPECIALISED_COMPLIANCE } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Drug Licences, GST & WHO-GDP Compliance',
+  title: 'Licences, Certifications & Compliance',
   description:
-    'VS Medico LLP operates under FDA Maharashtra Form 20B/21B wholesale drug licences, full GST compliance, batch traceability and WHO-GDP 2°C–8°C cold chain storage.',
+    'FDA Maharashtra Form 20B/21B drug licences, GST registration, WHO-GDP cold chain practices and batch traceability at VS Medico LLP, Mumbai.',
   path: '/compliance',
 });
 
 export default function CompliancePage() {
+  const { licenses } = COMPANY_INFO;
+  const registrations = [
+    { label: 'Drug Licence (Form 20B)', value: licenses.drugLicense20B },
+    { label: 'Drug Licence (Form 21B)', value: licenses.drugLicense21B },
+    { label: 'GSTIN', value: licenses.gstin },
+    { label: 'PAN', value: licenses.pan },
+    { label: 'FSSAI Licence', value: licenses.fssaiNo },
+    { label: 'Issuing Authority', value: licenses.issuingAuthority },
+  ];
+
   return (
-    <div className="py-16 bg-slate-50/50">
-      <div className="container">
-        {/* Header */}
-        <div className="max-w-3xl mb-14">
-          <span className="inline-flex items-center gap-1.5 text-emerald-700 font-bold text-xs uppercase tracking-widest bg-emerald-100/80 border border-emerald-200 px-3.5 py-1.5 rounded-full mb-3">
-            <Award size={14} />
-            <span>REGULATORY STANDARDS & QUALITY ASSURANCE</span>
-          </span>
-          <h1 className="font-heading font-extrabold text-4xl text-primary mb-3">
-            Licensing & Compliance Credentials
-          </h1>
-          <p className="text-slate-600 text-base leading-relaxed">
-            VS Medico LLP strictly adheres to the Drugs & Cosmetics Act, 1940 and rules thereunder, operating under valid FDA Maharashtra Drug Licenses and WHO-GDP quality distribution standards.
-          </p>
+    <>
+      <PageHeader title="Certifications & Compliance">
+        Full compliance with drug licensing, storage and tax regulations, ensuring safety, quality and regulatory
+        adherence on every order we supply.
+      </PageHeader>
+
+      <section className="section bg-alt">
+        <div className="container">
+          <div className="grid-3">
+            {COMPLIANCE_GROUPS.map((group) => (
+              <div key={group.title} className="card">
+                <h3 className="mb-5!">{group.title}</h3>
+                <ul className="check-list">
+                  {group.items.map((item) => (
+                    <li key={item}>
+                      <CheckCircle2 size={17} aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-        {/* Section 1: FDA Drug Licenses (2-Column Grid) */}
-        <div className="mb-14">
-          <h2 className="font-heading font-extrabold text-xl text-primary mb-5 flex items-center gap-2">
-            <FileCheck className="text-secondary" size={22} />
-            <span>State FDA Drug Registration Certificates</span>
-          </h2>
+      <section className="section bg-white">
+        <div className="container">
+          <SectionHead title="Comprehensive Compliance Framework" />
+          <div className="grid-2 gap-x-16">
+            {[COMPLIANCE_FRAMEWORK.regulatory, COMPLIANCE_FRAMEWORK.quality].map((group) => (
+              <div key={group.title}>
+                <h3 className="heading-2 mb-5">{group.title}</h3>
+                <div className="grid gap-5">
+                  {group.items.map((item) => (
+                    <div key={item.title}>
+                      <h4 className="text-[15px] mb-1">{item.title}</h4>
+                      <p className="body-small">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      <section className="section bg-alt">
+        <div className="container">
+          <SectionHead title="Quality Assurance Commitments" />
           <div className="grid-2">
-            {/* License 20B */}
-            <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between min-w-0">
-              <div>
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <span className="badge badge-blue font-bold">WHOLESALE DRUG LICENSE</span>
-                  <div className="w-11 h-11 rounded-2xl bg-sky-50 text-secondary flex items-center justify-center shrink-0">
-                    <FileCheck size={22} />
-                  </div>
-                </div>
-                <h3 className="font-heading font-extrabold text-xl text-primary mb-1">Form 20B Registration</h3>
-                <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
-
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-4">
-                  <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-                  <div className="font-mono font-extrabold text-xl text-primary break-all">{COMPANY_INFO.licenses.drugLicense20B}</div>
-                </div>
+            {SPECIALISED_COMPLIANCE.map((item) => (
+              <div key={item.title} className="card card-hover">
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
               </div>
-
-              <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
-                Authorizes VS Medico LLP to stock, store, sell, and distribute wholesale drugs other than those specified in Schedules C, C(1), and X.
-              </p>
-            </div>
-
-            {/* License 21B */}
-            <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between min-w-0">
-              <div>
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <span className="badge badge-green font-bold">BIOLOGICALS & SCHEDULE C LICENSE</span>
-                  <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
-                    <ShieldCheck size={22} />
-                  </div>
-                </div>
-                <h3 className="font-heading font-extrabold text-xl text-primary mb-1">Form 21B Registration</h3>
-                <p className="text-xs text-slate-500 mb-4">Issued by Food & Drug Administration (FDA), Maharashtra State</p>
-
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-4">
-                  <div className="text-xs text-slate-500 font-semibold mb-0.5">License Registration Number</div>
-                  <div className="font-mono font-extrabold text-xl text-emerald-800 break-all">{COMPANY_INFO.licenses.drugLicense21B}</div>
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
-                Authorizes VS Medico LLP to stock, store, sell, and distribute wholesale biological products, insulins, vaccines, and Schedule C/C(1) formulations.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Section 2: GSTIN & Tax Compliance (Dark Card) */}
-        <div className="mb-14 gst-panel">
-          <div className="gst-panel-grid">
-            <div>
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-widest flex items-center gap-1.5 mb-2">
-                <Lock size={13} /> TAX COMPLIANCE STATUS
-              </span>
-              <h2 className="font-heading font-bold text-2xl md:text-3xl text-white mb-3">GSTIN Registration & Tax Compliance</h2>
-              <p className="text-slate-300 text-sm leading-relaxed mb-5">
-                VS Medico LLP is a fully registered tax-compliant entity under the Goods & Services Tax network in Maharashtra (State Code 27). Every invoice includes complete HSN codes, PTR rates, and tax breakdown.
-              </p>
-              <div className="inline-block bg-slate-800/90 p-4 rounded-xl border border-slate-700 font-mono text-lg text-sky-300 font-extrabold break-all">
-                GSTIN: {COMPANY_INFO.licenses.gstin}
+      <section className="section bg-white">
+        <div className="container">
+          <SectionHead title="Registrations & Licence Numbers">
+            Our statutory registrations, available for verification by every buyer
+          </SectionHead>
+          <div className="grid-3">
+            {registrations.map((r) => (
+              <div key={r.label} className="card card-soft text-center">
+                <h3 className="text-base!">{r.label}</h3>
+                <p className="font-mono text-ink! text-[15px]!">{r.value}</p>
               </div>
-            </div>
-
-            <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-700/80 text-xs text-slate-300 flex flex-col gap-3">
-              <div className="flex items-center gap-2 text-white font-bold text-sm mb-1">
-                <CheckCircle2 size={18} className="text-emerald-400" />
-                <span>Quality & Compliance Pillars</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
-                <p><strong className="text-white">100% Genuine Direct Supply:</strong> Sourced strictly from original brand manufacturers or authorized super-stockists.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
-                <p><strong className="text-white">Expiry Traceability:</strong> Zero near-expiry items dispatched to retail chemist stores without prior written consent.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
-                <p><strong className="text-white">Batch Audit Trail:</strong> Every batch number is recorded on tax invoices for quick recall compliance.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
-                <p><strong className="text-white">Restricted Sales Policy:</strong> Sales permitted strictly to buyers providing valid Drug License (20B/21B) & GST credentials.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Section 3: Cold Chain Protocol */}
-        <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
-                <Snowflake size={26} />
+      <section className="section bg-alt">
+        <div className="container">
+          <SectionHead title="Documents We Need From Buyers">
+            We supply licensed buyers only. These documents are verified before an account is opened.
+          </SectionHead>
+          <div className="grid-3">
+            {BUYER_DOCUMENTS.map((d) => (
+              <div key={d.title} className="card text-center">
+                <h3>{d.title}</h3>
+                <p>{d.desc}</p>
               </div>
-              <div>
-                <h3 className="font-heading font-bold text-xl text-primary mb-1">WHO-GDP Cold Chain Protocols</h3>
-                <p className="text-slate-600 text-sm max-w-2xl leading-relaxed">
-                  Our Bhandup cold rooms operate 24/7 at 2°C to 8°C with dual power backups, digital data loggers, and insulated delivery boxes to preserve product potency.
-                </p>
-              </div>
-            </div>
-
-            <OpenLicenseButton className="btn btn-primary shrink-0 justify-center">
-              <FileText size={16} aria-hidden="true" />
-              <span>View Licence Summary</span>
-            </OpenLicenseButton>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <CtaBand
+        title="Compliance-Driven Pharma Supply"
+        text="Every order delivered with complete regulatory adherence and documentation."
+        href="/register"
+        label="Open a Wholesale Account"
+      />
+    </>
   );
 }

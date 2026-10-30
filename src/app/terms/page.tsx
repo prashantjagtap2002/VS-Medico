@@ -15,10 +15,10 @@ const LAST_UPDATED = '14 October 2026';
 export default function TermsPage() {
   const { contact, legalName, address } = COMPANY_INFO;
   return (
-    <div className="py-12 md:py-16">
+    <div className="section-sm">
       <div className="container">
         <article className="legal-prose">
-          <p className="text-secondary font-bold text-sm tracking-wider uppercase">Legal</p>
+          <p className="eyebrow">Legal</p>
           <h1>Terms of Use</h1>
           <p className="legal-meta">Last updated: {LAST_UPDATED}</p>
 

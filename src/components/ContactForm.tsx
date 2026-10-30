@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, FormEvent } from 'react';
-import Link from 'next/link';
 import { Send, CheckCircle2, MessageCircle, AlertTriangle } from 'lucide-react';
-import { Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
+import { ConsentCheckbox, Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
 import {
   submitLead,
   whatsappLink,
@@ -32,21 +31,23 @@ const EMPTY = {
 };
 
 type FormState = typeof EMPTY;
-type Errors = Partial<Record<keyof FormState, string>>;
+type Errors = Partial<Record<keyof FormState | 'consent', string>>;
 
-function validate(f: FormState): Errors {
+function validate(f: FormState, consent: boolean): Errors {
   const errors: Errors = {};
   if (f.fullName.trim().length < 2) errors.fullName = 'Please enter your full name.';
   if (!f.phone.trim()) errors.phone = 'Phone number is required so we can call you back.';
   else if (!isValidIndianPhone(f.phone)) errors.phone = 'Enter a valid 10-digit Indian mobile or landline number.';
   if (f.email.trim() && !isValidEmail(f.email)) errors.email = 'Enter a valid email address.';
   if (f.message.length > 2000) errors.message = 'Please keep your message under 2,000 characters.';
+  if (!consent) errors.consent = 'Please accept the Terms & Conditions to continue.';
   return errors;
 }
 
 export default function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
+  const [consent, setConsent] = useState(false);
   const [botcheck, setBotcheck] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle');
   const [failMessage, setFailMessage] = useState('');
@@ -69,7 +70,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const found = validate(form);
+    const found = validate(form, consent);
     setErrors(found);
     const firstInvalid = Object.keys(found)[0];
     if (firstInvalid) {
@@ -99,6 +100,7 @@ export default function ContactForm() {
 
   const reset = () => {
     setForm(EMPTY);
+    setConsent(false);
     setErrors({});
     setStatus('idle');
   };
@@ -106,8 +108,8 @@ export default function ContactForm() {
   return (
     <div className="form-panel">
       <div className="mb-6">
-        <h2 className="font-extrabold text-primary text-2xl font-heading mb-1">Send Us a B2B Inquiry</h2>
-        <p className="text-slate-500 text-sm">
+        <h2 className="heading-2 mb-1">Request Wholesale Consultation</h2>
+        <p className="body-small">
           Fill out the form and our wholesale sales team will get back to you within one working day.
         </p>
       </div>
@@ -115,7 +117,7 @@ export default function ContactForm() {
       {status === 'sent' ? (
         <div className="form-success" role="status">
           <CheckCircle2 size={48} className="text-emerald-600 mx-auto mb-3" aria-hidden="true" />
-          <h3 className="font-extrabold text-slate-800 text-xl font-heading mb-2">Message Received!</h3>
+          <h3 className="heading-2 mb-2">Message Received!</h3>
           <p className="text-sm text-slate-600 max-w-md mx-auto mb-4 leading-relaxed">
             Thank you, <strong>{form.fullName}</strong>. Our wholesale sales executive will reach out to{' '}
             <strong>{form.storeName || 'you'}</strong> on <strong>{form.phone}</strong> shortly.
@@ -192,7 +194,7 @@ export default function ContactForm() {
             </select>
           </Field>
 
-          <Field id="cf-message" label="Your Message or Required SKUs" error={errors.message} className="mb-6">
+          <Field id="cf-message" label="Your Message or Required SKUs" error={errors.message} className="mb-4">
             <textarea
               rows={4}
               maxLength={2000}
@@ -203,6 +205,18 @@ export default function ContactForm() {
               {...fieldA11y('cf-message', errors.message)}
             />
           </Field>
+
+          <div className="mb-6">
+            <ConsentCheckbox
+              id="cf-consent"
+              checked={consent}
+              error={errors.consent}
+              onChange={(v) => {
+                setConsent(v);
+                if (errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
+              }}
+            />
+          </div>
 
           {status === 'failed' && (
             <div className="form-alert form-alert-error mb-4" role="alert">
@@ -225,7 +239,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full btn btn-primary py-3 justify-center text-base"
+            className="w-full btn btn-primary py-3!"
           >
             {status === 'sending' ? <SubmitSpinner /> : <Send size={18} aria-hidden="true" />}
             <span>
@@ -236,9 +250,8 @@ export default function ContactForm() {
                   : 'Send Inquiry via WhatsApp'}
             </span>
           </button>
-          <p className="text-xs text-slate-500 mt-3 text-center form-consent-note">
-            We use your details only to respond to this inquiry (see our <Link href="/privacy">Privacy Policy</Link>).
-            B2B buyers with valid drug licences only.
+          <p className="text-xs text-ink-soft mt-3 text-center">
+            We use your details only to respond to this inquiry. B2B buyers with valid drug licences only.
           </p>
         </form>
       )}

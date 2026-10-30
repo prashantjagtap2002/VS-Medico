@@ -11,14 +11,14 @@ export default function Error({ error, retry }: { error: Error & { digest?: stri
   }, [error]);
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="section">
       <div className="container">
         <div className="max-w-xl mx-auto text-center">
-          <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-6">
+          <div className="icon-box w-16! h-16! mx-auto mb-6">
             <AlertTriangle size={32} aria-hidden="true" />
           </div>
-          <h1 className="font-heading font-extrabold text-3xl text-primary mb-3">Something went wrong</h1>
-          <p className="text-slate-600 mb-8">
+          <h1 className="hero-large mb-3">Something went wrong</h1>
+          <p className="body-regular mb-8">
             This part of the page failed to load. Please try again, or contact our sales desk directly — we&apos;re
             happy to help.
           </p>

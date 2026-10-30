@@ -1,16 +1,11 @@
 import type { Metadata } from 'next';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
 import ContactForm from '@/components/ContactForm';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
+import { PageHeader } from '@/components/PageSections';
 import { COMPANY_INFO } from '@/data/companyData';
 import { telHref } from '@/lib/forms';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Navigation
-} from 'lucide-react';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Contact Our Wholesale Sales Desk',
@@ -19,102 +14,107 @@ export const metadata: Metadata = pageMetadata({
   path: '/contact',
 });
 
+const REASONS = [
+  'Single-window supply of 50+ pharma brands',
+  'More than 25 years of pharmaceutical wholesale experience',
+  'FDA-licensed with full batch traceability',
+  'WHO-GDP cold chain for insulins and vaccines',
+  'Same-day delivery across the Mumbai MMR',
+];
+
 export default function ContactPage() {
+  const { contact, address } = COMPANY_INFO;
+  const rows = [
+    {
+      icon: Mail,
+      label: 'Email',
+      body: (
+        <a href={`mailto:${contact.emailSales}`} className="hover:text-teal-brand">
+          {contact.emailSales}
+        </a>
+      ),
+    },
+    {
+      icon: Phone,
+      label: 'Phone',
+      body: (
+        <>
+          <a href={telHref(contact.phoneSales)} className="hover:text-teal-brand">
+            {contact.phoneSales}
+          </a>{' '}
+          (Sales) ·{' '}
+          <a href={telHref(contact.phoneOffice)} className="hover:text-teal-brand">
+            {contact.phoneOffice}
+          </a>{' '}
+          (Office)
+        </>
+      ),
+    },
+    { icon: MapPin, label: 'Location', body: <>{address.fullAddress}, India</> },
+    { icon: Clock, label: 'Working Hours', body: <>{contact.workingHours}. Sunday: {contact.sundayStatus}</> },
+  ];
+
   return (
-    <div className="py-12 md:py-16">
-      <div className="container">
-        {/* Header */}
-        <div className="max-w-2xl mb-10">
-          <span className="text-secondary font-bold text-sm tracking-wider uppercase">GET IN TOUCH</span>
-          <h1 className="font-heading font-extrabold text-4xl text-primary mt-2 mb-3">
-            Contact VS Medico Sales & Support Desk
-          </h1>
-          <p className="text-slate-600 text-base leading-relaxed">
-            Reach out to our Bhandup warehouse desk for wholesale price quotes, new chemist store account opening, hospital rate contracts, or order tracking.
-          </p>
-        </div>
+    <>
+      <PageHeader title="Get in Touch">
+        Ready to discuss your pharmacy or hospital supply? Contact our wholesale team for rates, availability and
+        account opening.
+      </PageHeader>
 
-        {/* Contact Info Cards - Horizontal row with icon left, text right */}
-        <div className="grid-2 mb-10">
-          {/* Office Address */}
-          <div className="contact-card h-full">
-            <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
-                <MapPin size={22} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h2 className="font-bold text-primary text-sm mb-1">Registered Warehouse</h2>
-                <p className="text-sm text-slate-600 leading-relaxed">{COMPANY_INFO.address.fullAddress}</p>
-                <a href={COMPANY_INFO.address.mapDirectionsUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary font-bold hover:underline flex items-center gap-1 mt-1.5">
-                  <Navigation size={11} /> Open in Google Maps
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Sales Phone */}
-          <div className="contact-card h-full">
-            <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                <Phone size={22} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h2 className="font-bold text-primary text-sm mb-1">Sales Helpline</h2>
-                <a href={telHref(COMPANY_INFO.contact.phoneSales)} className="font-bold text-slate-800 text-base hover:text-secondary">
-                  {COMPANY_INFO.contact.phoneSales}
-                </a>
-                <p className="text-xs text-slate-500">
-                  Landline:{' '}
-                  <a href={telHref(COMPANY_INFO.contact.phoneOffice)} className="hover:text-secondary">
-                    {COMPANY_INFO.contact.phoneOffice}
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Email Support */}
-          <div className="contact-card h-full">
-            <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
-                <Mail size={22} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h2 className="font-bold text-primary text-sm mb-1">Email Desk</h2>
-                <a href={`mailto:${COMPANY_INFO.contact.emailSales}`} className="font-bold text-slate-800 text-sm hover:text-secondary break-all">
-                  {COMPANY_INFO.contact.emailSales}
-                </a>
-                <p className="text-xs text-slate-500">
-                  General:{' '}
-                  <a href={`mailto:${COMPANY_INFO.contact.emailInfo}`} className="hover:text-secondary">
-                    {COMPANY_INFO.contact.emailInfo}
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Working Hours & WhatsApp */}
-          <div className="contact-card h-full">
-            <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                <Clock size={22} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h2 className="font-bold text-primary text-sm mb-1">Working Hours</h2>
-                <p className="text-sm text-slate-600">{COMPANY_INFO.contact.workingHours}</p>
-                <p className="text-xs text-amber-700 font-semibold">{COMPANY_INFO.contact.sundayStatus}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Form + Map side by side */}
-        <div className="contact-layout">
+      <section className="section bg-alt">
+        <div className="container grid-2 items-start gap-12!">
           <ContactForm />
+
+          <div>
+            <h2 className="heading-2 mb-6">Contact Information</h2>
+            <ul className="grid gap-6 mb-10">
+              {rows.map(({ icon: Icon, label, body }) => (
+                <li key={label} className="flex gap-4">
+                  <Icon size={20} className="text-teal-brand shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-[15px] mb-0.5">{label}</p>
+                    <p className="body-small">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <div className="card">
+              <h3 className="heading-3 mb-4">Why Choose VS Medico?</h3>
+              <ul className="dash-list">
+                {REASONS.map((r) => (
+                  <li key={r}>{r}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-white">
+        <div className="container">
+          <div className="section-head">
+            <h2>
+              <span className="accent-teal">Warehouse</span> <span className="accent">Location</span>
+            </h2>
+            <p>
+              Visit our distribution hub in {address.locality}, {address.city}
+            </p>
+          </div>
           <GoogleMapEmbed />
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="section bg-alt">
+        <div className="container text-center max-w-3xl">
+          <h2 className="heading-1 mb-4">Serving the Mumbai Metropolitan Region</h2>
+          <p className="body-regular">
+            {COMPANY_INFO.legalName} delivers genuine medicines to licensed chemists, hospitals and institutions from
+            Bhandup and Mulund to Thane, Powai, Ghatkopar, Kurla, Dadar, the Western Suburbs and Navi Mumbai, with
+            same-day dispatch for orders received before 2 PM.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }

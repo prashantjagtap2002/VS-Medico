@@ -38,10 +38,15 @@ ${products.map((p) => `- [${p.name}](${SITE_URL}/products/${p.slug}): ${p.compos
 ## Pages
 - [Home](${SITE_URL}/)
 - [Product catalogue](${SITE_URL}/products)
-- [Brands](${SITE_URL}/brands)
+- [Services](${SITE_URL}/services)
+- [Delivery network](${SITE_URL}/network)
+- [Who we serve](${SITE_URL}/who-we-serve)
+- [Core strengths](${SITE_URL}/core-strengths)
 - [Open a wholesale account](${SITE_URL}/register)
 - [Licensing & compliance](${SITE_URL}/compliance)
 - [About](${SITE_URL}/about)
+- [Company profile](${SITE_URL}/company-profile)
+- [Gallery](${SITE_URL}/gallery)
 - [Contact](${SITE_URL}/contact)
 
 ## FAQ

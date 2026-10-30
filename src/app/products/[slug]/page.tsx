@@ -4,8 +4,6 @@ import { notFound } from 'next/navigation';
 import { ChevronRight, Snowflake, ShieldCheck, Truck, MessageCircle, FileText, Thermometer } from 'lucide-react';
 import { getProducts, getProductBySlug } from '@/data/products';
 import { COMPANY_INFO, PRODUCT_CATEGORIES, SITE_URL } from '@/data/companyData';
-import AddToBasketButton from '@/components/AddToBasketButton';
-import ProductCatalog from '@/components/ProductCatalog';
 import { whatsappLink } from '@/lib/forms';
 import { pageMetadata, absoluteUrl } from '@/lib/seo';
 import { jsonLd } from '@/lib/security';
@@ -98,74 +96,53 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   ];
 
   return (
-    <div className="py-8 md:py-12">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(structuredData)} />
-      <div className="container">
-        <nav aria-label="Breadcrumb" className="breadcrumbs">
-          <Link href="/">Home</Link>
-          <ChevronRight size={14} aria-hidden="true" />
-          <Link href={`/products?cat=${product.category}`}>{categoryName(product.category)}</Link>
-          <ChevronRight size={14} aria-hidden="true" />
-          <span aria-current="page">{product.name}</span>
-        </nav>
+      <section className="bg-alt py-6 border-b border-[#dee2e6]">
+        <div className="container">
+          <nav aria-label="Breadcrumb" className="breadcrumb">
+            <Link href="/">Home</Link>
+            <ChevronRight size={14} aria-hidden="true" />
+            <Link href="/products">Products</Link>
+            <ChevronRight size={14} aria-hidden="true" />
+            <span>{categoryName(product.category)}</span>
+            <ChevronRight size={14} aria-hidden="true" />
+            <span aria-current="page" className="text-ink">
+              {product.name}
+            </span>
+          </nav>
+        </div>
+      </section>
 
-        <div className="product-detail">
-          <div className="product-detail-media">
-            {product.image ? (
-              <img src={product.image} alt={`${product.name} – ${product.packSize}`} width={640} height={480} />
-            ) : (
-              <div className={`product-media-placeholder cat-${product.category} h-full`} aria-hidden="true">
-                <span className="font-heading font-extrabold text-3xl text-center px-6">{product.brand}</span>
+      <section className="section-sm bg-white">
+        <div className="container grid-split items-start! gap-12!">
+          <div>
+            {product.image && (
+              <div className="media-frame aspect-[4/3] mb-8 bg-white!">
+                <img src={product.image} alt={`${product.name} – ${product.packSize}`} className="object-contain!" />
               </div>
             )}
-          </div>
-
-          <div>
-            <p className="text-secondary font-bold text-xs uppercase tracking-widest mb-2">{product.brand}</p>
-            <h1 className="font-heading font-extrabold text-3xl md:text-4xl text-primary mb-3">{product.name}</h1>
-            <div className="flex flex-wrap gap-2 mb-5">
-              <span className={`badge ${product.stockStatus === 'Out of Stock' ? 'badge-red' : 'badge-green'}`}>
+            <p className="eyebrow mb-2">{product.brand}</p>
+            <h1 className="hero-large mb-4">{product.name}</h1>
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className={`tag ${product.stockStatus === 'Out of Stock' ? 'tag-orange' : 'tag-green'}`}>
                 {product.stockStatus}
               </span>
               {product.coldChain && (
-                <span className="badge badge-blue">
-                  <Snowflake size={12} aria-hidden="true" /> Cold Chain (2–8°C)
+                <span className="tag tag-blue">
+                  <Snowflake size={11} aria-hidden="true" /> Cold Chain (2–8°C)
                 </span>
               )}
-              {product.rxRequired && <span className="badge badge-amber">Rx Only</span>}
+              {product.rxRequired && <span className="tag tag-red">Rx Only</span>}
+              <span className="tag tag-teal">{categoryName(product.category)}</span>
             </div>
-
-            <p className="text-slate-600 leading-relaxed mb-6">
+            <p className="body-large mb-8">
               {product.description} VS Medico supplies <strong>{product.name}</strong> to licensed retail chemists,
-              hospitals and clinics across Mumbai, Thane and the MMR from our FDA-licensed warehouse in Bhandup West, with
-              same-day dispatch on orders placed before 2:00 PM.
+              hospitals and clinics across Mumbai, Thane and the MMR from our FDA-licensed warehouse in Bhandup West,
+              with same-day dispatch on orders placed before 2:00 PM.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mb-6">
-              <AddToBasketButton product={product} className="btn-lg justify-center" />
-              <a
-                href={whatsappLink(`Hello VS Medico, please share the wholesale rate and availability for ${product.name} (${product.packSize}).`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp btn-lg justify-center"
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                <span>Ask Rate on WhatsApp</span>
-              </a>
-            </div>
-
-            <ul className="detail-assurances">
-              <li><ShieldCheck size={16} aria-hidden="true" /> 100% genuine, sourced from authorised channels</li>
-              <li><Truck size={16} aria-hidden="true" /> Same-day delivery across Mumbai MMR</li>
-              {product.coldChain && <li><Thermometer size={16} aria-hidden="true" /> Packed in validated cold boxes with gel packs</li>}
-              <li><FileText size={16} aria-hidden="true" /> GST invoice with batch & expiry details</li>
-            </ul>
-          </div>
-        </div>
-
-        <section className="mt-12" aria-labelledby="specs-heading">
-          <h2 id="specs-heading" className="font-heading font-bold text-2xl text-primary mb-4">Product Specifications</h2>
-          <div className="spec-table-wrap">
+            <h2 className="heading-2 mb-2">Product Specifications</h2>
             <table className="spec-table">
               <tbody>
                 {specs
@@ -178,22 +155,76 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   ))}
               </tbody>
             </table>
+            <p className="body-small mt-4">
+              Information is provided for licensed trade buyers. MRP is as printed by the manufacturer and may change
+              with new batches. Contact our sales desk on {COMPANY_INFO.contact.phoneSales} for current net wholesale
+              rates.
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-3">
-            Information is provided for licensed trade buyers. MRP is as printed by the manufacturer and may change with new
-            batches. Contact our sales desk on {COMPANY_INFO.contact.phoneSales} for current net wholesale rates.
-          </p>
-        </section>
-      </div>
+
+          <aside className="card lg:sticky lg:top-28">
+            <h2 className="heading-2 mb-2">Request Wholesale Rate</h2>
+            <p className="mb-6">
+              Licensed chemists and hospitals can request current net PTR rates and stock availability for this
+              product.
+            </p>
+            <div className="grid gap-3 mb-6">
+              <a
+                href={whatsappLink(
+                  `Hello VS Medico, please share the wholesale rate and availability for ${product.name} (${product.packSize}).`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-whatsapp btn-lg"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                <span>Ask Rate on WhatsApp</span>
+              </a>
+              <Link href="/contact" className="btn btn-primary btn-lg">
+                Send an Inquiry
+              </Link>
+            </div>
+            <ul className="check-list">
+              <li>
+                <ShieldCheck size={16} aria-hidden="true" /> 100% genuine, sourced from authorised channels
+              </li>
+              <li>
+                <Truck size={16} aria-hidden="true" /> Same-day delivery across Mumbai MMR
+              </li>
+              {product.coldChain && (
+                <li>
+                  <Thermometer size={16} aria-hidden="true" /> Packed in validated cold boxes with gel packs
+                </li>
+              )}
+              <li>
+                <FileText size={16} aria-hidden="true" /> GST invoice with batch &amp; expiry details
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
 
       {related.length > 0 && (
-        <div className="mt-6 bg-slate-50 border-t border-slate-200">
-          <div className="container pt-12">
-            <h2 className="font-heading font-bold text-2xl text-primary">More in {categoryName(product.category)}</h2>
+        <section className="section-sm bg-alt">
+          <div className="container">
+            <h2 className="heading-1 mb-8">More in {categoryName(product.category)}</h2>
+            <div className="grid-3">
+              {related.map((p) => (
+                <Link key={p.id} href={`/products/${p.slug}`} className="product-tile bg-white!">
+                  <span className="name">
+                    <ChevronRight size={15} aria-hidden="true" />
+                    {p.name}
+                  </span>
+                  <span className="meta">
+                    {p.brand}
+                    {p.packSize ? ` · ${p.packSize}` : ''}
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
-          <ProductCatalog products={related} showTitle={false} hideControls />
-        </div>
+        </section>
       )}
-    </div>
+    </>
   );
 }

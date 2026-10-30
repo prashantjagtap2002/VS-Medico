@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { AlertCircle, Check, Loader2 } from 'lucide-react';
 
 interface FieldProps {
   id: string;
@@ -60,4 +61,55 @@ export function Honeypot({ checked, onChange }: { checked: boolean; onChange: (v
 
 export function SubmitSpinner() {
   return <Loader2 size={18} className="spin" aria-hidden="true" />;
+}
+
+interface ConsentCheckboxProps {
+  id: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  error?: string;
+  /** Extra declaration shown before the terms sentence (e.g. licence confirmation). */
+  children?: ReactNode;
+}
+
+/**
+ * Required "I agree to the Terms & Privacy Policy" checkbox. Links open in a new
+ * tab so a half-filled form (or the inquiry modal) is never lost.
+ */
+export function ConsentCheckbox({ id, checked, onChange, error, children }: ConsentCheckboxProps) {
+  return (
+    <div className="form-field">
+      <label htmlFor={id} className={`consent-row${checked ? ' is-checked' : ''}${error ? ' has-error' : ''}`}>
+        <input
+          id={id}
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${id}-error` : undefined}
+        />
+        <span className="consent-box" aria-hidden="true">
+          <Check size={14} strokeWidth={3} />
+        </span>
+        <span className="form-consent-note">
+          {children ? <>{children} </> : null}
+          I agree to the{' '}
+          <Link href="/terms" target="_blank" rel="noopener noreferrer">
+            Terms &amp; Conditions
+          </Link>{' '}
+          and{' '}
+          <Link href="/privacy" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </Link>
+          .
+        </span>
+      </label>
+      {error && (
+        <p id={`${id}-error`} className="form-error" role="alert">
+          <AlertCircle size={13} aria-hidden="true" />
+          <span>{error}</span>
+        </p>
+      )}
+    </div>
+  );
 }

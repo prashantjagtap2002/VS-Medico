@@ -178,3 +178,16 @@ collections:
                 pattern: ['^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$', 'Enter a valid 15-character GSTIN']
               - { label: PAN, name: pan, widget: string }
               - { label: FSSAI Licence No., name: fssaiNo, widget: string, required: false }
+      - name: gallery
+        label: Photo Gallery
+        file: content/settings/gallery.json
+        format: json
+        fields:
+          - label: Photos
+            name: photos
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: Photo, name: image, widget: image, hint: 'Landscape photos look best (shown at 16:10).' }
+              - { label: Title, name: title, widget: string, hint: 'e.g. Cold Storage Room' }
+              - { label: Caption, name: caption, widget: string, required: false }

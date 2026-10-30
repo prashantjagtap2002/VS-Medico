@@ -1,0 +1,14 @@
+{
+  "photos": [
+    {
+      "image": "/images/warehouse.webp",
+      "title": "Warehouse & Dispatch",
+      "caption": "Racked multi-brand inventory at our Bhandup West distribution hub"
+    },
+    {
+      "image": "/images/founder.webp",
+      "title": "Leadership",
+      "caption": "Our founder and managing partner at the VS Medico office"
+    }
+  ]
+}

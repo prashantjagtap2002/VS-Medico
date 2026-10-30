@@ -1,138 +1,111 @@
-"use client";
-
-import React from 'react';
 import Link from 'next/link';
+import { Mail, Phone, MapPin, Clock, ArrowUpRight } from 'lucide-react';
+import Logo from './Logo';
 import { COMPANY_INFO } from '@/data/companyData';
-import { useQuoteBasket } from './QuoteBasketContext';
-import { telHref, whatsappLink } from '@/lib/forms';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  ShieldCheck, 
-  MessageCircle,
-  ExternalLink
-} from 'lucide-react';
+import { SERVICES } from '@/data/siteContent';
+import { telHref } from '@/lib/forms';
+
+const QUICK_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/products', label: 'Products' },
+  { href: '/services', label: 'Services' },
+  { href: '/who-we-serve', label: 'Who We Serve' },
+  { href: '/core-strengths', label: 'Core Strengths' },
+  { href: '/compliance', label: 'Compliance' },
+  { href: '/company-profile', label: 'Download Company Profile' },
+];
 
 export default function Footer() {
-  const { setIsLicenseModalOpen } = useQuoteBasket();
-
+  const { contact, address, legalName } = COMPANY_INFO;
   return (
-    <footer className="footer">
+    <footer className="site-footer">
       <div className="container">
         <div className="footer-grid">
-          {/* Col 1: About & Location */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center font-extrabold text-xl shrink-0 shadow-md">
-                VS
-              </div>
-              <div>
-                <p className="text-white text-xl font-bold font-heading">{COMPANY_INFO.legalName}</p>
-                <p className="text-xs text-sky-400 font-semibold tracking-wider">PHARMA WHOLESALE & DISTRIBUTION</p>
-              </div>
-            </div>
-
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Authorized pharmaceutical stockist and distributor supplying genuine branded formulations, generic medicines, critical care injectables, and cold-chain products across Mumbai & Maharashtra.
+          <div>
+            <Logo />
+            <p className="body-regular mt-5 mb-6 max-w-sm">
+              Mumbai&apos;s single-window pharmaceutical wholesaler and super-stockist, supplying licensed chemists and
+              hospitals across the MMR since {COMPANY_INFO.establishedYear}.
             </p>
-
-            <div className="flex flex-col gap-3 text-sm text-slate-300 mt-1">
-              <div className="flex items-start gap-3">
-                <MapPin size={18} className="text-sky-400 shrink-0 mt-1" />
-                <span>{COMPANY_INFO.address.fullAddress}</span>
-              </div>
-              <a href={telHref(COMPANY_INFO.contact.phoneSales)} className="flex items-center gap-3 hover:text-white transition-colors">
-                <Phone size={18} className="text-emerald-400 shrink-0" aria-hidden="true" />
-                <span>Sales: {COMPANY_INFO.contact.phoneSales}</span>
-              </a>
-              <a href={`mailto:${COMPANY_INFO.contact.emailSales}`} className="flex items-center gap-3 hover:text-white transition-colors">
-                <Mail size={18} className="text-sky-400 shrink-0" aria-hidden="true" />
-                <span>{COMPANY_INFO.contact.emailSales}</span>
-              </a>
-              <div className="flex items-center gap-3">
-                <Clock size={18} className="text-amber-400 shrink-0" />
-                <span>{COMPANY_INFO.contact.workingHours}</span>
-              </div>
-            </div>
+            <Link href="/register" className="btn-orange">
+              Open a Wholesale Account <ArrowUpRight size={15} aria-hidden="true" />
+            </Link>
           </div>
 
-          {/* Col 2: Quick Links */}
-          <div className="footer-col">
-            <h2 className="footer-heading">Quick Navigation</h2>
+          <div>
+            <h2 className="footer-title">Quick Links</h2>
             <ul className="footer-links">
-              <li><Link href="/">Home Overview</Link></li>
-              <li><Link href="/about">About Company History</Link></li>
-              <li><Link href="/products">Products & Categories</Link></li>
-              <li><Link href="/brands">Pharma Brands We Represent</Link></li>
-              <li><Link href="/register">Open a Wholesale Account</Link></li>
-              <li><Link href="/compliance">Licensing & WHO-GDP</Link></li>
-              <li><Link href="/contact">Contact & Map Location</Link></li>
+              {QUICK_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 3: Key Categories */}
-          <div className="footer-col">
-            <h2 className="footer-heading">Product Segments</h2>
+          <div>
+            <h2 className="footer-title">Our Services</h2>
             <ul className="footer-links">
-              <li><Link href="/products?cat=formulations">Branded Formulations</Link></li>
-              <li><Link href="/products?cat=generics">Quality Trade Generics</Link></li>
-              <li><Link href="/products?cat=critical-care">Critical Care & ICU Injectables</Link></li>
-              <li><Link href="/products?cat=cold-chain">Cold-Chain Vaccines & Insulins</Link></li>
-              <li><Link href="/products?cat=surgical">Surgical & Diagnostic Supplies</Link></li>
-              <li><Link href="/products?cat=otc">OTC & Health Supplements</Link></li>
+              {SERVICES.map((s) => (
+                <li key={s.id}>
+                  <Link href="/services">{s.title}</Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/network">Delivery Network</Link>
+              </li>
             </ul>
           </div>
 
-          {/* Col 4: Regulatory & Compliance */}
-          <div className="footer-col">
-            <h2 className="footer-heading">Licensing & Compliance</h2>
-            <div className="footer-compliance-card">
-              <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
-                <ShieldCheck size={18} />
-                <span>FDA Maharashtra Verified</span>
-              </div>
-              <div className="text-xs text-slate-300 flex flex-col gap-1.5">
-                <p><strong className="text-slate-100">Drug License 20B:</strong> <span className="font-mono text-sky-300 font-semibold">{COMPANY_INFO.licenses.drugLicense20B}</span></p>
-                <p><strong className="text-slate-100">Drug License 21B:</strong> <span className="font-mono text-emerald-300 font-semibold">{COMPANY_INFO.licenses.drugLicense21B}</span></p>
-                <p><strong className="text-slate-100">GSTIN:</strong> <span className="font-mono text-sky-300 font-semibold">{COMPANY_INFO.licenses.gstin}</span></p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsLicenseModalOpen(true)}
-                className="text-xs text-sky-300 font-semibold hover:text-white flex items-center gap-1 pt-1"
-              >
-                <span>View Full Compliance Docs</span>
-                <ExternalLink size={12} />
-              </button>
-            </div>
-
-            <div className="mt-4">
-              <a
-                href={whatsappLink('Hello VS Medico, I have a wholesale inquiry.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full btn btn-whatsapp text-xs py-2.5 justify-center"
-              >
-                <MessageCircle size={16} /> Wholesale WhatsApp Desk
-              </a>
-            </div>
+          <div>
+            <h2 className="footer-title">Contact Us</h2>
+            <ul className="footer-contact grid gap-4">
+              <li>
+                <Mail size={16} aria-hidden="true" />
+                <a href={`mailto:${contact.emailSales}`} className="hover:text-teal-brand">
+                  {contact.emailSales}
+                </a>
+              </li>
+              <li>
+                <Phone size={16} aria-hidden="true" />
+                <span>
+                  <a href={telHref(contact.phoneSales)} className="hover:text-teal-brand">
+                    {contact.phoneSales}
+                  </a>
+                  <br />
+                  <a href={telHref(contact.phoneOffice)} className="hover:text-teal-brand">
+                    {contact.phoneOffice}
+                  </a>
+                </span>
+              </li>
+              <li>
+                <MapPin size={16} aria-hidden="true" />
+                <span>
+                  {address.building},
+                  <br />
+                  {address.locality},
+                  <br />
+                  {address.city} - {address.pincode}, {address.country}
+                </span>
+              </li>
+              <li>
+                <Clock size={16} aria-hidden="true" />
+                <span>{contact.workingHours}</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Legal & Copyright */}
         <div className="footer-bottom">
-          <div className="flex flex-col gap-2">
-            <span>© {new Date().getFullYear()} {COMPANY_INFO.legalName}. All Rights Reserved.</span>
-            <nav aria-label="Legal" className="footer-legal-links">
-              <Link href="/privacy">Privacy Policy</Link>
-              <Link href="/terms">Terms of Use</Link>
-            </nav>
-          </div>
-          <div className="text-xs text-slate-400 max-w-xl text-right leading-relaxed">
-            Disclaimer: VS Medico LLP is a licensed B2B pharmaceutical stockist supplying strictly to registered retail pharmacies, hospitals, and healthcare institutions with valid Drug Licenses (Form 20B/21B).
-          </div>
+          <p>
+            © {new Date().getFullYear()} {legalName}. All rights reserved.
+          </p>
+          <p className="flex flex-wrap gap-x-5 gap-y-1">
+            <span>Supplying licensed buyers only.</span>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms &amp; Conditions</Link>
+          </p>
         </div>
       </div>
     </footer>

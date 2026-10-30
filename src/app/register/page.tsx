@@ -27,50 +27,48 @@ const BENEFITS = [
 
 export default function RegisterPage() {
   return (
-    <div className="py-12 md:py-16">
-      <div className="container">
-        <div className="max-w-3xl mb-10">
-          <span className="text-secondary font-bold text-sm tracking-wider uppercase">NEW BUYER ONBOARDING</span>
-          <h1 className="font-heading font-extrabold text-3xl md:text-4xl text-primary mt-2 mb-3">
-            Open a Wholesale Account with VS Medico
-          </h1>
-          <p className="text-slate-600 text-base leading-relaxed">
-            Licensed retail chemists, hospitals, nursing homes and clinics can apply for a B2B billing account. Fill in
-            your business details below — our accounts team verifies your licences and activates your account, usually
-            within one working day.
+    <>
+      <section className="page-header">
+        <div className="container">
+          <h1>Open a Wholesale Account</h1>
+          <p>
+            Licensed retail chemists, hospitals, nursing homes and clinics can apply for a B2B billing account. Our
+            accounts team verifies your licences and activates your account, usually within one working day.
           </p>
         </div>
+      </section>
 
-        <div className="register-layout">
+      <section className="section bg-alt">
+        <div className="container grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] items-start">
           <AccountRegistrationForm />
 
-          <aside className="register-aside">
-            <div className="aside-card">
-              <h2 className="font-heading font-bold text-lg text-primary mb-4">Documents You&apos;ll Need</h2>
-              <ul className="flex flex-col gap-4">
+          <aside className="grid gap-6 lg:sticky lg:top-28">
+            <div className="card">
+              <h2 className="heading-2 mb-5">Documents You&apos;ll Need</h2>
+              <ul className="grid gap-4">
                 {DOCUMENTS.map(({ icon: Icon, title, desc }) => (
                   <li key={title} className="flex items-start gap-3">
-                    <span className="w-9 h-9 rounded-lg bg-sky-50 text-secondary flex items-center justify-center shrink-0">
-                      <Icon size={18} aria-hidden="true" />
+                    <span className="icon-circle w-9! h-9!">
+                      <Icon size={17} aria-hidden="true" />
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-slate-800">{title}</p>
-                      <p className="text-xs text-slate-500">{desc}</p>
+                      <p className="text-sm text-ink!">{title}</p>
+                      <p className="text-xs!">{desc}</p>
                     </div>
                   </li>
                 ))}
               </ul>
-              <p className="text-xs text-slate-500 mt-4 pt-4 border-t border-slate-100">
+              <p className="text-xs! mt-5 pt-4 border-t border-[#dee2e6]">
                 You don&apos;t need to upload anything now. We&apos;ll collect copies on WhatsApp or email after you apply.
               </p>
             </div>
 
-            <div className="aside-card aside-card-dark">
-              <h2 className="font-heading font-bold text-lg text-white mb-4">Why Open an Account?</h2>
-              <ul className="flex flex-col gap-3">
+            <div className="profile-contact">
+              <h2 className="text-lg text-white mb-4">Why Open an Account?</h2>
+              <ul className="grid gap-3">
                 {BENEFITS.map(({ icon: Icon, text }) => (
-                  <li key={text} className="flex items-start gap-3 text-sm text-slate-200">
-                    <Icon size={18} className="text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" />
+                  <li key={text} className="flex items-start gap-3 text-sm text-white/90">
+                    <Icon size={18} className="text-orange-brand shrink-0 mt-0.5" aria-hidden="true" />
                     <span>{text}</span>
                   </li>
                 ))}
@@ -79,16 +77,16 @@ export default function RegisterPage() {
                 href={whatsappLink('Hello VS Medico, I would like help opening a wholesale account.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp w-full justify-center mt-6"
+                className="btn btn-whatsapp w-full mt-6"
               >
                 <MessageCircle size={18} aria-hidden="true" />
                 <span>Need Help? Chat With Us</span>
               </a>
-              <p className="text-xs text-slate-400 text-center mt-3">or call {COMPANY_INFO.contact.phoneSales}</p>
+              <p className="text-xs text-white/75 text-center mt-3">or call {COMPANY_INFO.contact.phoneSales}</p>
             </div>
           </aside>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

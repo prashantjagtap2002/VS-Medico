@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState, FormEvent } from 'react';
-import Link from 'next/link';
 import { CheckCircle2, MessageCircle, AlertTriangle, UserPlus, FileText } from 'lucide-react';
 import { PRODUCT_CATEGORIES } from '@/data/companyData';
-import { Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
+import { ConsentCheckbox, Field, fieldA11y, Honeypot, SubmitSpinner } from './forms/Field';
 import {
   submitLead,
   whatsappLink,
@@ -69,7 +68,7 @@ function validate(f: FormState, consent: boolean): Errors {
   if (!isValidGstin(f.gstin)) e.gstin = 'Enter a valid 15-character GSTIN (e.g. 27ABCDE1234F1Z5).';
   if (f.address.trim().length < 8) e.address = 'Enter the full delivery address.';
   if (!isValidPincode(f.pincode)) e.pincode = 'Enter a valid 6-digit PIN code.';
-  if (!consent) e.consent = 'Please confirm to continue.';
+  if (!consent) e.consent = 'Please accept the Terms & Conditions to continue.';
   return e;
 }
 
@@ -152,7 +151,7 @@ export default function AccountRegistrationForm() {
       <div className="form-panel">
         <div className="form-success" role="status">
           <CheckCircle2 size={52} className="text-emerald-600 mx-auto mb-3" aria-hidden="true" />
-          <h2 className="font-extrabold text-slate-800 text-2xl font-heading mb-2">Application Received</h2>
+          <h2 className="heading-1 mb-2">Application Received</h2>
           <p className="text-sm text-slate-600 mb-1">
             Reference ID: <strong className="font-mono text-emerald-700 text-base">{refId}</strong>
           </p>
@@ -402,31 +401,19 @@ export default function AccountRegistrationForm() {
         </Field>
       </fieldset>
 
-      <div className="form-field mb-6">
-        <label className={`consent-row ${errors.consent ? 'has-error' : ''}`}>
-          <input
-            id="reg-consent"
-            type="checkbox"
-            checked={consent}
-            onChange={(e) => {
-              setConsent(e.target.checked);
-              if (errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
-            }}
-            aria-invalid={errors.consent ? true : undefined}
-            aria-describedby={errors.consent ? 'reg-consent-error' : undefined}
-          />
-          <span className="form-consent-note">
-            I confirm that this business holds valid drug licences and GST registration, and I agree to be contacted by
-            VS Medico regarding this application as described in the{' '}
-            <Link href="/privacy" target="_blank" rel="noopener noreferrer">
-              Privacy Policy
-            </Link>
-            .
-          </span>
-        </label>
-        {errors.consent && (
-          <p id="reg-consent-error" className="form-error" role="alert">{errors.consent}</p>
-        )}
+      <div className="mb-6">
+        <ConsentCheckbox
+          id="reg-consent"
+          checked={consent}
+          error={errors.consent}
+          onChange={(v) => {
+            setConsent(v);
+            if (errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
+          }}
+        >
+          I confirm that this business holds valid drug licences and GST registration, and I agree to be contacted by
+          VS Medico regarding this application.
+        </ConsentCheckbox>
       </div>
 
       {status === 'failed' && (

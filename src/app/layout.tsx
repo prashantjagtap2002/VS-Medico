@@ -1,37 +1,26 @@
 import './globals.css';
 import React, { ReactNode } from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Outfit } from 'next/font/google';
-import { QuoteBasketProvider } from '@/components/QuoteBasketContext';
+import { Inter } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import BulkInquiryModal from '@/components/BulkInquiryModal';
-import LicenseBadgeModal from '@/components/LicenseBadgeModal';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
-import BasketToast from '@/components/BasketToast';
+import ScrollToTop from '@/components/ScrollToTop';
 import { COMPANY_INFO, GEO, PHARMA_BRANDS, SITE_URL } from '@/data/companyData';
 import { DEFAULT_OG_IMAGE } from '@/lib/seo';
 import { CONTENT_SECURITY_POLICY, jsonLd } from '@/lib/security';
 
 // Self-hosted at build time: no render-blocking request to Google Fonts.
-const bodyFont = Plus_Jakarta_Sans({
+const bodyFont = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-jakarta',
-  display: 'swap',
-});
-
-const headingFont = Outfit({
-  subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
-  variable: '--font-outfit',
+  variable: '--font-inter',
   display: 'swap',
 });
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0f3b66',
+  themeColor: '#008080',
 };
 
 const DEFAULT_DESCRIPTION =
@@ -169,32 +158,26 @@ const jsonLdData = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-IN" className={`${bodyFont.variable} ${headingFont.variable}`} suppressHydrationWarning>
+    <html lang="en-IN" data-scroll-behavior="smooth" className={bodyFont.variable} suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV === 'production' && (
           <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
         )}
-        {/* Enables scroll-reveal animations only when JS runs, so content is never hidden without it. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(jsonLdData)} />
       </head>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <QuoteBasketProvider>
-          <div className="min-h-screen flex flex-col justify-between">
-            <Header />
-            <main id="main-content" className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-            <BulkInquiryModal />
-            <LicenseBadgeModal />
-            <BasketToast />
-            <WhatsAppWidget />
-          </div>
-        </QuoteBasketProvider>
+        <ScrollToTop />
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main id="main-content" className="grow">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppWidget />
+        </div>
       </body>
     </html>
   );
