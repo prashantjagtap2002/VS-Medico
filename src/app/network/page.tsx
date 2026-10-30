@@ -36,7 +36,7 @@ export default function NetworkPage() {
             Hyper-local distribution from our Bhandup West hub, delivering to licensed chemists, hospitals and nursing
             homes across the Mumbai Metropolitan Region.
           </p>
-          <div className="grid gap-4 grid-cols-2 md:grid-cols-5 mt-12 text-left">
+          <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 mt-12 text-left">
             {stats.map((s) => (
               <div key={s.label} className={`stat-tile${s.primary ? ' is-primary' : ''}`}>
                 <strong style={{ color: s.color }}>{s.value}</strong>

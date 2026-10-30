@@ -62,7 +62,7 @@ export default function ContactPage() {
       </PageHeader>
 
       <section className="section bg-alt">
-        <div className="container grid-2 items-start gap-12!">
+        <div className="container grid gap-12 min-[961px]:grid-cols-2 items-start">
           <ContactForm />
 
           <div>

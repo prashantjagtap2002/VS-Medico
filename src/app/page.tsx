@@ -88,7 +88,7 @@ export default function HomePage() {
             From a single strip to full hospital indents: 5,000+ active SKUs, temperature-controlled storage and
             same-day dispatch across the Mumbai Metropolitan Region.
           </SectionHead>
-          <div className="grid-3 max-w-4xl mx-auto">
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-3 max-w-4xl mx-auto">
             <div className="stat">
               <div className="stat-value">5,000+</div>
               <div className="stat-label">Active SKUs</div>
@@ -123,7 +123,7 @@ export default function HomePage() {
             Supplying {COMPANY_INFO.businessProfile.activeClients.toLowerCase()}, from neighbourhood pharmacies to
             multispecialty hospitals and public institutions.
           </SectionHead>
-          <div className="grid-4">
+          <div className="grid-4 grid-segments">
             {CUSTOMER_SEGMENTS.map((seg) => {
               const type = SEGMENT_TYPES[seg.type];
               const Icon = SEGMENT_ICONS[seg.type];

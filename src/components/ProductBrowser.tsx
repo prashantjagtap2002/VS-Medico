@@ -64,7 +64,7 @@ export default function ProductBrowser({ products }: { products: ProductItem[] }
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
+      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10">
         <div>
           <p className="flex items-center gap-2 text-sm mb-4">
             <Filter size={16} className="text-teal-brand" aria-hidden="true" /> Filter by Category:
@@ -91,7 +91,7 @@ export default function ProductBrowser({ products }: { products: ProductItem[] }
             ))}
           </div>
         </div>
-        <label className="relative block w-full md:w-[340px] shrink-0">
+        <label className="relative block w-full sm:max-w-[360px] lg:w-[340px] shrink-0">
           <span className="sr-only">Search products</span>
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-soft" aria-hidden="true" />
           <input
