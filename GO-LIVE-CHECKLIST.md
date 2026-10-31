@@ -24,7 +24,7 @@ Search engines, social previews and the email addresses all depend on the real d
 The site still contains **demo values**. Every build prints a warning listing them
 (`npm run build` → "Content check").
 
-Replace them in **Admin → Company Settings** (or `content/settings/company.json`):
+Replace them in **Sanity Studio → Company Settings** (set up with `SANITY-SETUP.txt`; before Sanity is set up, use `content/settings/company.json`):
 
 | Field | Current demo value |
 | --- | --- |

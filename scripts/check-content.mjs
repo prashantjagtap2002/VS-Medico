@@ -12,7 +12,7 @@ const root = process.cwd();
 const warnings = [];
 const errors = [];
 
-// Demo values shipped with the template. Replace them via /admin → Company Settings.
+// Demo values shipped with the template. Replace them in Sanity Studio → Company Settings.
 const PLACEHOLDERS = {
   'licenses.gstin': ['27AAAAA0000A1Z5'],
   'licenses.pan': ['AAAAA0000A'],

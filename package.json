@@ -4,16 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-content.mjs",
+    "prebuild": "node scripts/sync-sanity-content.mjs && node scripts/check-content.mjs",
     "build": "next build",
     "postbuild": "node scripts/fix-export-segments.mjs",
-    "start": "npx serve@14.2.4 out"
+    "start": "npx serve@14.2.4 out",
+    "studio": "sanity dev",
+    "studio:deploy": "sanity deploy",
+    "sanity:import": "node scripts/import-to-sanity.mjs"
   },
   "dependencies": {
+    "@sanity/client": "^8.14.1",
     "lucide-react": "^1.57.0",
     "next": "^16.4.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "sanity": "^6.21.0",
+    "styled-components": "^6.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",

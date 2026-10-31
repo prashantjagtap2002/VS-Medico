@@ -29,7 +29,31 @@ All are optional.
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools verification code. |
 | `STRICT_CONTENT` | Set to `1` in production once real business details are entered. The build then fails if demo values (dummy GSTIN, test phone numbers, …) are still present. |
 
-## Admin panel (`/admin`)
+## Content management (Sanity)
+
+Products, company details and gallery photos are edited in **Sanity Studio**, a hosted editor at
+`https://<your-name>.sanity.studio`. Step-by-step setup is in **`SANITY-SETUP.txt`**.
+
+| Command | What it does |
+| --- | --- |
+| `npm run studio` | Runs the Studio locally at http://localhost:3333 |
+| `npm run studio:deploy` | Publishes the Studio to `*.sanity.studio` |
+| `npm run sanity:import` | One-time copy of the checked-in `content/` JSON (and images) into Sanity |
+
+How it reaches the website: every `npm run build` first runs `scripts/sync-sanity-content.mjs`, which
+downloads the **published** Sanity content into `content/`, and then the static site is generated from it.
+The live site never queries Sanity, so after publishing in the Studio you need a new deployment (add a
+Sanity webhook that calls your host's deploy hook to make this automatic). Without Sanity variables, or if
+Sanity is unreachable, the checked-in JSON is used, unless `STRICT_CONTENT=1`, which fails the build instead.
+
+Sanity variables: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, optional
+`SANITY_API_READ_TOKEN` (hosting + `.env.local`), and `SANITY_STUDIO_PROJECT_ID`, `SANITY_STUDIO_DATASET`
+(`.env.local`, for the Studio commands).
+
+## Legacy Git-based admin panel (`/admin`)
+
+> Once Sanity is configured, **don't use `/admin`**: each build overwrites `content/` with Sanity's
+> content, so edits made here would be lost.
 
 Products (medicines) and company details are edited at **`https://your-domain/admin/`** using
 [Sveltia CMS](https://sveltiacms.app), a Git-based CMS:

@@ -1,0 +1,232 @@
+VS MEDICO - SANITY CMS SETUP
+============================
+
+HOW IT WORKS (read this first)
+------------------------------
+
+- You edit content in Sanity Studio, a website-style editor that Sanity hosts
+  for you at https://<your-name>.sanity.studio
+- When the website is built (npm run build, or a deployment on your host),
+  it downloads the PUBLISHED Sanity content and turns it into static pages.
+- Visitors never talk to Sanity, so the site stays fast. It also means that
+  after you publish something in the Studio, the website has to be rebuilt
+  before the change shows up (step 9 makes that automatic).
+- If Sanity is not set up yet, the website keeps using the files in content/.
+
+What Sanity manages:
+
+  Studio section          Shows on the website
+  ----------------------  -----------------------------------------------
+  Company Settings        Phones, WhatsApp, emails, address, map pin,
+                          drug licences, GSTIN, PAN, FSSAI (every page)
+  Photo Gallery           /gallery
+  Medicines & Products    /products, each /products/<name> page, and the
+                          featured products on the home page
+
+Everything else (page text, brands, FAQs, stats, leadership) is still edited
+in code: src/data/siteContent.ts and src/data/companyData.ts.
+
+
+WHAT YOU NEED TO UPDATE (checklist)
+-----------------------------------
+
+  [ ] Create the Sanity project and copy its Project ID          (step 1)
+  [ ] Create .env.local with the Project ID                      (step 2)
+  [ ] Copy the existing products/company/gallery into Sanity     (step 4)
+  [ ] Deploy the Studio                                          (step 5)
+  [ ] Add the Sanity variables to your hosting provider          (step 7)
+  [ ] Replace ALL demo values in Studio -> Company Settings      (step 8)
+      (GSTIN, PAN, FSSAI, drug licences 20B/21B, phones, WhatsApp,
+       emails, map coordinates)
+  [ ] Review / replace the 12 sample products                    (step 8)
+  [ ] Set up the auto-rebuild webhook                            (step 9)
+  [ ] Stop using the old /admin editor                           (step 10)
+
+
+1. Create a Sanity project
+--------------------------
+
+1. Open https://www.sanity.io/manage and sign in (Google or GitHub is fine).
+2. Click "Create new project". Name it "VS Medico".
+3. Create a dataset called: production   (visibility: Public is fine; the
+   public can only read PUBLISHED content, never drafts)
+4. Copy the Project ID (8 characters, shown at the top of the project page).
+
+
+2. Create .env.local
+--------------------
+
+In C:\VS Medico create a file named .env.local (copy .env.example) and fill:
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_STUDIO_PROJECT_ID=your-project-id
+SANITY_STUDIO_DATASET=production
+
+Yes, the same Project ID twice: the NEXT_PUBLIC_ pair is read by the website
+build, the SANITY_STUDIO_ pair by the Studio. The Studio cannot see the
+NEXT_PUBLIC_ names, so if you skip them it will fail to load.
+
+.env.local is git-ignored. Never commit it.
+
+
+3. Install and log in
+---------------------
+
+From C:\VS Medico run:
+
+npm install
+npx sanity login
+
+
+4. Copy the current content into Sanity (one time)
+--------------------------------------------------
+
+So you don't have to retype the 12 products, company details and gallery:
+
+1. Sanity Manage -> your project -> API -> Tokens -> "Add API token"
+   Name: import, Permissions: Editor. Copy the token.
+2. Add it to .env.local:
+       SANITY_API_WRITE_TOKEN=the-token
+3. Run:
+       npm run sanity:import
+   Local images (public/images/...) are uploaded to Sanity automatically.
+   Running it again will not overwrite documents that already exist.
+   To overwrite them with the files in content/, run:
+       npm run sanity:import -- --force
+4. When it has worked, delete SANITY_API_WRITE_TOKEN from .env.local and
+   delete the token in Sanity Manage. The website never needs it.
+
+
+5. Deploy the Studio
+--------------------
+
+Try it locally first (opens http://localhost:3333):
+
+npm run studio
+
+Then publish it online:
+
+npm run studio:deploy
+
+The first time it asks for a hostname, e.g. "vs-medico", which gives
+https://vs-medico.sanity.studio. Bookmark that: it is your editor.
+(Sanity adds that address to the project's CORS list for you. If the local
+Studio complains about CORS, add http://localhost:3333 under
+Sanity Manage -> API -> CORS origins with "Allow credentials" ticked.)
+
+To let staff edit: Sanity Manage -> Members -> Invite (role: Editor).
+
+
+6. Check a local build
+----------------------
+
+npm run build
+
+At the top of the output you should see a line like:
+
+[sanity] Synced 12 products, company settings, 2 gallery photos from abcd1234/production.
+
+Then: npm start   and open the address it prints to check the site.
+
+Note: a local build rewrites the files in content/ with Sanity's content
+(products deleted in Sanity disappear from content/products/). That is
+expected. Commit those changes to keep the fallback copy up to date, or
+discard them with: git restore content
+
+
+7. Configure the hosting provider (Vercel / Netlify / Cloudflare Pages)
+-----------------------------------------------------------------------
+
+Add these environment variables in the host's project settings:
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+
+Only if you made the dataset Private, also add a Viewer token
+(Sanity Manage -> API -> Tokens, Permissions: Viewer):
+
+SANITY_API_READ_TOKEN=your-viewer-token
+
+Build command:     npm run build
+Output directory:  out
+
+Do NOT add SANITY_STUDIO_* or SANITY_API_WRITE_TOKEN to the host.
+Never put a token in a variable that starts with NEXT_PUBLIC_.
+
+Once real details are entered (step 8), also set STRICT_CONTENT=1. The build
+will then fail, instead of quietly publishing old content, if Sanity cannot
+be reached or demo values are still present.
+
+
+8. Replace the demo content
+---------------------------
+
+In the Studio:
+
+- Company Settings: replace every demo value. The build prints a warning
+  for each one still present:
+      GSTIN 27AAAAA0000A1Z5, PAN AAAAA0000A, FSSAI 11521000000123,
+      Drug Licence 20B MH-MUM-20B-184920, 21B MH-MUM-21B-184921,
+      phones +91 98200 12345 / +91 022 2595 6789,
+      emails sales@vsmedico.in / contact@vsmedico.in,
+      map latitude/longitude (check the pin lands on the warehouse).
+  Empty fields keep the current value from content/settings/company.json.
+- Medicines & Products: review MRPs, packs and HSN codes; add the real
+  catalogue. Each SKU must be unique (the Studio blocks duplicates).
+  "Featured on Home Page" puts a product on the home page.
+  "Display Order": lower numbers are shown first.
+- Photo Gallery: every photo needs an image and a title.
+
+Remember to click PUBLISH. Drafts never appear on the website.
+
+
+9. Make the website rebuild automatically when you publish
+-----------------------------------------------------------
+
+1. On your host, create a Deploy Hook (a secret URL that starts a build):
+   - Vercel:  Project -> Settings -> Git -> Deploy Hooks (branch: main)
+   - Netlify: Site configuration -> Build & deploy -> Build hooks
+   - Cloudflare Pages: Settings -> Builds & deployments -> Deploy hooks
+2. Sanity Manage -> API -> Webhooks -> "Create webhook":
+   URL:          the deploy hook URL
+   Dataset:      production
+   Trigger on:   Create, Update, Delete
+   Filter:       _type in ["product", "companySettings", "gallery"]
+   HTTP method:  POST
+   Drafts:       leave OFF (only published changes should rebuild)
+3. Publish a small change and check the host starts a deployment.
+   Changes are live 1-2 minutes after the build finishes.
+
+Without the webhook you have to start a redeploy from the host's dashboard
+after each change.
+
+
+10. The old /admin editor
+-------------------------
+
+The site still contains the older Git-based editor at /admin. Once Sanity
+is set up, do not use it: every build replaces content/ with Sanity's
+content, so edits made in /admin would be overwritten. (It can be removed
+later by deleting public/admin/.)
+
+
+TROUBLESHOOTING
+---------------
+
+"[sanity] No project configured"
+    NEXT_PUBLIC_SANITY_PROJECT_ID is missing (in .env.local or on the host).
+
+"[sanity] Sync failed ... Dataset not found"
+    Wrong Project ID or dataset name.
+
+"[sanity] No published products; keeping checked-in products."
+    Nothing is published yet: run step 4 or publish a product.
+
+Studio shows "your-project-id" / will not load
+    SANITY_STUDIO_PROJECT_ID is missing from .env.local. Add it and run
+    npm run studio:deploy again.
+
+Change is not on the website
+    Was it Published (not just saved as a draft)? Did a new deployment run
+    after publishing (step 9)?
