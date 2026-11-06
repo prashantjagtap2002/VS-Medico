@@ -1,9 +1,9 @@
 {
   "photos": [
     {
-      "image": "/images/warehouse.webp",
-      "title": "Storage & Dispatch",
-      "caption": "Illustrative image of multi-brand pharmaceutical storage"
+      "caption": "Illustrative image of multi-brand pharmaceutical storage",
+      "image": "https://cdn.sanity.io/images/bmujpkcm/production/8c2ee249fc72900103ca7e13cd86f6298e9ef739-1024x1024.webp?w=1600&fit=max&auto=format",
+      "title": "Storage & Dispatch"
     }
   ]
 }
