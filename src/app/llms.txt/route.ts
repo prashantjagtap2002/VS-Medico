@@ -10,7 +10,7 @@ export function GET() {
 
   const body = `# ${COMPANY_INFO.legalName}
 
-> ${COMPANY_INFO.legalName} is a B2B pharmaceutical wholesale distributor and super stockist in ${address.locality}, ${address.city}, established in ${COMPANY_INFO.establishedYear}. It supplies licensed retail chemists, hospitals, nursing homes and clinics across the Mumbai Metropolitan Region with branded formulations, generics, critical-care injectables and 2–8°C cold-chain products. It sells only to buyers holding valid drug licences (Form 20B/21B) and GST registration.
+> ${COMPANY_INFO.legalName} is a B2B pharmaceutical wholesale distributor in ${address.locality}, ${address.city}, established in ${COMPANY_INFO.establishedYear}. It supplies licensed retail chemists, hospitals, nursing homes and clinics across the Mumbai Metropolitan Region with branded formulations, generics, critical-care injectables and 2–8°C cold-chain products. It sells only to buyers holding valid drug licences (Form 20B/21B) and GST registration.
 
 ## Key facts
 ${TRUST_STATS.map((s) => `- ${s.value} ${s.label} (${s.detail})`).join('\n')}
@@ -18,7 +18,7 @@ ${TRUST_STATS.map((s) => `- ${s.value} ${s.label} (${s.detail})`).join('\n')}
 - Service area: ${businessProfile.serviceArea}
 - Warehouse: ${businessProfile.temperatureControlledArea}
 - Same-day delivery in Mumbai MMR for orders placed before 2:00 PM IST (Mon–Sat)
-- Licences: Drug Licence Form 20B ${licenses.drugLicense20B}, Form 21B ${licenses.drugLicense21B}, issued by ${licenses.issuingAuthority}; GSTIN ${licenses.gstin}
+${licenses.llpin ? `- Registered as ${licenses.registeredName ?? COMPANY_INFO.legalName} (LLPIN ${licenses.llpin})${licenses.llpIncorporated ? `, incorporated ${licenses.llpIncorporated}` : ''}\n` : ''}- Licences: Drug Licence Form 20B / 21B issued by ${licenses.issuingAuthority}${licenses.drugLicense20B ? ` (${licenses.drugLicense20B}, ${licenses.drugLicense21B})` : ' (numbers available on request)'}${licenses.gstin ? `; GSTIN ${licenses.gstin}` : ''}
 
 ## Contact
 - Address: ${address.fullAddress}

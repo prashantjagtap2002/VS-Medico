@@ -148,12 +148,12 @@ export default function ProductBrowser({ products }: { products: ProductItem[] }
 
       {!groups.length && (
         <p className="text-center body-regular py-12">
-          No products match your search. Try another name, or ask our team: we stock 5,000+ SKUs beyond this list.
+          No products match your search. Try another name, or ask our team: we stock many more lines beyond this list.
         </p>
       )}
 
       <p className="text-center text-sm text-ink-soft mt-8" aria-live="polite">
-        Showing {filtered.length} of {products.length} listed products · 5,000+ SKUs available on request
+        Showing {filtered.length} of {products.length} listed products · more lines available on request
       </p>
     </>
   );

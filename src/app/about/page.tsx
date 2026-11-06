@@ -4,23 +4,22 @@ import { Briefcase } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
 import { PageHeader, SectionHead } from '@/components/PageSections';
 import { COMPANY_INFO, LEADERSHIP_TEAM } from '@/data/companyData';
-import { DIFFERENTIATORS, PROCESS_STEPS } from '@/data/siteContent';
+import { DIFFERENTIATORS, PROCESS_STEPS, TEAMS } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'About Us — Pharma Wholesale Since 1998',
-  description:
-    'VS Medico LLP has supplied genuine medicines to 1,200+ chemists and hospitals across Mumbai MMR since 1998 from its WHO-GDP compliant warehouse in Bhandup West.',
+  title: `About Us — Pharma Wholesale Since ${COMPANY_INFO.establishedYear}`,
+  description: `${COMPANY_INFO.legalName} is a pharmaceutical wholesale distributor in Bhandup West, Mumbai, registered in ${COMPANY_INFO.establishedYear}, supplying licensed chemists, hospitals and nursing homes across the Mumbai MMR.`,
   path: '/about',
 });
 
 /** Photos for team members, keyed by initials. Members without one show their initials. */
-const TEAM_PHOTOS: Record<string, string> = { VS: '/images/founder.webp' };
+const TEAM_PHOTOS: Record<string, string> = {};
 
 export default function AboutPage() {
   return (
     <>
       <PageHeader title="About VS Medico">
-        {COMPANY_INFO.legalName} is an authorised super-stockist and pharmaceutical wholesale distributor providing
+        {COMPANY_INFO.legalName} is a pharmaceutical wholesale distributor based in Bhandup West, Mumbai, providing
         single-window supply to retail chemists, hospitals, nursing homes and institutions across the Mumbai
         Metropolitan Region.
       </PageHeader>
@@ -28,7 +27,7 @@ export default function AboutPage() {
       <section className="section bg-alt">
         <div className="container grid-split">
           <div className="media-frame aspect-[4/3]">
-            <img src="/images/warehouse.webp" alt="Inside the VS Medico warehouse in Bhandup West" loading="lazy" />
+            <img src="/images/warehouse.webp" alt="Multi-brand pharmaceutical stock racked for dispatch" loading="lazy" />
           </div>
           <div>
             <h2 className="heading-1 mb-4">Our Mission</h2>
@@ -48,6 +47,29 @@ export default function AboutPage() {
 
       <section className="section bg-white">
         <div className="container">
+          <SectionHead title="Company at a Glance">
+            As recorded with the Ministry of Corporate Affairs, Government of India
+          </SectionHead>
+          <dl className="grid-4">
+            {[
+              { label: 'Registered Name', value: COMPANY_INFO.licenses.registeredName ?? COMPANY_INFO.legalName },
+              { label: 'LLPIN', value: COMPANY_INFO.licenses.llpin },
+              { label: 'Incorporated', value: COMPANY_INFO.licenses.llpIncorporated },
+              { label: 'Registered Office', value: COMPANY_INFO.address.fullAddress },
+            ]
+              .filter((f) => f.value)
+              .map((f) => (
+                <div key={f.label} className="card card-soft">
+                  <dt className="leader-label mb-2">{f.label}</dt>
+                  <dd className="body-regular text-ink!">{f.value}</dd>
+                </div>
+              ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="section bg-alt">
+        <div className="container">
           <SectionHead title="Order-to-Delivery Model">
             A structured process that keeps every order accurate, compliant and on time
           </SectionHead>
@@ -65,7 +87,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section bg-alt">
+      <section className="section bg-white">
         <div className="container">
           <SectionHead title="What Sets Us Apart" />
           <div className="grid-2 gap-x-16 gap-y-12">
@@ -79,7 +101,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section bg-white">
+      {LEADERSHIP_TEAM.length === 0 ? (
+        <section className="section bg-alt">
+          <div className="container">
+            <SectionHead title={<span className="accent">Our Team</span>}>
+              Dedicated teams covering every stage from order to delivery
+            </SectionHead>
+            <div className="grid-4">
+              {TEAMS.map((t) => (
+                <div key={t.title} className="card text-center">
+                  <h3 className="mb-2!">{t.title}</h3>
+                  <p className="text-[13px]!">{t.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+      <section className="section bg-alt">
         <div className="container">
           <SectionHead title={<span className="accent">Leadership Team</span>}>
             Experienced leaders driving dependable pharmaceutical distribution across Mumbai
@@ -113,8 +152,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      )}
 
-      <section className="quiet-cta bg-alt">
+      <section className="quiet-cta bg-white">
         <div className="container">
           <h2>Partner With VS Medico</h2>
           <p>Let&apos;s discuss how we can support your pharmacy or hospital with dependable, compliant supply.</p>

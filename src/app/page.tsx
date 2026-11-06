@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Store, Hospital, Landmark, Handshake, Pill } from 'lucide-react';
 import { CtaBand, SectionHead, ServiceCard } from '@/components/PageSections';
-import { COMPANY_INFO, PHARMA_BRANDS } from '@/data/companyData';
+import { COMPANY_INFO, PHARMA_BRANDS, PRODUCT_CATEGORIES } from '@/data/companyData';
 import { CORE_STRENGTHS, CUSTOMER_SEGMENTS, SEGMENT_TYPES, SERVICES, type SegmentType } from '@/data/siteContent';
 
 const SEGMENT_ICONS: Record<SegmentType, typeof Store> = {
@@ -20,11 +20,12 @@ export default function HomePage() {
           <div>
             <h1 className="hero-large mb-6">Excellence in Pharmaceutical Distribution</h1>
             <p className="body-large mb-4">
-              Single-window wholesale supply from 50+ leading pharma brands, from order to doorstep.
+              Single-window wholesale supply across leading pharma brands, from order to doorstep.
             </p>
             <p className="body-regular mb-8">
-              Licensed super-stockist serving retail chemists, hospitals and nursing homes across the Mumbai
-              Metropolitan Region since {COMPANY_INFO.establishedYear}, with WHO-GDP cold chain and same-day delivery.
+              Licensed pharmaceutical wholesaler in Bhandup West, serving retail chemists, hospitals and nursing homes
+              across the Mumbai Metropolitan Region since {COMPANY_INFO.establishedYear}, with cold-chain handling and
+              same-day delivery.
             </p>
             <Link href="/contact" className="btn-primary">
               Request Wholesale Consultation
@@ -84,18 +85,18 @@ export default function HomePage() {
       {/* Scale */}
       <section className="section bg-alt">
         <div className="container">
-          <SectionHead title="Pharma Distribution at Scale">
-            From a single strip to full hospital indents: 5,000+ active SKUs, temperature-controlled storage and
-            same-day dispatch across the Mumbai Metropolitan Region.
+          <SectionHead title="Pharma Distribution Made Simple">
+            From a single strip to full hospital indents: a broad multi-brand range, temperature-controlled storage
+            and same-day dispatch across the Mumbai Metropolitan Region.
           </SectionHead>
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-3 max-w-4xl mx-auto">
             <div className="stat">
-              <div className="stat-value">5,000+</div>
-              <div className="stat-label">Active SKUs</div>
+              <div className="stat-value">{PRODUCT_CATEGORIES.length - 1}</div>
+              <div className="stat-label">Product Categories</div>
             </div>
             <div className="stat">
-              <div className="stat-value">50+ Brands</div>
-              <div className="stat-label">On a Single Invoice</div>
+              <div className="stat-value">One Invoice</div>
+              <div className="stat-label">Across All Brands</div>
             </div>
             <div className="stat">
               <div className="stat-value">MMR-wide</div>
@@ -172,8 +173,7 @@ export default function HomePage() {
             ))}
           </div>
           <p className="text-center mt-10">
-            <span className="text-2xl text-teal-brand font-semibold">50+</span>{' '}
-            <span className="text-ink-soft">Pharma brands distributed from one warehouse</span>
+            <span className="text-ink-soft">Leading pharma brands available on a single wholesale account</span>
           </p>
         </div>
       </section>

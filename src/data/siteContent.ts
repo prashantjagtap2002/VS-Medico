@@ -29,7 +29,7 @@ export const SERVICES: ServiceItem[] = [
   {
     id: 'wholesale',
     title: 'Wholesale Distribution',
-    desc: 'Single-window stockist supply of 5,000+ SKUs from 50+ manufacturers, billed on one consolidated invoice at transparent net PTR rates.',
+    desc: 'Single-window wholesale supply across leading pharma manufacturers, billed on one consolidated invoice at transparent net PTR rates.',
     icon: 'Boxes',
     image: '/images/warehouse.webp',
   },
@@ -57,8 +57,8 @@ export const SERVICE_PORTFOLIO = [
   {
     title: 'Sourcing & Procurement',
     items: [
-      'Direct authorised stockist partnerships with manufacturers',
-      'Multi-brand sourcing across 50+ pharma companies',
+      'Sourcing from manufacturers and their authorised channels',
+      'Multi-brand sourcing across leading pharma companies',
       'Short-supply and hard-to-find SKU tracing',
       'Hospital indents and rate-contract procurement',
     ],
@@ -66,7 +66,7 @@ export const SERVICE_PORTFOLIO = [
   {
     title: 'Storage & Warehousing',
     items: [
-      '10,000 sq. ft. temperature-controlled warehouse',
+      'Temperature-controlled storage at our Bhandup West premises',
       'Batch-wise and expiry-wise stock rotation',
       'Segregated storage for Schedule H / H1 stock',
       'Racked, barcoded inventory for fast picking',
@@ -76,7 +76,7 @@ export const SERVICE_PORTFOLIO = [
     title: 'Cold Chain Management',
     items: [
       'Dedicated 2°C – 8°C cold rooms',
-      '24/7 digital temperature monitoring with power backup',
+      'Continuous temperature monitoring with power backup',
       'Validated insulated boxes and gel packs for transit',
       'Separate handling for insulins, vaccines and biologics',
     ],
@@ -131,11 +131,11 @@ export const THERAPEUTIC_SEGMENTS = [
 export const CORE_STRENGTHS = [
   {
     title: 'Single-Window Sourcing',
-    desc: 'One account, one order and one invoice for 50+ leading pharma brands instead of a dozen separate distributors.',
+    desc: 'One account, one order and one invoice across leading pharma brands instead of a dozen separate distributors.',
   },
   {
-    title: '25+ Years in Pharma Trade',
-    desc: 'Serving Mumbai’s chemists and hospitals since 1998, with long-standing manufacturer and stockist relationships.',
+    title: 'Registered & Accountable',
+    desc: 'Registered as V.S. Medico LLP (LLPIN AAX-4036) since 2021, with a fixed office in Sharad Industrial Estate, Bhandup West.',
   },
   {
     title: 'Cold Chain Infrastructure',
@@ -150,8 +150,8 @@ export const CORE_STRENGTHS = [
     desc: 'A Bhandup West hub that picks, packs and dispatches the same day for orders received before 2 PM.',
   },
   {
-    title: 'Scale & Capacity',
-    desc: '5,000+ active SKUs and 1,500+ order lines dispatched daily for 1,200+ registered chemists and hospitals.',
+    title: 'Broad Product Range',
+    desc: 'Branded formulations, generics, critical care, cold chain, OTC, surgical and Ayurvedic lines from a single supplier.',
   },
 ];
 
@@ -193,9 +193,9 @@ export const CAPABILITIES = {
 };
 
 export const SCALE_STATS = [
-  { value: '5,000+', label: 'Active SKUs', detail: 'Formulations, generics, cold chain and surgical' },
-  { value: '1,500+', label: 'Orders Daily', detail: 'Order lines picked and dispatched every day' },
-  { value: '10,000', label: 'Sq. Ft. Warehouse', detail: 'Including dedicated 2°C – 8°C cold storage' },
+  { value: '7', label: 'Product Categories', detail: 'Formulations, generics, cold chain, surgical and more' },
+  { value: String(THERAPEUTIC_SEGMENTS.length), label: 'Therapy Areas', detail: 'From cardiology and diabetology to critical care' },
+  { value: '2 PM', label: 'Same-Day Cut-off', detail: 'Orders confirmed before 2 PM leave the same day' },
 ];
 
 export const TEAMS = [
@@ -235,11 +235,11 @@ export const PROCESS_STEPS = [
 export const DIFFERENTIATORS = [
   {
     title: 'Single-Window Supply',
-    desc: 'Unlike single-brand manufacturers or fragmented traders, we supply 50+ brands on one bill with one delivery, so buyers manage one relationship instead of many.',
+    desc: 'Unlike single-brand manufacturers or fragmented traders, we supply many leading brands on one bill with one delivery, so buyers manage one relationship instead of many.',
   },
   {
-    title: 'Decades of Trade Experience',
-    desc: 'More than 25 years of pharmaceutical wholesale in Mumbai, serving neighbourhood chemists through to multispecialty hospitals.',
+    title: 'A Registered Local Business',
+    desc: 'Incorporated in 2021 as V.S. Medico LLP and based in Bhandup West, serving neighbourhood chemists through to multispecialty hospitals.',
   },
   {
     title: 'Factory-Direct Genuine Stock',
@@ -372,8 +372,8 @@ export const NETWORK_AREAS: NetworkArea[] = [
 
 export const COMPLIANCE_GROUPS = [
   { title: 'Drug Licensing', items: ['Form 20B Wholesale Licence', 'Form 21B Wholesale Licence', 'FDA Maharashtra', 'Registered Pharmacist'] },
-  { title: 'Storage & Quality', items: ['WHO-GDP Practices', '2°C – 8°C Cold Storage', '24/7 Temperature Logging', 'Batch Traceability'] },
-  { title: 'Tax & Business', items: ['GST Registered', 'PAN Registered', 'FSSAI Licensed'] },
+  { title: 'Storage & Quality', items: ['WHO-GDP Practices', '2°C – 8°C Cold Storage', 'Temperature Logging', 'Batch Traceability'] },
+  { title: 'Tax & Business', items: ['MCA-Registered LLP (AAX-4036)', 'GST Registered', 'PAN Registered'] },
 ];
 
 export const COMPLIANCE_FRAMEWORK = {

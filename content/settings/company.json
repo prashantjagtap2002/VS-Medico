@@ -9,21 +9,25 @@
     "sundayStatus": "Closed (Emergency Hospital Supply Available on Call)"
   },
   "address": {
-    "building": "F-117, Sharad Industrial Estate Rd",
+    "building": "F-117, 1st Floor, Sharad Industrial Estate, Lake Road",
     "locality": "Sadan Wadi, Bhandup West",
     "city": "Mumbai",
     "state": "Maharashtra",
     "pincode": "400078",
-    "landmark": "Near Bhandup Railway Station (West)",
+    "landmark": "Off Lake Road, Sadan Wadi",
     "latitude": 19.1471018,
-    "longitude": 72.9348123
+    "longitude": 72.9348123,
+    "mapsListingName": "VS MEDICO LLP DISTRIBUTORS"
   },
   "licenses": {
-    "drugLicense20B": "MH-MUM-20B-184920",
-    "drugLicense21B": "MH-MUM-21B-184921",
+    "registeredName": "V.S. Medico LLP",
+    "llpin": "AAX-4036",
+    "llpIncorporated": "15 June 2021",
+    "drugLicense20B": "",
+    "drugLicense21B": "",
     "issuingAuthority": "Food & Drug Administration (FDA), Maharashtra State",
-    "gstin": "27AAAAA0000A1Z5",
-    "pan": "AAAAA0000A",
-    "fssaiNo": "11521000000123"
+    "gstin": "",
+    "pan": "",
+    "fssaiNo": ""
   }
 }

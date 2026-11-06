@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <Logo />
             <p className="body-regular mt-5 mb-6 max-w-sm">
-              Mumbai&apos;s single-window pharmaceutical wholesaler and super-stockist, supplying licensed chemists and
+              Single-window pharmaceutical wholesaler in Bhandup West, Mumbai, supplying licensed chemists and
               hospitals across the MMR since {COMPANY_INFO.establishedYear}.
             </p>
             <Link href="/register" className="btn-orange">
@@ -99,7 +99,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p>
-            © {new Date().getFullYear()} {legalName}. All rights reserved.
+            © {new Date().getFullYear()} {legalName}.{COMPANY_INFO.licenses.llpin && ` LLPIN ${COMPANY_INFO.licenses.llpin}.`} All rights reserved.
           </p>
           <p className="flex flex-wrap gap-x-5 gap-y-1">
             <span>Supplying licensed buyers only.</span>

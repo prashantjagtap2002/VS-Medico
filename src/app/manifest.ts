@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${COMPANY_INFO.legalName} – Pharma Wholesale`,
     short_name: COMPANY_INFO.name,
-    description: 'Pharmaceutical wholesale distributor & super stockist in Bhandup West, Mumbai.',
+    description: 'Pharmaceutical wholesale distributor in Bhandup West, Mumbai.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

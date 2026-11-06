@@ -15,11 +15,14 @@ export const metadata: Metadata = pageMetadata({
 export default function CompliancePage() {
   const { licenses } = COMPANY_INFO;
   const registrations = [
-    { label: 'Drug Licence (Form 20B)', value: licenses.drugLicense20B },
-    { label: 'Drug Licence (Form 21B)', value: licenses.drugLicense21B },
-    { label: 'GSTIN', value: licenses.gstin },
-    { label: 'PAN', value: licenses.pan },
-    { label: 'FSSAI Licence', value: licenses.fssaiNo },
+    ...(licenses.registeredName ? [{ label: 'Registered Name', value: licenses.registeredName }] : []),
+    ...(licenses.llpin ? [{ label: 'LLPIN (Ministry of Corporate Affairs)', value: licenses.llpin }] : []),
+    ...(licenses.llpIncorporated ? [{ label: 'LLP Incorporated', value: licenses.llpIncorporated }] : []),
+    { label: 'Drug Licence (Form 20B)', value: licenses.drugLicense20B || 'Available on request' },
+    { label: 'Drug Licence (Form 21B)', value: licenses.drugLicense21B || 'Available on request' },
+    { label: 'GSTIN', value: licenses.gstin || 'Available on request' },
+    ...(licenses.pan ? [{ label: 'PAN', value: licenses.pan }] : []),
+    ...(licenses.fssaiNo ? [{ label: 'FSSAI Licence', value: licenses.fssaiNo }] : []),
     { label: 'Issuing Authority', value: licenses.issuingAuthority },
   ];
 

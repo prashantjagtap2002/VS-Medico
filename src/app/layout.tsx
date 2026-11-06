@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 };
 
 const DEFAULT_DESCRIPTION =
-  'FDA-licensed pharma wholesaler & super stockist in Bhandup West, Mumbai. 50+ brands incl. Sun, Cipla, Alkem & Lupin, 2–8°C cold chain, same-day MMR delivery.';
+  'V.S. Medico LLP (est. 2021): pharmaceutical wholesale distributor in Bhandup West, Mumbai. Leading brands incl. Sun, Cipla, Alkem & Lupin, 2–8°C cold chain, same-day MMR delivery.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     'pharma wholesale distributor Mumbai',
     'pharmaceutical stockist Bhandup West',
     'medicine wholesaler Mumbai',
-    'super stockist Mumbai',
+    'pharma distributor Bhandup',
     'Form 20B 21B licensed wholesaler',
     'cold chain insulin vaccine distributor Mumbai',
     'hospital medicine supplier Mumbai',
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VS Medico LLP | Pharma Wholesale Distributor & Stockist in Mumbai',
     description:
-      'Single-window pharmaceutical wholesale stockist supplying 50+ leading brands to 1,200+ retail chemists & hospitals across Mumbai MMR since 1998.',
+      'Single-window pharmaceutical wholesale distributor in Bhandup West, supplying licensed chemists & hospitals across Mumbai MMR since 2021.',
     url: '/',
     siteName: COMPANY_INFO.legalName,
     locale: 'en_IN',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'VS Medico LLP | Pharma Wholesale Distributor in Mumbai',
-    description: 'Authorised pharma stockist for 50+ brands with same-day delivery across Mumbai MMR.',
+    description: 'Pharma wholesale distributor in Bhandup West with same-day delivery across Mumbai MMR.',
     images: [DEFAULT_OG_IMAGE.url],
   },
   formatDetection: { telephone: true, email: true, address: true },
@@ -92,7 +92,11 @@ const jsonLdData = {
       url: SITE_URL,
       logo: `${SITE_URL}/icon.svg`,
       foundingDate: String(COMPANY_INFO.establishedYear),
-      taxID: COMPANY_INFO.licenses.gstin,
+      ...(COMPANY_INFO.licenses.gstin ? { taxID: COMPANY_INFO.licenses.gstin } : {}),
+      ...(COMPANY_INFO.licenses.registeredName ? { legalName: COMPANY_INFO.licenses.registeredName } : {}),
+      ...(COMPANY_INFO.licenses.llpin
+        ? { identifier: { '@type': 'PropertyValue', propertyID: 'LLPIN', value: COMPANY_INFO.licenses.llpin } }
+        : {}),
       email: COMPANY_INFO.contact.emailSales,
       telephone: COMPANY_INFO.contact.phoneSales,
       contactPoint: [

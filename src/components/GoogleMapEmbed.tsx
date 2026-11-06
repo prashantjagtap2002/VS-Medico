@@ -60,7 +60,8 @@ export default function GoogleMapEmbed() {
           <div>
             <strong>{legalName}</strong>
             <span>
-              {address.fullAddress} · {address.landmark}
+              {address.fullAddress}
+              {address.landmark && <> · {address.landmark}</>}
             </span>
           </div>
         </div>

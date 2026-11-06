@@ -6,7 +6,7 @@ import { CAPABILITIES, CORE_STRENGTHS, SCALE_STATS, TEAMS } from '@/data/siteCon
 export const metadata: Metadata = pageMetadata({
   title: 'Core Strengths & Capabilities',
   description:
-    'Single-window sourcing of 50+ brands, WHO-GDP cold chain, 5,000+ SKUs and same-day dispatch: the capabilities behind VS Medico’s pharma wholesale service.',
+    'Single-window multi-brand sourcing, cold-chain handling, a broad product range and same-day dispatch: the capabilities behind VS Medico’s pharma wholesale service.',
   path: '/core-strengths',
 });
 
@@ -54,7 +54,7 @@ export default function CoreStrengthsPage() {
 
       <section className="section bg-alt">
         <div className="container">
-          <SectionHead title="Scale & Capacity" />
+          <SectionHead title="Range & Reach" />
           <div className="grid-3">
             {SCALE_STATS.map((s) => (
               <div key={s.label} className="card text-center">

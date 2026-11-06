@@ -15,8 +15,8 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const REASONS = [
-  'Single-window supply of 50+ pharma brands',
-  'More than 25 years of pharmaceutical wholesale experience',
+  'Single-window supply of leading pharma brands',
+  `Registered LLP since ${COMPANY_INFO.establishedYear}, based in Bhandup West`,
   'FDA-licensed with full batch traceability',
   'WHO-GDP cold chain for insulins and vaccines',
   'Same-day delivery across the Mumbai MMR',

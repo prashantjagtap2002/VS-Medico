@@ -9,6 +9,12 @@
 import companySettings from '../../content/settings/company.json';
 
 export interface CompanyLicenses {
+  /** Name exactly as registered with the Ministry of Corporate Affairs. */
+  registeredName?: string;
+  /** LLP Identification Number (MCA). */
+  llpin?: string;
+  /** LLP incorporation date, display text. */
+  llpIncorporated?: string;
   drugLicense20B: string;
   drugLicense21B: string;
   issuingAuthority: string;
@@ -140,17 +146,21 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://vsmedico.i
 /** Same-day dispatch cut-off, in IST (24h clock). */
 export const DISPATCH_CUTOFF_HOUR_IST = 14;
 
-const { latitude, longitude, ...ADDRESS } = companySettings.address;
+const { latitude, longitude, mapsListingName, ...ADDRESS } = companySettings.address;
 const FULL_ADDRESS = `${ADDRESS.building}, ${ADDRESS.locality}, ${ADDRESS.city}, ${ADDRESS.state} ${ADDRESS.pincode}`;
-const MAP_QUERY = FULL_ADDRESS;
+// Prefixing the Google Maps listing name pins the map to the business itself, not just the street.
+const MAP_QUERY = mapsListingName ? `${mapsListingName}, ${FULL_ADDRESS}` : FULL_ADDRESS;
 export const GEO = { latitude, longitude };
+
+/** Year V.S. Medico LLP was incorporated (MCA record, LLPIN AAX-4036). */
+export const ESTABLISHED_YEAR = 2021;
 
 export const COMPANY_INFO: CompanyInfo = {
   name: "VS Medico",
   legalName: "VS Medico LLP",
-  tagline: "Mumbai's Single-Window Wholesale Super-Stockist & Pharma Distributor",
-  establishedYear: 1998,
-  yearsOfExcellence: "25+",
+  tagline: "Pharmaceutical Wholesale Distributor in Bhandup West, Mumbai",
+  establishedYear: ESTABLISHED_YEAR,
+  yearsOfExcellence: `${new Date().getFullYear() - ESTABLISHED_YEAR}+`,
   
   licenses: companySettings.licenses,
 
@@ -168,31 +178,31 @@ export const COMPANY_INFO: CompanyInfo = {
   },
 
   businessProfile: {
-    role: "Authorized Super Stockist & Wholesale Distributor",
+    role: "Pharmaceutical Wholesale Distributor",
     primaryCustomers: "Retail Chemists, Chain Pharmacies, Multispecialty Hospitals, Nursing Homes, & Government Procurement",
     serviceArea: "Mumbai Metropolitan Region (MMR), Bhandup, Mulund, Thane, Powai, & Extended Maharashtra",
-    dailyCapacity: "1,500+ Orders Dispatched Daily",
-    skuCount: "5,000+ Active Pharma SKUs",
-    activeClients: "1,200+ Registered Retail Chemists & Hospitals",
-    temperatureControlledArea: "10,000 Sq. Ft. WHO-GDP Compliant Warehouse with 2°C - 8°C Cold Storage"
+    dailyCapacity: "Same-day dispatch for orders received before 2 PM",
+    skuCount: "Branded formulations, generics, critical care, cold chain, OTC, surgical and Ayurvedic lines",
+    activeClients: "Licensed retail chemists, hospitals, nursing homes and clinics",
+    temperatureControlledArea: "Temperature-controlled storage with dedicated 2°C – 8°C cold storage, run to WHO-GDP practices"
   },
 
   valuePropositions: [
     {
-      title: "50+ Brands on Single Bill",
-      desc: "One order, one invoice, and single-source delivery for Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott, Mankind, and 40+ leading MNCs."
+      title: "Many Brands, One Bill",
+      desc: "One order, one invoice and one delivery across leading brands such as Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott and Mankind."
     },
     {
-      title: "100% Factory Direct Supply",
-      desc: "Direct authorized stockist partnerships with manufacturers ensuring batch traceability, zero counterfeit risk, and full FDA compliance."
+      title: "Genuine, Traceable Stock",
+      desc: "Sourced from manufacturers and their authorised channels, with batch numbers on every invoice for full traceability."
     },
     {
-      title: "WHO-GDP Cold Chain Standard",
-      desc: "24/7 digital temperature-monitored cold rooms (2°C to 8°C) and calibrated insulated boxes for insulins, vaccines, & biologics."
+      title: "Cold Chain Care",
+      desc: "Temperature-monitored 2°C to 8°C storage and insulated transit packing for insulins, vaccines and biologics."
     },
     {
       title: "Same-Day MMR Express Run",
-      desc: "Hyper-local Bhandup West logistics hub delivering same-day across Bhandup, Mulund, Thane, Powai, Ghatkopar, Dadar, and MMR."
+      desc: "From our Bhandup West premises we deliver same-day across Bhandup, Mulund, Thane, Powai, Ghatkopar, Dadar, and MMR."
     }
   ]
 };
@@ -200,7 +210,7 @@ export const COMPANY_INFO: CompanyInfo = {
 export const COMPETITIVE_EDGE: CompetitiveEdgeItem[] = [
   {
     feature: "Brand Sourcing Scope",
-    vsMedico: "50+ Top Pharma Brands on 1 Consolidated Invoice",
+    vsMedico: "Leading Pharma Brands on 1 Consolidated Invoice",
     singleManufacturer: "1 Single Brand Catalog Only",
     unorganizedTrader: "Fragmented & Unverified Stock"
   },
@@ -212,7 +222,7 @@ export const COMPETITIVE_EDGE: CompetitiveEdgeItem[] = [
   },
   {
     feature: "Cold Chain Integrity (2°C - 8°C)",
-    vsMedico: "WHO-GDP Certified Cold Rooms + Gel-Pack Box",
+    vsMedico: "WHO-GDP Aligned Cold Storage + Gel-Pack Box",
     singleManufacturer: "Varies by Carrier Line",
     unorganizedTrader: "High Risk of Temperature Abuse"
   },
@@ -260,38 +270,17 @@ export const PHARMA_BRANDS: PharmaBrand[] = [
 ];
 
 export const TRUST_STATS: TrustStat[] = [
-  { value: "25+", label: "Years of Wholesale Legacy", detail: "Serving Mumbai since 1998" },
-  { value: "5,000+", label: "Active Pharma SKUs", detail: "Formulations, Generics & Cold Chain" },
-  { value: "1,200+", label: "Chemist & Hospital Clients", detail: "Registered buyers across MMR" },
-  { value: "50+", label: "Pharma MNC Brands", detail: "Direct authorized distribution" }
+  { value: String(ESTABLISHED_YEAR), label: "Year Established", detail: `Registered LLP in Mumbai (LLPIN ${companySettings.licenses.llpin})` },
+  { value: String(PRODUCT_CATEGORIES.length - 1), label: "Product Categories", detail: "Formulations, generics, cold chain & more" },
+  { value: "2–8°C", label: "Cold Chain Handling", detail: "Insulins, vaccines & biologics" },
+  { value: "Same-day", label: "MMR Delivery", detail: "Orders before 2 PM, Monday to Saturday" }
 ];
 
-export const LEADERSHIP_TEAM: TeamMember[] = [
-  {
-    name: "V. S. Sharma",
-    role: "Founder & Managing Partner",
-    bio: "Founded VS Medico in 1998 and has led its growth into a 5,000+ SKU wholesale distribution house serving the MMR.",
-    initials: "VS"
-  },
-  {
-    name: "Rohan Sharma",
-    role: "Director – Operations & Logistics",
-    bio: "Oversees the Bhandup warehouse, cold-chain fleet, and same-day dispatch operations across Mumbai & Thane.",
-    initials: "RS"
-  },
-  {
-    name: "Anita Deshmukh",
-    role: "Head – Quality & Regulatory Compliance",
-    bio: "Manages FDA licensing, batch audit trails, and WHO-GDP cold chain protocol adherence.",
-    initials: "AD"
-  },
-  {
-    name: "Imran Shaikh",
-    role: "Head – B2B Sales & Key Accounts",
-    bio: "Leads wholesale pricing, chemist onboarding, and hospital institutional accounts.",
-    initials: "IS"
-  }
-];
+/**
+ * Named leaders shown on the About and Company Profile pages. Left empty until the real partners'
+ * names and roles are confirmed; while empty, those pages show the department overview instead.
+ */
+export const LEADERSHIP_TEAM: TeamMember[] = [];
 
 export const FAQS: FAQItem[] = [
   {
@@ -300,15 +289,15 @@ export const FAQS: FAQItem[] = [
   },
   {
     q: "How is VS Medico different from buying directly from a single manufacturer?",
-    a: "Unlike single-brand manufacturers who only supply their own products and require separate vendor accounts, VS Medico acts as a single-window super-stockist. We supply 50+ leading brands (Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott, Mankind, Sanofi, GSK, Macleods) on 1 consolidated bill with same-day Mumbai MMR delivery."
+    a: "Unlike single-brand manufacturers who only supply their own products and require separate vendor accounts, VS Medico acts as a single-window wholesale supplier. We supply leading brands (Sun Pharma, Cipla, Alkem, Lupin, Torrent, Abbott, Mankind, Sanofi, GSK, Macleods) on 1 consolidated bill with same-day Mumbai MMR delivery."
   },
   {
     q: "How do I request wholesale prices or PTR/MRP rate lists?",
-    a: "You can click on the 'Request Wholesale Quote' button on our website or contact our sales team directly via WhatsApp (+91 98200 12345) with your pharmacy name and Drug License copy. We instantly provide updated stock availability and net wholesale rates."
+    a: `You can click on the 'Request Wholesale Quote' button on our website or contact our sales team directly via WhatsApp (${companySettings.contact.whatsapp}) with your pharmacy name and Drug License copy. We instantly provide updated stock availability and net wholesale rates.`
   },
   {
     q: "How does VS Medico manage cold chain products like Insulins & Vaccines?",
-    a: "We operate a WHO-GDP certified 10,000 sq. ft. facility with dedicated 2°C to 8°C cold rooms equipped with 24/7 digital temperature logging and power backup. All cold chain shipments are packed in insulated temperature-monitored boxes with ice gels for MMR transit."
+    a: "Cold-chain products are kept in dedicated 2°C to 8°C refrigerated storage with continuous temperature logging, following WHO-GDP practices. All cold chain shipments are packed in insulated temperature-monitored boxes with ice gels for MMR transit."
   },
   {
     q: "What is the delivery timeline within Mumbai, Thane, and Navi Mumbai?",

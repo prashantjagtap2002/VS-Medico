@@ -55,7 +55,7 @@ export default function ProductsPage() {
               <span className="accent-teal">Multi-Brand</span> <span className="accent">Pharma Portfolio</span>
             </h2>
             <p className="body-regular mb-6">
-              One account gives you access to 5,000+ SKUs across every major category and therapy area, billed on a
+              One account gives you access to a broad multi-brand range across every major category and therapy area, billed on a
               single consolidated invoice at net PTR rates.
             </p>
             <ul className="check-list grid-cols-1 sm:grid-cols-2 gap-x-6">
@@ -72,10 +72,10 @@ export default function ProductsPage() {
             <p className="mb-4">Every order follows the same controlled path:</p>
             <ul className="grid gap-3 text-sm">
               <li>
-                <strong>Sourcing:</strong> factory-direct from manufacturers or their authorised stockists
+                <strong>Sourcing:</strong> from manufacturers or their authorised stockists
               </li>
               <li>
-                <strong>Storage:</strong> WHO-GDP warehouse with dedicated 2°C – 8°C cold rooms
+                <strong>Storage:</strong> temperature-controlled, with dedicated 2°C – 8°C cold storage
               </li>
               <li>
                 <strong>Delivery:</strong> batch-documented invoices and same-day dispatch across the MMR

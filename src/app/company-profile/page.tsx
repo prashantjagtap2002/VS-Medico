@@ -4,26 +4,29 @@ import { pageMetadata } from '@/lib/seo';
 import PrintButton from '@/components/PrintButton';
 import { LogoMark } from '@/components/Logo';
 import { COMPANY_INFO, LEADERSHIP_TEAM, PRODUCT_CATEGORIES } from '@/data/companyData';
-import { CUSTOMER_SEGMENTS, SERVICES, THERAPEUTIC_SEGMENTS } from '@/data/siteContent';
+import { CUSTOMER_SEGMENTS, SERVICES, TEAMS, THERAPEUTIC_SEGMENTS } from '@/data/siteContent';
 import { telHref } from '@/lib/forms';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Company Profile',
   description:
-    'Download the VS Medico LLP company profile: services, product categories, leadership, customers, licences and contact details.',
+    'Download the VS Medico LLP company profile: services, product categories, team, customers, licences and contact details.',
   path: '/company-profile',
 });
 
 export default function CompanyProfilePage() {
   const { contact, address, licenses } = COMPANY_INFO;
-  const highlights = [
-    { value: '25+', label: 'Years in Pharma Trade' },
-    { value: '5,000+', label: 'Active SKUs' },
-    { value: '50+', label: 'Pharma Brands' },
-    { value: '1,200+', label: 'Registered Buyers' },
-  ];
-  const badges = ['Form 20B', 'Form 21B', 'FDA Maharashtra', 'WHO-GDP', 'GST', 'FSSAI'];
   const categories = PRODUCT_CATEGORIES.filter((c) => c.id !== 'all');
+  const highlights = [
+    { value: String(COMPANY_INFO.establishedYear), label: 'Year Established' },
+    { value: licenses.llpin || 'LLP', label: 'LLPIN (MCA)' },
+    { value: String(categories.length), label: 'Product Categories' },
+    { value: String(THERAPEUTIC_SEGMENTS.length), label: 'Therapy Areas' },
+  ];
+  const badges = ['MCA-Registered LLP', 'Form 20B', 'Form 21B', 'FDA Maharashtra', 'WHO-GDP Practices', 'GST'];
+  const drugLicences = [licenses.drugLicense20B && `${licenses.drugLicense20B} (20B)`, licenses.drugLicense21B && `${licenses.drugLicense21B} (21B)`]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
     <section className="section bg-white">
@@ -45,8 +48,8 @@ export default function CompanyProfilePage() {
             <h2>Company Overview</h2>
             <p className="body-regular mb-3">
               {COMPANY_INFO.legalName} is an {COMPANY_INFO.businessProfile.role.toLowerCase()} based in{' '}
-              {address.locality}, {address.city}. Since {COMPANY_INFO.establishedYear} we have supplied genuine
-              medicines from 50+ leading manufacturers to retail chemists, hospitals, nursing homes and institutions
+              {address.locality}, {address.city}. Registered in {COMPANY_INFO.establishedYear}, we supply genuine
+              medicines from leading manufacturers to retail chemists, hospitals, nursing homes and institutions
               across the Mumbai Metropolitan Region.
             </p>
             <p className="body-regular">{COMPANY_INFO.businessProfile.temperatureControlledArea}.</p>
@@ -89,8 +92,15 @@ export default function CompanyProfilePage() {
           </div>
 
           <div className="profile-section">
-            <h2>Leadership Team</h2>
+            <h2>{LEADERSHIP_TEAM.length ? 'Leadership Team' : 'Our Team'}</h2>
             <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
+              {LEADERSHIP_TEAM.length === 0 &&
+                TEAMS.map((t) => (
+                  <div key={t.title} className="profile-highlight">
+                    <strong className="text-[15px]! text-ink! font-medium!">{t.title}</strong>
+                    <span>{t.desc}</span>
+                  </div>
+                ))}
               {LEADERSHIP_TEAM.map((m) => (
                 <div key={m.name} className="profile-highlight">
                   <span className="mx-auto mb-2 w-12 h-12 rounded-full bg-teal-brand text-white flex items-center justify-center">
@@ -124,7 +134,11 @@ export default function CompanyProfilePage() {
               ))}
             </div>
             <p className="body-small">
-              Drug Licences: {licenses.drugLicense20B} (20B) · {licenses.drugLicense21B} (21B) · GSTIN: {licenses.gstin}
+              {licenses.registeredName ?? COMPANY_INFO.legalName}
+              {licenses.llpin && <> · LLPIN: {licenses.llpin}</>}
+              {licenses.llpIncorporated && <> · Incorporated {licenses.llpIncorporated}</>}
+              {' · '}Drug Licences: {drugLicences || 'available on request'}
+              {licenses.gstin && <> · GSTIN: {licenses.gstin}</>}
             </p>
           </div>
 

@@ -21,7 +21,7 @@ export default function NotFound() {
           </h1>
           <p className="body-regular mb-8">
             The page may have moved or the product may no longer be listed. Try the catalogue, or contact our sales desk
-            for any item from our 5,000+ SKU range.
+            for any item in our range.
           </p>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center">
             <Link href="/" className="btn btn-outline justify-center">
